@@ -48,9 +48,6 @@ const seoParams = {
   },
 }
 
-const GOOGLE_SEARCH_SITE = getEnv(import.meta.env, Astro, 'GOOGLE_SEARCH_SITE')
-const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : '/search/result'
-
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
@@ -73,6 +70,7 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f4f1ec" />
+    <link href="https://fonts.googleapis.cn/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet" />
     <link rel="alternate" type="application/rss+xml" title={`${RSS_PREFIX}${channel?.title}`} href={RSS_URL} />
     <style is:inline>
       @view-transition {
@@ -141,11 +139,6 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
                 ))
               }
             </div>
-            <input class="search-icon" name="icon" type="checkbox" placeholder="Search" />
-            <form class="search-form" action={searchAction} method="get">
-              {GOOGLE_SEARCH_SITE ? <input type="hidden" name="as_sitesearch" value={GOOGLE_SEARCH_SITE} /> : null}
-              <input type="text" name="q" placeholder="Search" />
-            </form>
             <div class="copyright-wrap">
               Powered by
               <a

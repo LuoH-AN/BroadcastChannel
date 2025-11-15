@@ -38,9 +38,9 @@
     display: block;
     background: var(--cell-background-color);
     border-left: 3px solid var(--highlight-color);
-    padding: 6px;
-    padding-left: 10px;
-    border-radius: var(--box-border-radius);
+    padding: 8px;
+    padding-left: 12px;
+    border-radius: 12px;
 
     .link_preview_title {
       display: block;
@@ -84,7 +84,7 @@
       font-size: 14px;
       color: #fff;
       line-height: 1.5;
-      border-radius: var(--box-border-radius);
+      border-radius: 8px;
       text-overflow: ellipsis;
       max-width: calc(100% - 28px);
       white-space: nowrap;
@@ -102,9 +102,9 @@
     font-size: 0.8em;
     background: var(--cell-background-color);
     border-left: 3px solid var(--highlight-color);
-    padding: 6px;
-    padding-left: 10px;
-    border-radius: var(--box-border-radius);
+    padding: 8px;
+    padding-left: 12px;
+    border-radius: 12px;
   }
 
   .tgme_widget_message_sticker {
@@ -166,7 +166,7 @@
     tg-spoiler {
       color: transparent;
       margin: auto 2px;
-      border-radius: var(--box-border-radius);
+      border-radius: 8px;
       background: #ccc 60% 60% / 3000px 3000px;
       background-image: repeating-conic-gradient(#999 0 0.0001%, #0000 0 0.0002%);
     }
@@ -219,7 +219,6 @@
   max-height: calc(100% - 40px) !important;
   border-radius: var(--media-border-radius);
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadows);
   cursor: pointer;
   object-fit: scale-down;
 }

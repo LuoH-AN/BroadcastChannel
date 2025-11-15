@@ -13,7 +13,7 @@ export async function GET(Astro) {
   url.pathname = SITE_URL
   url.search = ''
 
-  return Response.json({
+  const jsonData = {
     version: 'https://jsonfeed.org/version/1.1',
     title: `${tag ? `${tag} | ` : ''}${channel.title}`,
     description: channel.description,
@@ -26,5 +26,15 @@ export async function GET(Astro) {
       tags: item.tags,
       content_html: item.content,
     })),
+  }
+
+  return new Response(JSON.stringify(jsonData), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Cache-Control': 'public, max-age=3600',
+    },
   })
 }
