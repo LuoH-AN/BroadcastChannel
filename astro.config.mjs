@@ -11,6 +11,7 @@ const providers = {
   vercel: vercel({
     isr: false,
     edgeMiddleware: false,
+    runtime: 'nodejs22.x',
   }),
   cloudflare_pages: cloudflare(),
   netlify: netlify({
