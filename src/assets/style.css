@@ -8,10 +8,8 @@
   --box-margin: 12px;
   --border-color: rgba(0, 0, 0, 0.08);
   --link-color: var(--highlight-color);
-  --icon-hover-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(23deg)
-    brightness(90%) contrast(90%);
-  --icon-secondary-filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(129deg)
-    brightness(86%) contrast(88%);
+  --icon-hover-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(23deg) brightness(90%) contrast(90%);
+  --icon-secondary-filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(129deg) brightness(86%) contrast(88%);
   --cell-background-color: #fff;
   --code-background-color: #f9f9f9;
   --secondary-color: #999;
