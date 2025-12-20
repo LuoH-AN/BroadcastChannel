@@ -1,9 +1,9 @@
 {
   "name": "broadcast-channel",
   "type": "module",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": true,
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.26.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
