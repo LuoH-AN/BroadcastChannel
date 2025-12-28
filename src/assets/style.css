@@ -20,7 +20,7 @@
 body {
   background-color: var(--background-color);
   color: var(--foreground-color);
-  font-family: 'Sen', ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Sen', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
 }
 
 #wrapper {

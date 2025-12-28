@@ -132,7 +132,7 @@ LINKS=Title1,URL1;Title2,URL3;Title3,URL3;
 ## 侧边栏导航项, 使用英文逗号和分号分割
 NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 
-## 启用 RSS 美化
+## 启用 RSS 美化（使用自定义样式表）
 RSS_BEAUTIFY=true
 ```
 

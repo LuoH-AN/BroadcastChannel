@@ -28,3 +28,5 @@ pnpm-debug.log*
 .wrangler
 
 CLAUDE.md
+
+claudix-vscode-0.3.9.vsix
