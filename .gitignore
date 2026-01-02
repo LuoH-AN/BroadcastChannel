@@ -26,6 +26,7 @@ pnpm-debug.log*
 .vercel
 .netlify
 .wrangler
+.edgeone
 
 CLAUDE.md
 
