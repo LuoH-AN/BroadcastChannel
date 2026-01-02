@@ -34,17 +34,14 @@ function getImageStickers($, item, { staticProxy, index }) {
   })?.get()?.join('')
 }
 
-function getImages($, item, { staticProxy, id, index, title }) {
+function getImages($, item, { staticProxy, _id, index, title }) {
   const images = $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
-    const popoverId = `modal-${id}-${_index}`
+    const imageUrl = staticProxy + url
     return `
-      <button class="image-preview-button image-preview-wrap" popovertarget="${popoverId}" popovertargetaction="show">
-        <img src="${staticProxy + url}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
-      </button>
-      <button class="image-preview-button modal" id="${popoverId}" popovertarget="${popoverId}" popovertargetaction="hide" popover>
-        <img class="modal-img" src="${staticProxy + url}" alt="${title}" loading="lazy" />
-      </button>
+      <a href="${imageUrl}" data-pswp-width="" data-pswp-height="" data-pswp-type="image" class="image-preview-wrap">
+        <img src="${imageUrl}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
+      </a>
     `
   })?.get()
   return images.length ? `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>` : ''

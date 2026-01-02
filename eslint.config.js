@@ -6,5 +6,6 @@ export default antfu({
   pnpm: false,
   rules: {
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+    'style/brace-style': 'off',
   },
 })

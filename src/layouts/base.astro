@@ -5,6 +5,7 @@ import '../assets/global.css'
 import { SEO } from 'astro-seo'
 import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
+import PhotoSwipe from '../components/PhotoSwipe.astro'
 
 const { SITE_URL, RSS_URL, RSS_PREFIX } = Astro.locals
 const { channel } = Astro.props
@@ -164,5 +165,6 @@ const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
       <img {...backToTopIcon} alt="Back to Top" />
     </a>
     <Fragment set:html={FOOTER_INJECT} />
+    <PhotoSwipe />
   </body>
 </html>

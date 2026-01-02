@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom">
+<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
   <xsl:template match="/">
     <xsl:variable name="title">
@@ -253,21 +253,12 @@
                             </xsl:choose>
                           </div>
                         </div>
-                        <xsl:if test="description or title">
+                        <xsl:if test="description or content:encoded">
                           <div class="text-box">
-                            <xsl:if test="title">
-                              <h2 style="font-size: 1.05em; margin-bottom: 0.5em; font-weight: 600;">
-                                <xsl:choose>
-                                  <xsl:when test="link">
-                                    <a href="{link}" class="site-title" target="_blank" rel="noopener">
-                                      <xsl:value-of select="title"/>
-                                    </a>
-                                  </xsl:when>
-                                  <xsl:otherwise>
-                                    <xsl:value-of select="title"/>
-                                  </xsl:otherwise>
-                                </xsl:choose>
-                              </h2>
+                            <xsl:if test="content:encoded">
+                              <div>
+                                <xsl:value-of select="content:encoded" disable-output-escaping="yes"/>
+                              </div>
                             </xsl:if>
                             <xsl:if test="description">
                               <div>

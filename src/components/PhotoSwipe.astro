@@ -1,0 +1,48 @@
+---
+import PhotoSwipeLightbox from 'photoswipe/lightbox'
+import 'photoswipe/style.css'
+---
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#main-container',
+    children: 'a[data-pswp-width][data-pswp-height]',
+    pswpModule: () => import('photoswipe'),
+    closeOnVerticalDrag: false,
+    pinchToClose: false,
+  })
+
+  lightbox.on('open' as any, () => {
+    document.body.style.overflow = 'hidden'
+  })
+
+  lightbox.on('close' as any, () => {
+    document.body.style.overflow = ''
+  })
+
+  lightbox.init()
+
+  function initImageListImages() {
+    const imageLinks = document.querySelectorAll('.image-list-container a[data-pswp-width]')
+    imageLinks.forEach((link) => {
+      const img = link.querySelector('img')
+      if (img && img.complete) {
+        link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
+        link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
+      } else if (img) {
+        img.onload = () => {
+          link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
+          link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
+        }
+      }
+    })
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initImageListImages)
+  } else {
+    initImageListImages()
+  }
+</script>
