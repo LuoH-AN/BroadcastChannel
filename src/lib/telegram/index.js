@@ -39,13 +39,15 @@ async function hydrateTgEmoji($, content, { staticProxy } = {}) {
   await Promise.all(emojiNodes.map((emojiEl) => {
     const emojiId = $(emojiEl).attr('emoji-id')
     if (!emojiId)
-      return
+      return null
 
     const imageUrl = getCustomEmojiImage(emojiId, staticProxy)
     if (imageUrl) {
       const imageMarkup = `<img class="tg-emoji" src="${imageUrl}" alt="" loading="lazy" />`
       $(emojiEl).replaceWith(imageMarkup)
     }
+
+    return null
   }))
 }
 
@@ -70,7 +72,7 @@ function getImageStickers($, item, { staticProxy, index }) {
   })?.get()?.join('')
 }
 
-function getImages($, item, { staticProxy, _id, index, title }) {
+function getImages($, item, { staticProxy, index, title }) {
   const images = $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
     const imageUrl = staticProxy + url
@@ -252,7 +254,7 @@ async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnab
       $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
       getLinkPreview($, item, { staticProxy, index }),
-    ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (match, p1, p2, _p3) => {
+    ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (_match, p1, p2, _p3) => {
       if (p2 === '//') {
         p2 = 'https://'
       }

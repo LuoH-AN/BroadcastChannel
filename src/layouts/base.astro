@@ -53,16 +53,18 @@ const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
 const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
-const navs = (getEnv(import.meta.env, Astro, 'NAVS') || '')
+const rawNavs = String(getEnv(import.meta.env, Astro, 'NAVS') || '')
+const navs = rawNavs
   .split(';')
   .filter(Boolean)
-  .map((link) => {
-    link = link.split(',')
+  .map((rawLink) => {
+    const [title = '', href = ''] = rawLink.split(',')
     return {
-      title: link[0],
-      href: link[1],
+      title,
+      href,
     }
   })
+  .filter((nav) => nav.title && nav.href)
 ---
 
 <!doctype html>

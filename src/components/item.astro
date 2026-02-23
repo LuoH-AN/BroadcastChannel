@@ -4,13 +4,28 @@ import 'prismjs/themes/prism.css'
 import dayjs from '../lib/dayjs'
 import { getEnv } from '../lib/env'
 
+interface Reaction {
+  isPaid?: boolean
+  emoji?: string
+  emojiImage?: string
+  count?: string
+}
+
+interface Post {
+  id: string | number
+  datetime: string
+  content: string
+  tags: string[]
+  reactions?: Reaction[]
+}
+
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 const timezone = getEnv(import.meta.env, Astro, 'TIMEZONE')
 
 locale && dayjs.locale(locale)
 
 const { SITE_URL } = Astro.locals
-const { post, isItem } = Astro.props
+const { post, isItem = false } = Astro.props as { post: Post; isItem?: boolean }
 
 const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
 const COMMENTS = getEnv(import.meta.env, Astro, 'COMMENTS')
@@ -37,13 +52,13 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
           {post.reactions.map((reaction) => (
             <span class={`reaction-pill${reaction.isPaid ? ' reaction-pill-paid' : ''}`}>
               <span class="reaction-emoji">
-                {
-                  reaction.isPaid
-                    ? '\u2B50'
-                    : reaction.emojiImage
-                      ? <img src={reaction.emojiImage} alt={reaction.emoji || 'emoji'} loading="lazy" />
-                      : reaction.emoji
-                }
+                {reaction.isPaid ? (
+                  '\u2B50'
+                ) : reaction.emojiImage ? (
+                  <img src={reaction.emojiImage} alt={reaction.emoji || 'emoji'} loading="lazy" />
+                ) : (
+                  reaction.emoji
+                )}
               </span>
               <span class="reaction-count">{reaction.count}</span>
             </span>
