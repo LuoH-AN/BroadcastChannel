@@ -7,11 +7,14 @@ import 'photoswipe/style.css'
   import PhotoSwipeLightbox from 'photoswipe/lightbox'
 
   const lightbox = new PhotoSwipeLightbox({
-    gallery: '#main-container',
+    gallery: '.item .image-list-container',
     children: 'a[data-pswp-width][data-pswp-height]',
     pswpModule: () => import('photoswipe'),
-    closeOnVerticalDrag: false,
-    pinchToClose: false,
+    closeOnVerticalDrag: true,
+    pinchToClose: true,
+    bgClickAction: 'close',
+    imageClickAction: 'close',
+    tapAction: 'close',
   })
 
   lightbox.on('open' as any, () => {
