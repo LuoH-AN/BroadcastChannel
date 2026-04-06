@@ -51,6 +51,9 @@ export default defineConfig({
       : []),
   ],
   vite: {
+    server: {
+      allowedHosts: ['.run.pinggy-free.link'],
+    },
     ssr: {
       noExternal: process.env.DOCKER ? !!process.env.DOCKER : undefined,
       external: [
