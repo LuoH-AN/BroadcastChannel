@@ -109,6 +109,53 @@ function getAudio($, item, { staticProxy }) {
   return $.html(audio)
 }
 
+function normalizeYouTubeVideoId(videoId = '') {
+  return /^[\w-]{11}$/.test(videoId) ? videoId : ''
+}
+
+function getYouTubeVideoId(urlString = '') {
+  try {
+    const url = new URL(urlString)
+    const hostname = url.hostname.replace(/^www\./, '')
+
+    if (hostname === 'youtu.be') {
+      return normalizeYouTubeVideoId(url.pathname.split('/').filter(Boolean)[0])
+    }
+
+    if (['youtube.com', 'm.youtube.com', 'music.youtube.com'].includes(hostname)) {
+      if (url.pathname === '/watch') {
+        return normalizeYouTubeVideoId(url.searchParams.get('v') || '')
+      }
+
+      return normalizeYouTubeVideoId(url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?#]+)/)?.[1] || '')
+    }
+  }
+  catch {
+    return ''
+  }
+
+  return ''
+}
+
+function getLinkPreviewVideo($, item) {
+  const urls = [
+    $(item).find('.tgme_widget_message_link_preview')?.attr('href'),
+    ...($(item).find('.tgme_widget_message_text a[href]')?.map((_index, link) => $(link).attr('href'))?.get() ?? []),
+  ].filter(Boolean)
+
+  for (const url of urls) {
+    const videoId = getYouTubeVideoId(url)
+    if (videoId) {
+      return {
+        videoId,
+        html: `<div class="link-preview-video-wrap"><iframe class="link-preview-video" src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
+      }
+    }
+  }
+
+  return null
+}
+
 function getLinkPreview($, item, { staticProxy, index }) {
   const link = $(item).find('.tgme_widget_message_link_preview')
   const title = $(item).find('.link_preview_title')?.text() || $(item).find('.link_preview_site_name')?.text()
@@ -233,6 +280,8 @@ async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnab
     $(a)?.attr('href', `/search/${encodeURIComponent($(a)?.text())}`)
   })?.map((_index, a) => $(a)?.text()?.replace('#', ''))?.get()
 
+  const linkPreviewVideo = getLinkPreviewVideo($, item)
+
   return {
     id,
     title,
@@ -253,7 +302,8 @@ async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnab
       $.html($(item).find('.tgme_widget_message_document_wrap')),
       $.html($(item).find('.tgme_widget_message_video_player.not_supported')),
       $.html($(item).find('.tgme_widget_message_location_wrap')),
-      getLinkPreview($, item, { staticProxy, index }),
+      linkPreviewVideo?.html,
+      !linkPreviewVideo && getLinkPreview($, item, { staticProxy, index }),
     ].filter(Boolean).join('').replace(/(url\(["'])((https?:)?\/\/)/g, (_match, p1, p2, _p3) => {
       if (p2 === '//') {
         p2 = 'https://'
