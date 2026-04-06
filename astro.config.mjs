@@ -5,6 +5,7 @@ import node from '@astrojs/node'
 import vercel from '@astrojs/vercel'
 import edgeone from '@edgeone/astro'
 import sentry from '@sentry/astro'
+import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
 import { provider } from 'std-env'
 
@@ -33,6 +34,11 @@ export default defineConfig({
   output: 'server',
   adapter: providers[adapterProvider] || providers.node,
   integrations: [
+    icon({
+      include: {
+        ri: ['rss-line', 'mic-line', 'twitter-x-line', 'github-line', 'telegram-line', 'discord-line', 'mastodon-line', 'bluesky-line'],
+      },
+    }),
     ...(process.env.SENTRY_DSN
       ? [
           sentry({
