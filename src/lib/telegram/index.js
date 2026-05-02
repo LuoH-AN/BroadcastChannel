@@ -137,6 +137,54 @@ function getYouTubeVideoId(urlString = '') {
   return ''
 }
 
+/**
+ * Parse Bilibili video ID from URL
+ * Supports formats:
+ * - www.bilibili.com/video/BVxxxxxx
+ * - www.bilibili.com/video/avxxxxxx
+ * - b23.tv/xxxxxx (short link)
+ * - m.bilibili.com/video/BVxxxxxx
+ */
+function getBilibiliVideoId(urlString = '') {
+  try {
+    const url = new URL(urlString)
+    const hostname = url.hostname.replace(/^www\./, '')
+
+    // Short link format: b23.tv/xxxxxx
+    if (hostname === 'b23.tv') {
+      const pathId = url.pathname.split('/').filter(Boolean)[0]
+      if (pathId) {
+        // Could be BV or av format
+        if (pathId.startsWith('BV') || pathId.startsWith('bv')) {
+          return { bvid: pathId }
+        }
+        const avMatch = pathId.match(/^(?:av)?(\d+)$/i)
+        if (avMatch) {
+          return { aid: avMatch[1] }
+        }
+      }
+      return null
+    }
+
+    // Standard bilibili format
+    if (['bilibili.com', 'm.bilibili.com'].includes(hostname)) {
+      // Match /video/BVxxxxxx or /video/avxxxxxx
+      const videoMatch = url.pathname.match(/^\/video\/(BV\w+|av(\d+))/i)
+      if (videoMatch) {
+        if (videoMatch[1].toLowerCase().startsWith('bv')) {
+          return { bvid: videoMatch[1] }
+        }
+        return { aid: videoMatch[2] }
+      }
+    }
+  }
+  catch {
+    return null
+  }
+
+  return null
+}
+
 function getLinkPreviewVideo($, item) {
   const urls = [
     $(item).find('.tgme_widget_message_link_preview')?.attr('href'),
@@ -144,11 +192,26 @@ function getLinkPreviewVideo($, item) {
   ].filter(Boolean)
 
   for (const url of urls) {
-    const videoId = getYouTubeVideoId(url)
-    if (videoId) {
+    // Check YouTube first
+    const youtubeVideoId = getYouTubeVideoId(url)
+    if (youtubeVideoId) {
       return {
-        videoId,
-        html: `<div class="link-preview-video-wrap"><iframe class="link-preview-video" src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
+        videoId: youtubeVideoId,
+        html: `<div class="link-preview-video-wrap"><iframe class="link-preview-video" src="https://www.youtube-nocookie.com/embed/${youtubeVideoId}" title="YouTube video player" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
+      }
+    }
+
+    // Check Bilibili
+    const bilibiliVideoId = getBilibiliVideoId(url)
+    if (bilibiliVideoId) {
+      // Bilibili embed URL format: //player.bilibili.com/player.html?bvid=BVxxxxxx or aid=xxx
+      const embedSrc = bilibiliVideoId.bvid
+        ? `//player.bilibili.com/player.html?bvid=${bilibiliVideoId.bvid}&high_quality=1&danmaku=0`
+        : `//player.bilibili.com/player.html?aid=${bilibiliVideoId.aid}&high_quality=1&danmaku=0`
+
+      return {
+        videoId: bilibiliVideoId.bvid || bilibiliVideoId.aid,
+        html: `<div class="link-preview-video-wrap link-preview-video-bilibili"><iframe class="link-preview-video" src="${embedSrc}" title="Bilibili video player" loading="lazy" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen></iframe></div>`,
       }
     }
   }
