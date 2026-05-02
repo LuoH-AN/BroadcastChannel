@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#f4f1ec"/>
         <link href="https://fonts.googleapis.cn/css2?family=Noto+Serif+SC:wght@200..900&amp;family=Sen:wght@400..800&amp;display=swap" rel="stylesheet"/>
-        <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+        <script src="https://fastly.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
         <title><xsl:value-of select="$title"/> - RSS Feed</title>
         <style>
           :root {
