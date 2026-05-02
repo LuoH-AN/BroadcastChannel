@@ -16,7 +16,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#f4f1ec"/>
-        <link href="https://fonts.googleapis.cn/css2?family=Noto+Serif+SC:wght@200..900&amp;family=Sen:wght@400..800&amp;display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.cn/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"/>
         <script src="https://fastly.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
         <title><xsl:value-of select="$title"/> - RSS Feed</title>
         <style>
@@ -42,7 +42,7 @@
           }
 
           body {
-            font-family: 'Sen', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
+            font-family: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
             background-color: var(--background-color);
             color: var(--foreground-color);
             line-height: 1.6;
