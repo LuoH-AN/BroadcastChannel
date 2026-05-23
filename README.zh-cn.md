@@ -104,6 +104,10 @@ PODCASRT=https://PODCASRT.com
 FOOTER_INJECT=FOOTER_INJECT
 HEADER_INJECT=HEADER_INJECT
 
+## Umami 统计，UMAMI_WEBSITE_ID 留空则不启用
+UMAMI_WEBSITE_ID=
+UMAMI_SRC=https://cloud.umami.is/script.js
+
 ## SEO 配置项，可不让搜索引擎索引内容
 NO_FOLLOW=false
 NO_INDEX=false

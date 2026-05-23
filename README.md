@@ -106,6 +106,10 @@ PODCAST=https://PODCAST.com
 FOOTER_INJECT=FOOTER_INJECT
 HEADER_INJECT=HEADER_INJECT
 
+## Umami analytics, leave UMAMI_WEBSITE_ID empty to disable
+UMAMI_WEBSITE_ID=
+UMAMI_SRC=https://cloud.umami.is/script.js
+
 ## SEO configuration options, can prevent search engines from indexing content
 NO_FOLLOW=false
 NO_INDEX=false

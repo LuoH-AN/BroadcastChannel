@@ -51,6 +51,8 @@ const seoParams = {
 
 const HEADER_INJECT = getEnv(import.meta.env, Astro, 'HEADER_INJECT')
 const FOOTER_INJECT = getEnv(import.meta.env, Astro, 'FOOTER_INJECT')
+const UMAMI_WEBSITE_ID = getEnv(import.meta.env, Astro, 'UMAMI_WEBSITE_ID')
+const UMAMI_SRC = getEnv(import.meta.env, Astro, 'UMAMI_SRC') || 'https://cloud.umami.is/script.js'
 const TAGS = getEnv(import.meta.env, Astro, 'TAGS')
 const LINKS = getEnv(import.meta.env, Astro, 'LINKS')
 const rawNavs = String(getEnv(import.meta.env, Astro, 'NAVS') || '')
@@ -93,6 +95,7 @@ const navs = rawNavs
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
+    {UMAMI_WEBSITE_ID && <script is:inline defer src={UMAMI_SRC} data-website-id={UMAMI_WEBSITE_ID} />}
   </head>
 
   <body>
