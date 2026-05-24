@@ -127,8 +127,9 @@ STATIC_PROXY=
 ## 启用标签页, 标签使用英文逗号分割
 TAGS=标签A,标签B,标签C
 
-## 展示评论
+## 展示评论（由 Twikoo 驱动）
 COMMENTS=true
+TWIKOO_ENV_ID=https://your-twikoo-instance.example.com/
 
 ## 展示 Reactions
 REACTIONS=true

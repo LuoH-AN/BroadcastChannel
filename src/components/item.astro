@@ -27,8 +27,8 @@ locale && dayjs.locale(locale)
 const { SITE_URL } = Astro.locals
 const { post, isItem = false } = Astro.props as { post: Post; isItem?: boolean }
 
-const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
 const COMMENTS = getEnv(import.meta.env, Astro, 'COMMENTS')
+const TWIKOO_ENV_ID = getEnv(import.meta.env, Astro, 'TWIKOO_ENV_ID')
 const REACTIONS = getEnv(import.meta.env, Astro, 'REACTIONS')
 
 const datetime = dayjs(post.datetime).tz(timezone)
@@ -81,17 +81,13 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
   }
 
   {
-    COMMENTS && isItem && (
+    COMMENTS && TWIKOO_ENV_ID && isItem && (
       <div class="comments">
-        <script
-          is:inline
-          async
-          src="https://telegram.org/js/telegram-widget.js"
-          data-telegram-discussion={`${channel}/${post.id}`}
-          data-comments-limit="50"
-          data-colorful="1"
-          data-color="454545"
-        />
+        <div id="tcomment" />
+        <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js" />
+        <script is:inline define:vars={{ TWIKOO_ENV_ID }}>
+          twikoo.init({ envId: TWIKOO_ENV_ID, el: '#tcomment' })
+        </script>
       </div>
     )
   }

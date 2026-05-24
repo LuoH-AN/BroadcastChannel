@@ -129,8 +129,9 @@ STATIC_PROXY=
 ## Enable tags page, separate tags with commas
 TAGS=tag1,tag2,tag3
 
-## Show comments
+## Show comments (powered by Twikoo)
 COMMENTS=true
+TWIKOO_ENV_ID=https://your-twikoo-instance.example.com/
 
 ## Show reactions
 REACTIONS=true
