@@ -25,7 +25,7 @@ export async function GET(Astro) {
     items: posts.map(item => ({
       link: `posts/${item.id}`,
       title: item.title,
-      description: item.description,
+      description: item.text,
       pubDate: new Date(item.datetime),
       content: sanitizeHtml(item.content, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'video', 'audio']),

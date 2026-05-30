@@ -21,7 +21,7 @@ export async function GET(Astro) {
     items: posts.map(item => ({
       url: `${url.toString()}posts/${item.id}`,
       title: item.title,
-      description: item.description,
+      description: item.text,
       date_published: new Date(item.datetime),
       tags: item.tags,
       content_html: item.content,

@@ -6,7 +6,7 @@ import voidFile from '../assets/void.png'
 const { SITE_URL, RSS_URL } = Astro.locals
 const { channel } = Astro.props
 
-const PODCASRT = getEnv(import.meta.env, Astro, 'PODCASRT')
+const PODCAST = getEnv(import.meta.env, Astro, 'PODCAST') ?? getEnv(import.meta.env, Astro, 'PODCASRT')
 const TWITTER = getEnv(import.meta.env, Astro, 'TWITTER')
 const GITHUB = getEnv(import.meta.env, Astro, 'GITHUB')
 const TELEGRAM = getEnv(import.meta.env, Astro, 'TELEGRAM')
@@ -26,8 +26,8 @@ const socialLinks = [
     rel: 'alternate noopener noreferrer',
     type: 'application/rss+xml',
   },
-  PODCASRT && {
-    href: PODCASRT,
+  PODCAST && {
+    href: PODCAST,
     title: 'Podcast',
     label: 'Podcast',
     icon: 'ri:mic-line',
