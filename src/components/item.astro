@@ -3,6 +3,7 @@ import '../assets/item.css'
 import 'prismjs/themes/prism.css'
 import dayjs from '../lib/dayjs'
 import { getEnv } from '../lib/env'
+import Comments from './comments.astro'
 
 interface Reaction {
   isPaid?: boolean
@@ -80,15 +81,5 @@ const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('H
     )
   }
 
-  {
-    COMMENTS && TWIKOO_ENV_ID && isItem && (
-      <div class="comments">
-        <div id="tcomment" />
-        <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js" />
-        <script is:inline define:vars={{ TWIKOO_ENV_ID }}>
-          twikoo.init({ envId: TWIKOO_ENV_ID, el: '#tcomment' })
-        </script>
-      </div>
-    )
-  }
+  {COMMENTS && TWIKOO_ENV_ID && isItem && <Comments envId={TWIKOO_ENV_ID} />}
 </div>

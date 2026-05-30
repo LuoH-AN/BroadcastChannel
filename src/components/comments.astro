@@ -1,0 +1,11 @@
+---
+const { envId } = Astro.props as { envId: string }
+---
+
+<div class="comments">
+  <div id="tcomment"></div>
+  <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js"></script>
+  <script is:inline define:vars={{ envId }}>
+    twikoo.init({ envId, el: '#tcomment' })
+  </script>
+</div>
