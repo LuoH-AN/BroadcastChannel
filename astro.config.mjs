@@ -36,7 +36,7 @@ export default defineConfig({
   integrations: [
     icon({
       include: {
-        ri: ['rss-line', 'mic-line', 'twitter-x-line', 'github-line', 'telegram-line', 'discord-line', 'mastodon-line', 'bluesky-line'],
+        ri: ['search-line', 'rss-line', 'mic-line', 'twitter-x-line', 'github-line', 'telegram-line', 'discord-line', 'mastodon-line', 'bluesky-line'],
       },
     }),
     ...(process.env.SENTRY_DSN

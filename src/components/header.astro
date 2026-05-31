@@ -99,6 +99,15 @@ const socialLinks = [
     </a>
   </div>
   <div class="header-icons">
+    <div class="search">
+      <input type="checkbox" id="search-toggle" class="search-toggle" />
+      <label for="search-toggle" class="search-button" title="Search" aria-label="Search">
+        <Icon name="ri:search-line" class="social-icon" aria-hidden="true" />
+      </label>
+      <form action="/search" method="get" role="search" class="search-form">
+        <input type="search" name="q" class="search-input" placeholder="Search" aria-label="Search" />
+      </form>
+    </div>
     {
       socialLinks.map((item) => (
         <a href={item.href} target="_blank" rel={item.rel} type={item.type} title={item.title} aria-label={item.label}>
@@ -147,5 +156,71 @@ const socialLinks = [
 
   .header-icons {
     gap: 4px;
+  }
+
+  .search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .search-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .search-button {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .search-button:hover .social-icon {
+    filter: var(--icon-hover-filter);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .search-toggle:focus-visible ~ .search-button .social-icon {
+    outline: 2px solid var(--highlight-color);
+    outline-offset: 2px;
+  }
+
+  .search-form {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease,
+      visibility 0.15s;
+  }
+
+  .search-toggle:checked ~ .search-form {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .search-input {
+    width: 12rem;
+    max-width: 60vw;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background-color: var(--cell-background-color);
+    color: var(--foreground-color);
+    font: inherit;
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--highlight-color);
   }
 </style>
