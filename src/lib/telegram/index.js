@@ -185,6 +185,17 @@ function getBilibiliVideoId(urlString = '') {
   return null
 }
 
+// Once a video link has been turned into an embedded card, strip the source
+// link out of the message body so the page shows only the video card.
+function removeVideoLinkFromText($, item, isVideoLink) {
+  $(item)
+    .find('.tgme_widget_message_text a[href]')
+    .each((_index, link) => {
+      if (isVideoLink($(link).attr('href')))
+        $(link).remove()
+    })
+}
+
 function getLinkPreviewVideo($, item) {
   const urls = [
     $(item).find('.tgme_widget_message_link_preview')?.attr('href'),
@@ -195,6 +206,7 @@ function getLinkPreviewVideo($, item) {
     // Check YouTube first
     const youtubeVideoId = getYouTubeVideoId(url)
     if (youtubeVideoId) {
+      removeVideoLinkFromText($, item, href => getYouTubeVideoId(href) === youtubeVideoId)
       return {
         videoId: youtubeVideoId,
         html: `<div class="link-preview-video-wrap"><iframe class="link-preview-video" src="https://www.youtube-nocookie.com/embed/${youtubeVideoId}" title="YouTube video player" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
@@ -204,13 +216,18 @@ function getLinkPreviewVideo($, item) {
     // Check Bilibili
     const bilibiliVideoId = getBilibiliVideoId(url)
     if (bilibiliVideoId) {
+      const bilibiliKey = bilibiliVideoId.bvid || bilibiliVideoId.aid
+      removeVideoLinkFromText($, item, (href) => {
+        const video = getBilibiliVideoId(href)
+        return !!video && (video.bvid || video.aid) === bilibiliKey
+      })
       // Bilibili embed URL format: //player.bilibili.com/player.html?bvid=BVxxxxxx or aid=xxx
       const embedSrc = bilibiliVideoId.bvid
         ? `//player.bilibili.com/player.html?bvid=${bilibiliVideoId.bvid}&high_quality=1&danmaku=0`
         : `//player.bilibili.com/player.html?aid=${bilibiliVideoId.aid}&high_quality=1&danmaku=0`
 
       return {
-        videoId: bilibiliVideoId.bvid || bilibiliVideoId.aid,
+        videoId: bilibiliKey,
         html: `<div class="link-preview-video-wrap link-preview-video-bilibili"><iframe class="link-preview-video" src="${embedSrc}" title="Bilibili video player" loading="lazy" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen></iframe></div>`,
       }
     }
