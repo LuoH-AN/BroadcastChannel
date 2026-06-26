@@ -7,14 +7,14 @@ import { getEnv } from '../lib/env'
 import backToTopIcon from '../assets/back-to-top.svg'
 import PhotoSwipe from '../components/PhotoSwipe.astro'
 
-const { SITE_URL, RSS_URL, RSS_PREFIX } = Astro.locals
+const { SITE_URL, RSS_URL, RSS_PREFIX, SITE_ORIGIN } = Astro.locals
 const { channel } = Astro.props
 
 const locale = getEnv(import.meta.env, Astro, 'LOCALE')
 
 const seo = channel?.seo
 const reqPathname = Astro.url.pathname.replace(/\/$/, '')
-const canonical = SITE_URL.startsWith('http') ? new URL(SITE_URL).origin + reqPathname : Astro.url.origin + reqPathname
+const canonical = `${SITE_ORIGIN}${reqPathname}`
 
 const { origin, pathname } = new URL(canonical)
 const twitter = getEnv(import.meta.env, Astro, 'TWITTER')

@@ -1,3 +1,5 @@
+import { resolveSiteOrigin } from './lib/origin.js'
+
 function getSearchQuery(context) {
   const fromQuery = context.url.searchParams.get('q')
   if (fromQuery)
@@ -19,6 +21,7 @@ function getSearchQuery(context) {
 
 export async function onRequest(context, next) {
   context.locals.SITE_URL = `${import.meta.env.SITE ?? ''}${import.meta.env.BASE_URL}`
+  context.locals.SITE_ORIGIN = resolveSiteOrigin(import.meta.env, context.request.headers, context.url.origin)
   context.locals.RSS_URL = `${context.locals.SITE_URL}rss.xml`
   context.locals.RSS_PREFIX = ''
 
