@@ -348,7 +348,26 @@ function getReactions($, item, staticProxy) {
   return reactions
 }
 
-async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnabled } = {}) {
+function escapeRegExp(string = '') {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+// Highlight the search term in the assembled content. Only visible text is
+// wrapped — tags and attribute values are left untouched by splitting the HTML
+// into tag and text segments. Prism-highlighted code uses entity-encoded angle
+// brackets, so it is safe to transform those text segments too.
+function highlightSearchTerm(html = '', q = '') {
+  if (!q)
+    return html
+
+  const pattern = new RegExp(`(${escapeRegExp(q)})`, 'gi')
+  return html
+    .split(/(<[^>]+>)/g)
+    .map(segment => (segment.startsWith('<') ? segment : segment.replace(pattern, '<mark class="search-highlight">$1</mark>')))
+    .join('')
+}
+
+async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnabled, q } = {}) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? await modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index, staticProxy })
@@ -369,7 +388,7 @@ async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnab
     datetime: $(item).find('.tgme_widget_message_date time')?.attr('datetime'),
     tags,
     text: content?.text(),
-    content: [
+    content: highlightSearchTerm([
       getReply($, item, { channel }),
       getImages($, item, { staticProxy, id, index, title }),
       getVideo($, item, { staticProxy, id, index, title }),
@@ -392,7 +411,7 @@ async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnab
         return false
       }
       return `${p1}${staticProxy}${p2}`
-    }),
+    }), q),
     reactions: reactionsEnabled ? getReactions($, item, staticProxy) : [],
   }
 }
@@ -443,7 +462,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
   }
   const posts = (await Promise.all(
     $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
-      return getPost($, item, { channel, staticProxy, index, reactionsEnabled })
+      return getPost($, item, { channel, staticProxy, index, reactionsEnabled, q })
     })?.get() ?? [],
   ))?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
 

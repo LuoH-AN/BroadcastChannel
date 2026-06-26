@@ -328,3 +328,11 @@
 .tag-box {
   flex-wrap: wrap;
 }
+
+mark.search-highlight {
+  background: rgb(255 213 79 / 0.5);
+  color: inherit;
+  padding: 0 0.15em;
+  border-radius: 3px;
+}
+
