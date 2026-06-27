@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
+import { absolutizeHtml } from '../lib/absolutize'
 import { getEnv } from '../lib/env'
 import { getChannelInfo } from '../lib/telegram'
 
@@ -22,7 +23,7 @@ export async function GET(Astro) {
       title: item.title,
       description: item.text,
       pubDate: new Date(item.datetime),
-      content: sanitizeHtml(item.content, {
+      content: absolutizeHtml(sanitizeHtml(item.content, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'video', 'audio']),
         allowedAttributes: {
           ...sanitizeHtml.defaults.allowedAttributes,
@@ -33,7 +34,7 @@ export async function GET(Astro) {
         exclusiveFilter(frame) {
           return frame.tag === 'img' && frame.attribs?.class?.includes('modal-img')
         },
-      }),
+      }), SITE_ORIGIN),
     })),
   })
 

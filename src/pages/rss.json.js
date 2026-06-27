@@ -1,3 +1,4 @@
+import { absolutizeHtml } from '../lib/absolutize'
 import { getChannelInfo } from '../lib/telegram'
 
 export async function GET(Astro) {
@@ -19,7 +20,7 @@ export async function GET(Astro) {
       description: item.text,
       date_published: new Date(item.datetime),
       tags: item.tags,
-      content_html: item.content,
+      content_html: absolutizeHtml(item.content, SITE_ORIGIN),
     })),
   }
 
