@@ -4,6 +4,7 @@ import { LRUCache } from 'lru-cache'
 import { $fetch } from 'ofetch'
 import { getEnv } from '../env'
 import prism from '../prism'
+import { normalizeUrlAttribute, normalizeUrlAttributes } from './url'
 
 const cache = new LRUCache({
   ttl: 1000 * 60 * 5, // 5 minutes
@@ -362,13 +363,17 @@ function highlightSearchTerm(html = '', q = '') {
 
   const pattern = new RegExp(`(${escapeRegExp(q)})`, 'gi')
   return html
-    .split(/(<[^>]+>)/g)
+    .split(/(<[^>]+>)/)
     .map(segment => (segment.startsWith('<') ? segment : segment.replace(pattern, '<mark class="search-highlight">$1</mark>')))
     .join('')
 }
 
 async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnabled, q } = {}) {
   item = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
+  // Decode entity-encoded characters in every URL-bearing attribute before any
+  // downstream parsing, so an encoded scheme (e.g. &#106;avascript:) can't slip
+  // through into a proxied src/href.
+  normalizeUrlAttributes($, $(item))
   const content = $(item).find('.js-message_reply_text')?.length > 0
     ? await modifyHTMLContent($, $(item).find('.tgme_widget_message_text.js-message_text'), { index, staticProxy })
     : await modifyHTMLContent($, $(item).find('.tgme_widget_message_text'), { index, staticProxy })
@@ -471,7 +476,7 @@ export async function getChannelInfo(Astro, { before = '', after = '', q = '', t
     title: $('.tgme_channel_info_header_title')?.text(),
     description: $('.tgme_channel_info_description')?.text(),
     descriptionHTML: (await modifyHTMLContent($, $('.tgme_channel_info_description'), { staticProxy }))?.html(),
-    avatar: $('.tgme_page_photo_image img')?.attr('src'),
+    avatar: normalizeUrlAttribute($('.tgme_page_photo_image img')?.attr('src') ?? ''),
   }
 
   cache.set(cacheKey, channelInfo)
