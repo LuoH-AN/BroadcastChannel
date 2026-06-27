@@ -14,7 +14,7 @@ const providers = {
     isr: false,
     edgeMiddleware: false,
   }),
-  cloudflare_pages: cloudflare(),
+  cloudflare_workers: cloudflare(),
   netlify: netlify({
     cacheOnDemandPages: false,
     edgeMiddleware: false,
@@ -25,9 +25,16 @@ const providers = {
   edgeone: edgeone(),
 }
 
-const adapterProvider = (process.env.HOME === '/dev/shm/home' && process.env.TMPDIR === '/dev/shm/tmp')
+// @astrojs/cloudflare v13 dropped Cloudflare Pages in favor of Workers.
+const adapterAliases = {
+  cloudflare: 'cloudflare_workers',
+}
+
+const requestedProvider = (process.env.HOME === '/dev/shm/home' && process.env.TMPDIR === '/dev/shm/tmp')
   ? 'edgeone'
   : process.env.SERVER_ADAPTER || provider
+
+const adapterProvider = adapterAliases[requestedProvider] || requestedProvider
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,7 +70,7 @@ export default defineConfig({
     ssr: {
       noExternal: process.env.DOCKER ? !!process.env.DOCKER : undefined,
       external: [
-        ...adapterProvider === 'cloudflare_pages'
+        ...adapterProvider === 'cloudflare_workers'
           ? [
               'module',
               'url',
