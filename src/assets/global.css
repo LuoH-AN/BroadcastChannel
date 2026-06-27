@@ -46,7 +46,9 @@ html {
 }
 
 #back-to-top {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -58,7 +60,7 @@ html {
   border: none;
   font-size: 24px;
   text-decoration: none;
-  opacity: 0;
+  opacity: 0.9;
   transition:
     opacity 0.3s,
     transform 0.3s;
@@ -77,24 +79,33 @@ html {
   }
 }
 
-/* Use @scroll-timeline to control the display of the button */
-@supports (animation-timeline: view()) {
+/* Reveal the back-to-top button only after scrolling past one viewport,
+   driven purely by the scroll animation timeline (no JS). */
+@supports (animation-timeline: scroll()) {
   #back-to-top {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: fadeIn 0.5s linear both;
-    animation-timeline: view(block 0 100vh);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    animation: back-to-top-reveal linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 100vh;
   }
 
-  @keyframes fadeIn {
-    from {
+  @keyframes back-to-top-reveal {
+    0%,
+    99% {
       opacity: 0;
       pointer-events: none;
+      visibility: hidden;
     }
-    to {
+
+    100% {
       opacity: 0.9;
       pointer-events: auto;
+      visibility: visible;
     }
   }
 }
