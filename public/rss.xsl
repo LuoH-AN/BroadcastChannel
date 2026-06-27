@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
   <xsl:template match="/">
     <xsl:variable name="title">
@@ -16,7 +16,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#f4f1ec"/>
-        <link href="https://fonts.googleapis.cn/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.cn/css2?family=Bitter:ital,wght@0,100..900;1,100..900&amp;family=Noto+Serif+SC:wght@200..900&amp;display=swap" rel="stylesheet"/>
         <script src="https://fastly.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
         <title><xsl:value-of select="$title"/> - RSS Feed</title>
         <style>
