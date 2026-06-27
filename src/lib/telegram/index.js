@@ -73,12 +73,76 @@ function getImageStickers($, item, { staticProxy, index }) {
   })?.get()?.join('')
 }
 
+const STYLE_DIMENSION_REGEX = {
+  width: /width:\s*(\d+(?:\.\d+)?)px/i,
+  height: /height:\s*(\d+(?:\.\d+)?)px/i,
+}
+const STYLE_PADDING_TOP_REGEX = /padding-top:\s*(\d+(?:\.\d+)?)%/i
+const SYNTHETIC_IMAGE_DIMENSION = 1000
+
+function getStyleDimension(style, property) {
+  const value = style?.match(STYLE_DIMENSION_REGEX[property])?.[1]
+  return value ? Math.round(Number(value)) : null
+}
+
+function getStylePaddingTop(style) {
+  const value = style?.match(STYLE_PADDING_TOP_REGEX)?.[1]
+  return value ? Number(value) : null
+}
+
+// Telegram widgets encode image ratios in styles, so this returns synthetic
+// dimensions for layout reservation rather than real pixel dimensions.
+function inferImageDimensions($, node, fallback = { width: SYNTHETIC_IMAGE_DIMENSION, height: SYNTHETIC_IMAGE_DIMENSION }) {
+  const element = $(node)
+  const styles = [
+    element.attr('style'),
+    element.find('.tgme_widget_message_photo').first().attr('style'),
+    element.find('i').attr('style'),
+    element.parent().attr('style'),
+  ]
+
+  let width = null
+  let height = null
+  let paddingTop = null
+
+  for (const style of styles) {
+    if (width === null) {
+      width = getStyleDimension(style, 'width')
+    }
+
+    if (height === null) {
+      height = getStyleDimension(style, 'height')
+    }
+
+    if (paddingTop === null) {
+      paddingTop = getStylePaddingTop(style)
+    }
+
+    if (width && height) {
+      return { width, height }
+    }
+  }
+
+  // Telegram commonly uses wrap width plus child padding-top to express image
+  // ratio instead of returning real pixel dimensions.
+  if (paddingTop !== null) {
+    const syntheticWidth = width ?? fallback.width
+    return {
+      width: syntheticWidth,
+      height: Math.max(1, Math.round(syntheticWidth * paddingTop / 100)),
+    }
+  }
+
+  return fallback
+}
+
 function getImages($, item, { staticProxy, index, title }) {
   const images = $(item).find('.tgme_widget_message_photo_wrap')?.map((_index, photo) => {
     const url = $(photo).attr('style').match(/url\(["'](.*?)["']/)?.[1]
     const imageUrl = staticProxy + url
+    const { width, height } = inferImageDimensions($, photo)
     return `
-      <a href="${imageUrl}" data-pswp-width="" data-pswp-height="" data-pswp-type="image" class="image-preview-wrap">
+      <a href="${imageUrl}" data-pswp-width="${width}" data-pswp-height="${height}" data-pswp-type="image" class="image-preview-wrap">
         <img src="${imageUrl}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </a>
     `
