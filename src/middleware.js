@@ -36,11 +36,15 @@ export async function onRequest(context, next) {
   const response = await next()
 
   if (!response.bodyUsed) {
-    if (response.headers.get('Content-type') === 'text/html') {
+    const contentType = response.headers.get('Content-Type') || ''
+    const isSuccessful = response.status >= 200 && response.status < 300
+    const isCacheableMethod = ['GET', 'HEAD'].includes(context.request.method)
+
+    if (isSuccessful && contentType.startsWith('text/html')) {
       response.headers.set('Speculation-Rules', '"/rules/prefetch.json"')
     }
 
-    if (!response.headers.has('Cache-Control')) {
+    if (isSuccessful && isCacheableMethod && !response.headers.has('Cache-Control')) {
       response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=300')
     }
   }

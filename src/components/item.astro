@@ -2,7 +2,7 @@
 import '../assets/item.css'
 import 'prismjs/themes/prism.css'
 import dayjs from '../lib/dayjs'
-import { getEnv } from '../lib/env'
+import { getBooleanEnv, getEnv } from '../lib/env'
 import Comments from './comments.astro'
 
 interface Reaction {
@@ -28,9 +28,9 @@ locale && dayjs.locale(locale)
 const { SITE_URL } = Astro.locals
 const { post, isItem = false } = Astro.props as { post: Post; isItem?: boolean }
 
-const COMMENTS = getEnv(import.meta.env, Astro, 'COMMENTS')
+const COMMENTS = getBooleanEnv(import.meta.env, Astro, 'COMMENTS')
 const TWIKOO_ENV_ID = getEnv(import.meta.env, Astro, 'TWIKOO_ENV_ID')
-const REACTIONS = getEnv(import.meta.env, Astro, 'REACTIONS')
+const REACTIONS = getBooleanEnv(import.meta.env, Astro, 'REACTIONS')
 
 const datetime = dayjs(post.datetime).tz(timezone)
 const timeago = datetime.isBefore(dayjs().subtract(1, 'w')) ? datetime.format('HH:mm · ll · ddd') : datetime.fromNow()

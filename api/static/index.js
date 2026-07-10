@@ -5,22 +5,26 @@ export const config = {
 }
 
 export default function handler(request) {
-  const url = request.url?.split('/static/')?.[1]
+  try {
+    const url = request.url?.split('/static/')?.[1]
 
-  if (!url) {
-    return new Response('Not Found', { status: 404 })
+    if (!url)
+      return new Response('Not Found', { status: 404 })
+
+    const target = new URL(url)
+    target.searchParams.delete('path')
+
+    return GET({
+      request,
+      params: {
+        url: target.origin + target.pathname,
+      },
+      url: {
+        search: target.search,
+      },
+    })
   }
-
-  const target = new URL(url)
-  target.searchParams.delete('path')
-
-  return GET({
-    request,
-    params: {
-      url: target.origin + target.pathname,
-    },
-    url: {
-      search: target.search,
-    },
-  })
+  catch {
+    return new Response('Bad Request', { status: 400 })
+  }
 }

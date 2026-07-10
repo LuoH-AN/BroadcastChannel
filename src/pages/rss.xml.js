@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
 import { absolutizeHtml } from '../lib/absolutize'
-import { getEnv } from '../lib/env'
+import { getBooleanEnv } from '../lib/env'
 import { getChannelInfo } from '../lib/telegram'
 
 export async function GET(Astro) {
@@ -17,7 +17,7 @@ export async function GET(Astro) {
     description: channel.description,
     site: SITE_ORIGIN,
     trailingSlash: false,
-    stylesheet: getEnv(import.meta.env, Astro, 'RSS_BEAUTIFY') ? '/rss.xsl' : undefined,
+    stylesheet: getBooleanEnv(import.meta.env, Astro, 'RSS_BEAUTIFY') ? '/rss.xsl' : undefined,
     items: posts.map(item => ({
       link: `posts/${item.id}`,
       title: item.title,

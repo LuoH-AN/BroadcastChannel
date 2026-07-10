@@ -1,3 +1,4 @@
+import { escapeXml, getLatestPostId, getSitemapCursors } from '../lib/sitemap'
 import { getChannelInfo } from '../lib/telegram'
 
 export async function GET(Astro) {
@@ -5,20 +6,13 @@ export async function GET(Astro) {
   const channel = await getChannelInfo(Astro)
   const posts = channel.posts || []
 
-  const pageSize = 20
-  let count = +posts[0]?.id
-
-  const pages = []
-  pages.push(count)
-  while (count > pageSize) {
-    count -= pageSize
-    pages.push(count)
-  }
+  const latestPostId = Math.max(getLatestPostId(posts), Number(channel.latestMessageId) || 0)
+  const pages = getSitemapCursors(latestPostId)
 
   const sitemaps = pages.map((page) => {
     return `
 <sitemap>
-  <loc>${SITE_ORIGIN}/sitemap/${page}.xml</loc>
+  <loc>${escapeXml(`${SITE_ORIGIN}/sitemap/${page}.xml`)}</loc>
 </sitemap>`
   })
 
@@ -28,6 +22,7 @@ export async function GET(Astro) {
 </sitemapindex>`, {
     headers: {
       'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
     },
   })
 }

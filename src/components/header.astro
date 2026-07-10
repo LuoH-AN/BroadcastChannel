@@ -1,5 +1,5 @@
 ---
-import { getEnv } from '../lib/env'
+import { getBooleanEnv, getEnv } from '../lib/env'
 import { Icon } from 'astro-icon/components'
 import voidFile from '../assets/void.png'
 
@@ -15,7 +15,7 @@ const MASTODON = getEnv(import.meta.env, Astro, 'MASTODON')
 const BLUESKY = getEnv(import.meta.env, Astro, 'BLUESKY')
 
 const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
-const hideDescription = getEnv(import.meta.env, Astro, 'HIDE_DESCRIPTION')
+const hideDescription = getBooleanEnv(import.meta.env, Astro, 'HIDE_DESCRIPTION')
 
 const socialLinks = [
   {
@@ -119,7 +119,7 @@ const socialLinks = [
 </div>
 
 {
-  hideDescription !== 'true' && channel?.descriptionHTML && channel?.descriptionHTML.length > 0 && (
+  !hideDescription && channel?.descriptionHTML && channel?.descriptionHTML.length > 0 && (
     <div class="text-box" id="site-intro" set:html={channel?.descriptionHTML} />
   )
 }

@@ -2,17 +2,72 @@ import * as cheerio from 'cheerio'
 import flourite from 'flourite'
 import { LRUCache } from 'lru-cache'
 import { $fetch } from 'ofetch'
-import { getEnv } from '../env'
+import { getBooleanEnv, getEnv } from '../env'
 import prism from '../prism'
 import { normalizeUrlAttribute, normalizeUrlAttributes } from './url'
 
+const CACHE_FRESH_TTL = 1000 * 60 * 5
+const CACHE_STALE_TTL = 1000 * 60 * 60
+const TELEGRAM_REQUEST_TIMEOUT = 10_000
+
 const cache = new LRUCache({
-  ttl: 1000 * 60 * 5, // 5 minutes
+  ttl: CACHE_STALE_TTL,
   maxSize: 50 * 1024 * 1024, // 50MB
   sizeCalculation: (item) => {
     return JSON.stringify(item).length
   },
 })
+
+const telegramHeaderAllowlist = [
+  'accept',
+  'accept-language',
+  'user-agent',
+]
+
+function cloneResult(result) {
+  return JSON.parse(JSON.stringify(result))
+}
+
+function getTelegramHeaders(headers) {
+  const allowedHeaders = {}
+
+  for (const name of telegramHeaderAllowlist) {
+    const value = headers.get(name)
+    if (value)
+      allowedHeaders[name] = value
+  }
+
+  return allowedHeaders
+}
+
+function getCachedResult(cacheKey) {
+  const cached = cache.get(cacheKey)
+  if (!cached)
+    return null
+
+  return {
+    data: cloneResult(cached.data),
+    isFresh: Date.now() - cached.cachedAt < CACHE_FRESH_TTL,
+  }
+}
+
+function setCachedResult(cacheKey, data) {
+  cache.set(cacheKey, {
+    cachedAt: Date.now(),
+    data: cloneResult(data),
+  })
+}
+
+function serveStaleOrThrow(cachedResult, error, details) {
+  if (!cachedResult)
+    throw error
+
+  console.warn('Telegram request failed, serving stale cache', {
+    ...details,
+    error: error instanceof Error ? error.message : String(error),
+  })
+  return cachedResult.data
+}
 
 // Normalize emoji variants (e.g., heart variants)
 function normalizeEmoji(emoji) {
@@ -485,64 +540,78 @@ async function getPost($, item, { channel, staticProxy, index = 0, reactionsEnab
   }
 }
 
-const unnessaryHeaders = ['host', 'cookie', 'origin', 'referer']
-
 export async function getChannelInfo(Astro, { before = '', after = '', q = '', type = 'list', id = '' } = {}) {
-  const cacheKey = JSON.stringify({ before, after, q, type, id })
-  const cachedResult = cache.get(cacheKey)
-
-  if (cachedResult) {
-    console.info('Match Cache', { before, after, q, type, id })
-    return JSON.parse(JSON.stringify(cachedResult))
-  }
-
   // Where t.me can also be telegram.me, telegram.dog
   const host = getEnv(import.meta.env, Astro, 'TELEGRAM_HOST') ?? 't.me'
   const channel = getEnv(import.meta.env, Astro, 'CHANNEL')
   const staticProxy = getEnv(import.meta.env, Astro, 'STATIC_PROXY') ?? '/static/'
-  const reactionsEnabled = getEnv(import.meta.env, Astro, 'REACTIONS')
+  const reactionsEnabled = getBooleanEnv(import.meta.env, Astro, 'REACTIONS')
+
+  if (!channel)
+    throw new Error('CHANNEL environment variable is required')
+
+  const cacheKey = JSON.stringify({ before, after, q, type, id, host, channel, staticProxy, reactionsEnabled })
+  const cachedResult = getCachedResult(cacheKey)
+
+  if (cachedResult?.isFresh) {
+    console.info('Match Cache', { before, after, q, type, id })
+    return cachedResult.data
+  }
 
   const url = id ? `https://${host}/${channel}/${id}?embed=1&mode=tme` : `https://${host}/s/${channel}`
-  const headers = Object.fromEntries(Astro.request.headers)
-
-  Object.keys(headers).forEach((key) => {
-    if (unnessaryHeaders.includes(key)) {
-      delete headers[key]
-    }
-  })
+  const headers = getTelegramHeaders(Astro.request.headers)
 
   console.info('Fetching', url, { before, after, q, type, id })
-  const html = await $fetch(url, {
-    headers,
-    query: {
-      before: before || undefined,
-      after: after || undefined,
-      q: q || undefined,
-    },
-    retry: 3,
-    retryDelay: 100,
-  })
+  let html
 
-  const $ = cheerio.load(html, {}, false)
-  if (id) {
-    const post = await getPost($, null, { channel, staticProxy, reactionsEnabled })
-    cache.set(cacheKey, post)
-    return post
+  try {
+    html = await $fetch(url, {
+      headers,
+      query: {
+        before: before || undefined,
+        after: after || undefined,
+        q: q || undefined,
+      },
+      retry: 3,
+      retryDelay: 100,
+      timeout: TELEGRAM_REQUEST_TIMEOUT,
+    })
   }
-  const posts = (await Promise.all(
-    $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
-      return getPost($, item, { channel, staticProxy, index, reactionsEnabled, q })
-    })?.get() ?? [],
-  ))?.reverse().filter(post => ['text'].includes(post.type) && post.id && post.content)
-
-  const channelInfo = {
-    posts,
-    title: $('.tgme_channel_info_header_title')?.text(),
-    description: $('.tgme_channel_info_description')?.text(),
-    descriptionHTML: (await modifyHTMLContent($, $('.tgme_channel_info_description'), { staticProxy }))?.html(),
-    avatar: normalizeUrlAttribute($('.tgme_page_photo_image img')?.attr('src') ?? ''),
+  catch (error) {
+    return serveStaleOrThrow(cachedResult, error, { before, after, q, type, id })
   }
 
-  cache.set(cacheKey, channelInfo)
-  return channelInfo
+  try {
+    const $ = cheerio.load(html, {}, false)
+    if (id) {
+      const post = await getPost($, null, { channel, staticProxy, reactionsEnabled })
+      setCachedResult(cacheKey, post)
+      return post
+    }
+    const parsedPosts = (await Promise.all(
+      $('.tgme_channel_history  .tgme_widget_message_wrap')?.map((index, item) => {
+        return getPost($, item, { channel, staticProxy, index, reactionsEnabled, q })
+      })?.get() ?? [],
+    ))?.reverse()
+    const posts = parsedPosts.filter(post => ['text'].includes(post.type) && post.id && post.content)
+    const latestMessageId = parsedPosts.reduce((latest, post) => {
+      const postId = Number(post.id)
+      return Number.isSafeInteger(postId) && postId > latest ? postId : latest
+    }, 0)
+
+    const channelInfo = {
+      posts,
+      latestMessageId,
+      title: $('.tgme_channel_info_header_title')?.text(),
+      description: $('.tgme_channel_info_description')?.text(),
+      descriptionHTML: (await modifyHTMLContent($, $('.tgme_channel_info_description'), { staticProxy }))?.html(),
+      avatar: normalizeUrlAttribute($('.tgme_page_photo_image img')?.attr('src') ?? ''),
+    }
+
+    setCachedResult(cacheKey, channelInfo)
+    return channelInfo
+  }
+  catch (error) {
+    return serveStaleOrThrow(cachedResult, error, { before, after, q, type, id })
+  }
 }
