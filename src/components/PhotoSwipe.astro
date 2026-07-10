@@ -26,7 +26,35 @@ import 'photoswipe/style.css'
 
   lightbox.init()
 
-  function initImageListImages() {
+  function markImageLoadingState(img: HTMLImageElement) {
+    const placeholder = img.closest('.image-loading-placeholder')
+    if (!placeholder) {
+      return
+    }
+
+    const markLoaded = () => {
+      placeholder.classList.remove('is-image-error')
+      placeholder.classList.add('is-image-loaded')
+    }
+    const markError = () => {
+      placeholder.classList.remove('is-image-loaded')
+      placeholder.classList.add('is-image-error')
+    }
+
+    if (img.complete) {
+      if (img.naturalWidth > 0) {
+        markLoaded()
+      } else {
+        markError()
+      }
+      return
+    }
+
+    img.addEventListener('load', markLoaded, { once: true })
+    img.addEventListener('error', markError, { once: true })
+  }
+
+  function initImages() {
     const imageLinks = document.querySelectorAll('.image-list-container a[data-pswp-width]')
     imageLinks.forEach((link) => {
       const img = link.querySelector('img')
@@ -34,17 +62,23 @@ import 'photoswipe/style.css'
         link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
         link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
       } else if (img) {
-        img.onload = () => {
-          link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
-          link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
-        }
+        img.addEventListener(
+          'load',
+          () => {
+            link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
+            link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
+          },
+          { once: true },
+        )
       }
     })
+
+    document.querySelectorAll<HTMLImageElement>('.image-loading-placeholder img').forEach(markImageLoadingState)
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImageListImages)
+    document.addEventListener('DOMContentLoaded', initImages)
   } else {
-    initImageListImages()
+    initImages()
   }
 </script>

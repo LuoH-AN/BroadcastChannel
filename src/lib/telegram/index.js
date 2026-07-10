@@ -197,8 +197,8 @@ function getImages($, item, { staticProxy, index, title }) {
     const imageUrl = staticProxy + url
     const { width, height } = inferImageDimensions($, photo)
     return `
-      <a href="${imageUrl}" data-pswp-width="${width}" data-pswp-height="${height}" data-pswp-type="image" class="image-preview-wrap">
-        <img src="${imageUrl}" alt="${title}" loading="${index > 15 ? 'eager' : 'lazy'}" />
+      <a href="${imageUrl}" data-pswp-width="${width}" data-pswp-height="${height}" data-pswp-type="image" class="image-preview-wrap image-loading-placeholder" style="aspect-ratio: ${width} / ${height};">
+        <img src="${imageUrl}" alt="${title}" width="${width}" height="${height}" loading="${index > 15 ? 'eager' : 'lazy'}" />
       </a>
     `
   })?.get()
@@ -366,6 +366,8 @@ function getLinkPreview($, item, { staticProxy, index }) {
   const image = $(item).find('.link_preview_image')
   const src = image?.attr('style')?.match(/url\(["'](.*?)["']/i)?.[1]
   const imageSrc = src ? staticProxy + src : ''
+  if (imageSrc)
+    link?.addClass('image-loading-placeholder')
   image?.replaceWith(`<img class="link_preview_image" alt="${title}" src="${imageSrc}" loading="${index > 15 ? 'eager' : 'lazy'}" />`)
   return $.html(link)
 }

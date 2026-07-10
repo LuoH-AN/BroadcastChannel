@@ -13,6 +13,62 @@
     }
   }
 
+  .image-preview-wrap {
+    display: block;
+    width: calc(100% - var(--box-margin));
+    border-radius: var(--media-border-radius);
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      object-fit: cover;
+    }
+  }
+
+  .image-loading-placeholder {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--code-background-color);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.72) 45%,
+        rgba(255, 255, 255, 0.72) 55%,
+        transparent 75%
+      );
+      transform: translateX(-100%);
+      animation: image-loading-shimmer 1.4s ease-in-out infinite;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    img {
+      position: relative;
+      z-index: 1;
+      background: var(--cell-background-color);
+    }
+
+    &.is-image-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    &.is-image-error::before {
+      animation: none;
+      background: var(--border-color);
+    }
+  }
+
   img {
     width: calc(100% - var(--box-margin));
   }
@@ -78,11 +134,16 @@
   .tgme_widget_message_link_preview:has(.link_preview_image) {
     display: flex;
     position: relative;
+    width: calc(100% - var(--box-margin));
+    aspect-ratio: 1200 / 630;
     border: none;
     padding: 0;
-    background: transparent;
+    background: var(--code-background-color);
 
     .link_preview_image {
+      width: 100%;
+      height: 100%;
+      max-width: none;
       aspect-ratio: 1200 / 630;
       object-fit: cover;
     }
@@ -103,6 +164,7 @@
       max-width: calc(100% - 28px);
       white-space: nowrap;
       overflow: hidden;
+      z-index: 2;
     }
 
     .link_preview_title,
@@ -278,6 +340,19 @@
       background: unset;
       color: unset;
     }
+  }
+}
+
+@keyframes image-loading-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content .image-loading-placeholder::before {
+    animation: none;
+    background: rgba(255, 255, 255, 0.35);
   }
 }
 
