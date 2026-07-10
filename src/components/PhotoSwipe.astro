@@ -3,6 +3,7 @@ import 'photoswipe/style.css'
 ---
 
 <script>
+  import imagesLoaded from 'imagesloaded'
   import PhotoSwipeLightbox from 'photoswipe/lightbox'
 
   const lightbox = new PhotoSwipeLightbox({
@@ -26,54 +27,36 @@ import 'photoswipe/style.css'
 
   lightbox.init()
 
-  function markImageLoadingState(img: HTMLImageElement) {
+  function updatePhotoSwipeDimensions(img: HTMLImageElement) {
+    const link = img.closest('a[data-pswp-width][data-pswp-height]')
+    if (!link) {
+      return
+    }
+
+    link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
+    link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
+  }
+
+  function observeImage(img: HTMLImageElement) {
     const placeholder = img.closest('.image-loading-placeholder')
     if (!placeholder) {
       return
     }
 
-    const markLoaded = () => {
+    const tracker = imagesLoaded(img)
+    tracker.on('done', () => {
       placeholder.classList.remove('is-image-error')
       placeholder.classList.add('is-image-loaded')
-    }
-    const markError = () => {
+      updatePhotoSwipeDimensions(img)
+    })
+    tracker.on('fail', () => {
       placeholder.classList.remove('is-image-loaded')
       placeholder.classList.add('is-image-error')
-    }
-
-    if (img.complete) {
-      if (img.naturalWidth > 0) {
-        markLoaded()
-      } else {
-        markError()
-      }
-      return
-    }
-
-    img.addEventListener('load', markLoaded, { once: true })
-    img.addEventListener('error', markError, { once: true })
+    })
   }
 
   function initImages() {
-    const imageLinks = document.querySelectorAll('.image-list-container a[data-pswp-width]')
-    imageLinks.forEach((link) => {
-      const img = link.querySelector('img')
-      if (img && img.complete) {
-        link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
-        link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
-      } else if (img) {
-        img.addEventListener(
-          'load',
-          () => {
-            link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
-            link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
-          },
-          { once: true },
-        )
-      }
-    })
-
-    document.querySelectorAll<HTMLImageElement>('.image-loading-placeholder img').forEach(markImageLoadingState)
+    document.querySelectorAll<HTMLImageElement>('.image-loading-placeholder img').forEach(observeImage)
   }
 
   if (document.readyState === 'loading') {
