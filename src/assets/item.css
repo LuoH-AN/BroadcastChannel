@@ -2,20 +2,27 @@
   word-break: break-word;
 
   .image-list-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: masonry;
+    --image-grid-gutter: 12px;
+    --image-grid-half-gutter: 6px;
 
-    &.image-list-odd {
-      :first-child {
-        grid-column: 1 / 3;
-      }
+    width: calc(100% - var(--box-margin));
+
+    .image-grid-sizer,
+    .image-preview-wrap {
+      width: calc(50% - var(--image-grid-half-gutter));
+    }
+
+    .image-preview-wrap {
+      margin-bottom: var(--image-grid-gutter);
+    }
+
+    &.image-list-odd .image-preview-wrap:first-of-type {
+      width: 100%;
     }
   }
 
   .image-preview-wrap {
     display: block;
-    width: calc(100% - var(--box-margin));
     border-radius: var(--media-border-radius);
 
     img {

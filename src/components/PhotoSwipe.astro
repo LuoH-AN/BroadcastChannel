@@ -4,6 +4,7 @@ import 'photoswipe/style.css'
 
 <script>
   import imagesLoaded from 'imagesloaded'
+  import Masonry from 'masonry-layout'
   import PhotoSwipeLightbox from 'photoswipe/lightbox'
 
   const lightbox = new PhotoSwipeLightbox({
@@ -55,8 +56,24 @@ import 'photoswipe/style.css'
     })
   }
 
+  function initMasonryGallery(grid: HTMLElement) {
+    const gutter = Number.parseFloat(getComputedStyle(grid).getPropertyValue('--image-grid-gutter')) || 12
+    const masonry = new Masonry(grid, {
+      itemSelector: '.image-preview-wrap',
+      columnWidth: '.image-grid-sizer',
+      gutter,
+      percentPosition: true,
+      horizontalOrder: true,
+      transitionDuration: 0,
+    })
+    const tracker = imagesLoaded(grid)
+    tracker.on('progress', () => masonry.layout?.())
+    tracker.on('always', () => masonry.layout?.())
+  }
+
   function initImages() {
     document.querySelectorAll<HTMLImageElement>('.image-loading-placeholder img').forEach(observeImage)
+    document.querySelectorAll<HTMLElement>('.image-list-container').forEach(initMasonryGallery)
   }
 
   if (document.readyState === 'loading') {

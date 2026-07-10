@@ -202,7 +202,7 @@ function getImages($, item, { staticProxy, index, title }) {
       </a>
     `
   })?.get()
-  return images.length ? `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}">${images?.join('')}</div>` : ''
+  return images.length ? `<div class="image-list-container ${images.length % 2 === 0 ? 'image-list-even' : 'image-list-odd'}"><div class="image-grid-sizer"></div>${images?.join('')}</div>` : ''
 }
 
 function getVideo($, item, { staticProxy, index }) {
