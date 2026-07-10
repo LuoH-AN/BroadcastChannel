@@ -51,11 +51,9 @@ English | [简体中文](./README.zh-cn.md)
 
 ### Platform
 
-1. [Cloudflare](https://broadcast-channel.pages.dev/)
-2. [Netlify](https://broadcast-channel.netlify.app/)
-3. [Vercel](https://broadcast-channel.vercel.app/)
+1. [Vercel](https://broadcast-channel.vercel.app/)
 
-BroadcastChannel supports deployment on serverless platforms like Cloudflare, Netlify, Vercel that support Node.js SSR, or on a VPS.
+BroadcastChannel supports Vercel SSR deployments exclusively.
 For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en/guides/deploy/).
 
 ## 🧱 Tech Stack
@@ -66,15 +64,10 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 
 ## 🏗️ Deployment
 
-### Docker
-
-1. `docker pull ghcr.io/miantiao-me/broadcastchannel:main`
-2. `docker run -d --name broadcastchannel -p 4321:4321 -e CHANNEL=miantiao_me ghcr.io/miantiao-me/broadcastchannel:main`
-
-### Serverless
+### Vercel
 
 1. [Fork](https://github.com/miantiao-me/BroadcastChannel/fork) this project to your GitHub
-2. Create a project on Cloudflare/Netlify/Vercel
+2. Create a project on Vercel
 3. Select the `BroadcastChannel` project and the `Astro` framework
 4. Configure the environment variable `CHANNEL` with your channel name. This is the minimal configuration, for more configurations see the options below
 5. Save and deploy

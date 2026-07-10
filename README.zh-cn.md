@@ -51,11 +51,9 @@
 
 ### 平台
 
-1. [Cloudflare](https://broadcast-channel.pages.dev/)
-2. [Netlify](https://broadcast-channel.netlify.app/)
-3. [Vercel](https://broadcast-channel.vercel.app/)
+1. [Vercel](https://broadcast-channel.vercel.app/)
 
-广播频道支持部署在 Cloudflare、Netlify、Vercel 等支持 Node.js SSR 的无服务器平台或者 VPS。
+广播频道仅支持部署到 Vercel SSR。
 具体教程见[部署你的 Astro 站点](https://docs.astro.build/zh-cn/guides/deploy/)。
 
 ## 🧱 技术栈
@@ -66,15 +64,10 @@
 
 ## 🏗️ 部署
 
-### Docker
-
-1. `docker pull ghcr.io/miantiao-me/broadcastchannel:main`
-2. `docker run -d --name broadcastchannel -p 4321:4321 -e CHANNEL=miantiao_me ghcr.io/miantiao-me/broadcastchannel:main`
-
-### Serverless
+### Vercel
 
 1. [Fork](https://github.com/miantiao-me/BroadcastChannel/fork) 此项目到你 GitHub
-2. 在 Cloudflare/Netlify/Vercel 创建项目
+2. 在 Vercel 创建项目
 3. 选择 `BroadcastChannel` 项目和 `Astro` 框架
 4. 配置环境变量 `CHANNEL` 为你的频道名称。此为最小化配置，更多配置见下面的配置项
 5. 保存并部署

@@ -1,7 +1,7 @@
 // Resolve the real public origin for the current request.
 //
-// On serverless hosts (Vercel / Netlify / Cloudflare) the request is forwarded
-// internally before reaching the app, so Astro.url and request.url report
+// On Vercel the request can be forwarded internally before reaching the app,
+// so Astro.url and request.url may report
 // `https://localhost`. The actual public host/proto only survive in forwarded
 // request headers. We therefore prefer, in order:
 //   1. the explicitly configured `SITE` (most reliable across adapters)

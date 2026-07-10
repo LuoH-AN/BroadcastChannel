@@ -2,7 +2,7 @@
 
 ## Project Structure & Modules
 
-The codebase is built on Astro 4. Routes live in `src/pages`, shared UI in `src/components`, layouts in `src/layouts`, and Telegram/RSS logic in `src/lib`. Styles and static assets sit under `src/styles` and `src/assets`. Everything placed in `public/` is served as-is by Astro. Helper utilities and automation scripts belong to `api/` and `scripts/`. Build artifacts are emitted to `dist/`; always clean up previous outputs before deploying to avoid stale files.
+The codebase is built on Astro 6 and targets Vercel SSR exclusively. Routes live in `src/pages`, shared UI in `src/components`, layouts in `src/layouts`, and Telegram/RSS logic in `src/lib`. Styles and static assets sit under `src/styles` and `src/assets`. Everything placed in `public/` is served as-is by Astro. Vercel helpers live in `api/`, while automation scripts belong to `scripts/`. Build artifacts are emitted to `dist/`; always clean up previous outputs before deploying to avoid stale files.
 
 ## Build, Test & Dev Commands
 
@@ -22,4 +22,4 @@ Follow Conventional Commits (`feat:`, `fix:`, `refactor:`, etc.) and explain the
 
 ## Security & Config Notes
 
-Deployments depend on `.env` settings such as `CHANNEL`, `LOCALE`, Sentry credentials, and social account URLs. Never commit real tokens—use `.env.example` or platform variables (Vercel/Cloudflare/etc.). To try different Telegram proxies, copy `.env` to `.env.local`; Astro will load it during `astro dev`. Cloudflare/Netlify/Vercel Node adapters live in `astro.config.mjs`, so confirm the target platform supports SSR before changing them.
+Deployments depend on `.env` settings such as `CHANNEL`, `LOCALE`, Sentry credentials, and social account URLs. Never commit real tokens—use `.env.example` or Vercel project variables. To try different Telegram proxies, copy `.env` to `.env.local`; Astro will load it during `astro dev`. The Vercel adapter is configured directly in `astro.config.mjs`; do not add additional server adapters without an explicit project decision.

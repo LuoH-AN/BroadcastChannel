@@ -34,11 +34,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.0.0",
-    "@astrojs/cloudflare": "^13.7.0",
-    "@astrojs/netlify": "^7.0.13",
-    "@astrojs/node": "^10.1.4",
     "@astrojs/vercel": "^10.0.8",
-    "@edgeone/astro": "^1.1.2",
     "@types/prismjs": "^1.26.6",
     "@types/sanitize-html": "^2.16.0",
     "astro": "^6.4.6",
@@ -54,7 +50,6 @@
     "postcss-nesting": "^13.0.2",
     "prettier-plugin-astro": "^0.14.1",
     "simple-git-hooks": "^2.13.1",
-    "std-env": "^4.1.0",
     "typescript": "^5.9.3"
   },
   "simple-git-hooks": {
