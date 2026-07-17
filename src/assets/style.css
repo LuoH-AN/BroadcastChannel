@@ -127,23 +127,24 @@ a.item-link:hover {
 }
 
 #breadcrumb {
-  padding: 10px 0px 10px 0px;
-  margin-bottom: 20px;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 10px;
   font-weight: 600;
   display: flex;
   align-items: center;
 }
 
 .breadcrumb-avatar {
-  width: 20px;
-  height: 20px;
-  border: 0.5px solid var(--border-color);
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
 }
 
 .breadcrumb-title {
   flex: 1;
-  font-size: 14px;
+  font-size: 20px;
   margin-left: 10px;
+  padding-right: 10px;
 }
 
 hr {
