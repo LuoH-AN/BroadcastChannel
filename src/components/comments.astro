@@ -3,9 +3,326 @@ const { envId } = Astro.props as { envId: string }
 ---
 
 <div class="comments">
+  <div class="comments-loading" id="comments-loading">
+    <span class="comments-spinner"></span>
+    <span class="comments-loading-text">Comments are loading…</span>
+  </div>
   <div id="tcomment"></div>
   <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js"></script>
   <script is:inline define:vars={{ envId }}>
-    twikoo.init({ envId, el: '#tcomment' })
+    const commentsRoot = document.querySelector('.comments')
+    const loadingEl = document.getElementById('comments-loading')
+    let done = false
+    function hideLoading() {
+      if (done || !loadingEl) {
+        return
+      }
+      done = true
+      loadingEl.classList.add('is-comments-loaded')
+      setTimeout(() => loadingEl.remove(), 300)
+    }
+    // Twikoo renames its mount node (id becomes "twikoo"), so observe the
+    // stable .comments wrapper and look for Twikoo's actual injected markup.
+    if (commentsRoot) {
+      new MutationObserver((_, obs) => {
+        if (commentsRoot.querySelector('.tk-comments')) {
+          hideLoading()
+          obs.disconnect()
+        }
+      }).observe(commentsRoot, { childList: true, subtree: true })
+    }
+    // Hard cap so the loader never lingers forever on a slow / failed load.
+    setTimeout(hideLoading, 8000)
+    try {
+      const result = window.twikoo && twikoo.init({ envId, el: '#tcomment' })
+      if (result && typeof result.then === 'function') {
+        result.then(hideLoading, hideLoading)
+      }
+    } catch {
+      hideLoading()
+    }
   </script>
 </div>
+
+<style>
+  .comments-loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 4px;
+    color: var(--secondary-color);
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .comments-loading.is-comments-loaded {
+    opacity: 0;
+  }
+
+  .comments-spinner {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--highlight-color);
+    border-radius: 50%;
+    animation: comments-spinner 0.75s linear infinite;
+  }
+
+  @keyframes comments-spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .comments-spinner {
+      animation: none;
+      border-top-color: var(--border-color);
+      opacity: 0.5;
+    }
+  }
+</style>
+
+<!-- Twikoo injects Element UI markup at runtime, so these overrides must be global.
+     Styled flat & plain after 阮一峰的网络日志 — no cards, no white blocks; everything
+     sits directly on the page background, separated only by hairline rules. -->
+<style is:global>
+  .tk-comments {
+    margin-top: 24px;
+    font-family: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
+    color: var(--foreground-color);
+  }
+
+  /* ---- Submit form: flat, no card, no background ---- */
+  .tk-comments .tk-submit {
+    background: none;
+    border: none;
+    padding: 4px 0 0;
+    margin-bottom: 8px;
+  }
+
+  .tk-comments .tk-avatar-img {
+    color: var(--secondary-color);
+  }
+
+  /* ---- Nick / email / website inputs: plain rectangles ---- */
+  .tk-comments .tk-meta-input .el-input {
+    margin-bottom: 8px;
+  }
+
+  .tk-comments .tk-meta-input .el-input-group__prepend {
+    background: none;
+    border-color: var(--border-color);
+    color: var(--secondary-color);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .tk-comments .tk-meta-input .el-input__inner {
+    font-family: inherit;
+    background: none;
+    border-color: var(--border-color);
+    color: var(--foreground-color);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .tk-comments .tk-meta-input .el-input__inner:focus {
+    border-color: var(--highlight-color);
+  }
+
+  /* ---- Comment textarea: plain rectangle ---- */
+  .tk-comments .tk-input .el-textarea__inner {
+    font-family: inherit;
+    background: none;
+    border-color: var(--border-color);
+    border-radius: 4px;
+    color: var(--foreground-color);
+  }
+
+  .tk-comments .tk-input .el-textarea__inner:focus {
+    border-color: var(--highlight-color);
+  }
+
+  .tk-comments .tk-input__count {
+    color: var(--secondary-color);
+  }
+
+  /* ---- Action icons (emoji / image / markdown) ---- */
+  .tk-comments .tk-submit-action-icon {
+    color: var(--secondary-color);
+    transition: color 0.15s ease-in-out;
+  }
+
+  .tk-comments .tk-submit-action-icon:hover {
+    color: var(--highlight-color);
+  }
+
+  .tk-comments .tk-error-message {
+    color: var(--highlight-color);
+  }
+
+  /* ---- Buttons: minimal, flat (no fills) ---- */
+  .tk-comments .el-button {
+    font-family: inherit;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .tk-comments .el-button--default {
+    background: none;
+    border-color: var(--border-color);
+    color: var(--secondary-color);
+  }
+
+  .tk-comments .el-button--default:hover,
+  .tk-comments .el-button--default:focus {
+    color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    background: none;
+  }
+
+  .tk-comments .el-button--primary {
+    background: none;
+    border-color: var(--highlight-color);
+    color: var(--highlight-color);
+  }
+
+  .tk-comments .el-button--primary:hover,
+  .tk-comments .el-button--primary:focus {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    color: #fff;
+  }
+
+  .tk-comments .el-button--primary.is-disabled,
+  .tk-comments .el-button--primary.is-disabled:hover,
+  .tk-comments .el-button--primary.is-disabled:focus {
+    background: none;
+    border-color: var(--border-color);
+    color: var(--secondary-color);
+    cursor: not-allowed;
+  }
+
+  /* ---- Comments list: flat, separated only by hairlines ---- */
+  .tk-comments .tk-comments-container {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .tk-comments .tk-comments-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .tk-comments .tk-comments-count {
+    color: var(--secondary-color);
+    font-size: 14px;
+  }
+
+  .tk-comments .tk-comments-actions .tk-icon {
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: color 0.15s ease-in-out;
+  }
+
+  .tk-comments .tk-comments-actions .tk-icon:hover {
+    color: var(--highlight-color);
+  }
+
+  .tk-comments .tk-comments-no {
+    color: var(--secondary-color);
+    font-size: 14px;
+    text-align: center;
+    padding: 28px 0;
+  }
+
+  /* ---- Individual comments ---- */
+  .tk-comments .tk-comment {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .tk-comments .tk-comment:last-child {
+    border-bottom: none;
+  }
+
+  .tk-comments .tk-nick,
+  .tk-comments .tk-nick a {
+    color: var(--foreground-color);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .tk-comments .tk-nick a:hover {
+    color: var(--highlight-color);
+  }
+
+  .tk-comments .tk-tag {
+    color: var(--highlight-color);
+    border-color: var(--highlight-color);
+  }
+
+  .tk-comments .tk-date {
+    color: var(--secondary-color);
+    font-size: 12px;
+  }
+
+  .tk-comments .tk-content {
+    color: var(--foreground-color);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 6px 0;
+  }
+
+  .tk-comments .tk-content a {
+    color: var(--link-color);
+  }
+
+  .tk-comments .tk-action {
+    color: var(--secondary-color);
+    font-size: 12px;
+    transition: color 0.15s ease-in-out;
+  }
+
+  .tk-comments .tk-action:hover {
+    color: var(--highlight-color);
+  }
+
+  .tk-comments .tk-replies .tk-comment {
+    padding: 12px 0;
+    border-bottom: none;
+  }
+
+  /* ---- Element loading spinner (fetching comments) ---- */
+  .tk-comments .el-loading-spinner .path {
+    stroke: var(--highlight-color);
+  }
+
+  /* ---- Footer & admin ---- */
+  .tk-comments .tk-footer {
+    margin-top: 8px;
+    color: var(--secondary-color);
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  .tk-comments .tk-footer a {
+    color: var(--link-color);
+    text-decoration: none;
+  }
+
+  .tk-comments .tk-admin .el-button,
+  .tk-comments .tk-admin .el-input__inner {
+    font-family: inherit;
+  }
+
+  .tk-comments .tk-admin-close,
+  .tk-comments .tk-login-title {
+    color: var(--secondary-color);
+  }
+</style>
