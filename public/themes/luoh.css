@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.cn/css2?family=Cormorant+Garamond:wght@500;600;700&family=LXGW+WenKai&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
 /* LuoH custom theme for BroadcastChannel Base.
    Ported from the v0.1.8 fork: 米白纸面 #f4f1ec, orangered accent, Bitter +
    Noto Serif SC typography, soft rounded panels. Load via HEADER_INJECT
@@ -29,6 +31,53 @@
 
 html {
   color-scheme: light;
+}
+
+/* ===== Typography: role-based font assignment =====
+   Headings / UI / meta each get their own typeface, while CJK always
+   falls back to a matching Chinese webfont (loaded via @import above). */
+
+/* Headings: Cormorant Garamond (Latin) + LXGW WenKai (CJK) */
+.site-header > .title,
+.site-header > .title > h1,
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  font-family: 'Cormorant Garamond', 'LXGW WenKai', serif;
+}
+
+/* UI / navigation: Inter (Latin) + Noto Sans SC (CJK) */
+.site-navigation a,
+.site-navigation a:visited,
+.search-button,
+.search-submit,
+.search-input {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+
+/* Meta / timestamps / footer: IBM Plex Mono digits + Noto Sans SC CJK */
+.post-meta,
+.post-meta p,
+.post-meta a,
+.post-meta a:visited,
+.tg-message-meta,
+.tg-message-meta a,
+.post-entry-author,
+.site-footer,
+.site-footer a,
+time {
+  font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
+}
+
+/* Code: IBM Plex Mono with CJK fallback for inline comments */
+.content code,
+.content pre,
+code,
+pre {
+  font-family: 'IBM Plex Mono', 'Noto Sans SC', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 /* ===== Header: keep the title vertically centered against the avatar ===== */
