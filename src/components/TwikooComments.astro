@@ -5,52 +5,51 @@ const { isDetail } = Astro.props as { isDetail?: boolean }
 
 const COMMENTS = getBooleanEnv(import.meta.env, 'COMMENTS')
 const TWIKOO_ENV_ID = getEnv(import.meta.env, 'TWIKOO_ENV_ID')
+const enabled = COMMENTS && TWIKOO_ENV_ID && isDetail
 ---
 
-{
-  COMMENTS && TWIKOO_ENV_ID && isDetail && (
-    <section class="post-comments" aria-label="Comments">
-      <div class="comments">
-        <div class="comments-loading" id="comments-loading">
-          <span class="comments-spinner" />
-          <span class="comments-loading-text">Comments are loading…</span>
-        </div>
-        <div id="tcomment" />
-        <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js" />
-        <script is:inline define:vars={{ envId: TWIKOO_ENV_ID }}>
-          const commentsRoot = document.querySelector('.comments')
-          const loadingEl = document.getElementById('comments-loading')
-          let done = false
-          function hideLoading() {
-            if (done || !loadingEl) {
-              return
-            }
-            done = true
-            loadingEl.classList.add('is-comments-loaded')
-            setTimeout(() => loadingEl.remove(), 300)
-          }
-          // Twikoo renames its mount node (id becomes "twikoo"), so observe the
-          // stable .comments wrapper and look for Twikoo's actual injected markup.
-          if (commentsRoot) {
-            new MutationObserver((_, obs) => {
-              if (commentsRoot.querySelector('.tk-comments')) {
-                hideLoading()
-                obs.disconnect()
-              }
-            }).observe(commentsRoot, { childList: true, subtree: true })
-          }
-          // Hard cap so the loader never lingers forever on a slow / failed load.
-          setTimeout(hideLoading, 8000)
-          try {
-            const result = window.twikoo && twikoo.init({ envId, el: '#tcomment' })
-            if (result && typeof result.then === 'function') {
-              result.then(hideLoading, hideLoading)
-            }
-          } catch {
-            hideLoading()
-          }
-        </script>
+{enabled && (
+  <section class="post-comments" aria-label="Comments">
+    <div class="comments">
+      <div class="comments-loading" id="comments-loading">
+        <span class="comments-spinner" />
+        <span class="comments-loading-text">Comments are loading…</span>
       </div>
-    </section>
-  )
-}
+      <div id="tcomment" />
+      <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js" />
+      <script is:inline define:vars={{ envId: TWIKOO_ENV_ID }}>
+        const commentsRoot = document.querySelector('.comments')
+        const loadingEl = document.getElementById('comments-loading')
+        let done = false
+        function hideLoading() {
+          if (done || !loadingEl) {
+            return
+          }
+          done = true
+          loadingEl.classList.add('is-comments-loaded')
+          setTimeout(() => loadingEl.remove(), 300)
+        }
+        // Twikoo renames its mount node (id becomes "twikoo"), so observe the
+        // stable .comments wrapper and look for Twikoo's actual injected markup.
+        if (commentsRoot) {
+          new MutationObserver((_, obs) => {
+            if (commentsRoot.querySelector('.tk-comments')) {
+              hideLoading()
+              obs.disconnect()
+            }
+          }).observe(commentsRoot, { childList: true, subtree: true })
+        }
+        // Hard cap so the loader never lingers forever on a slow / failed load.
+        setTimeout(hideLoading, 8000)
+        try {
+          const result = window.twikoo && twikoo.init({ envId, el: '#tcomment' })
+          if (result && typeof result.then === 'function') {
+            result.then(hideLoading, hideLoading)
+          }
+        } catch {
+          hideLoading()
+        }
+      </script>
+    </div>
+  </section>
+)}

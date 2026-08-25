@@ -102,9 +102,7 @@ const hasTags = post.tags.length > 0
     commentsEnabled && isDetail && (
       <section class="post-comments" aria-label="Comments">
         {twikooEnvId
-          ? (
-            <TwikooComments isDetail={isDetail} />
-          )
+          ? <TwikooComments isDetail={isDetail} />
           : (
             /* Telegram comments are the only intentional client-side JS exception. */
             <script
