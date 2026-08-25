@@ -62,21 +62,21 @@ html {
   corner-shape: superellipse(1.2);
 }
 
+/* Intro sits on the bare page background, separated from the header row
+   above and the nav band below by hairlines — no card. */
 .channel-description {
-  margin-top: 0.3rem;
-  padding: 0.6rem 1.1rem;
-  border-radius: var(--radius-chip);
-  background: color-mix(in srgb, var(--link-color) 14%, transparent);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
   word-break: break-word;
 }
 
-/* ===== Navigation: pill highlight instead of underline ===== */
+/* ===== Navigation: hairline-separated band (no card) ===== */
 
-/* Hairlines above and below separate the nav band from the header card
-   above and the content below — same trick as aria/terminal themes. */
+/* Three hairlines divide the top into distinct bands — header row /
+   intro / nav. Spacing between grid rows is handled by .site-header gap;
+   padding-block keeps the text clear of the lines. */
 .site-navigation {
-  margin-top: 0.35rem;
-  padding-top: 0.5rem;
+  padding-block: 0.75rem;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -87,15 +87,15 @@ html {
 
 .site-navigation a {
   display: inline-block;
-  padding: 0.25rem 0.85rem;
-  border-radius: var(--radius-chip);
+  padding: 0.25rem 0.2rem;
   text-decoration: none;
 }
 
 .site-navigation a:hover,
 .site-navigation a[aria-current='page'] {
   text-decoration: none;
-  background: color-mix(in srgb, var(--link-color) 14%, transparent);
+  color: var(--link-color);
+  font-weight: 600;
 }
 
 /* ===== Search: toggle icon in the header link row, floating panel ===== */
