@@ -237,7 +237,8 @@ pre {
 }
 
 /* Restore the legacy pill button (v0.1.8 `.page`): rounded capsule with a
-   1px border, instead of the bare 2rem square containing just an arrow. */
+   1px border, text styled to match the footer "Powered by BroadcastChannel".
+   Same muted grey, 0.8em size, and mono/Noto Sans SC type stack. */
 .pagination a.older,
 .pagination a.newer {
   width: auto;
@@ -245,9 +246,10 @@ pre {
   padding: 0.5rem 1.25rem;
   border-radius: var(--radius-chip);
   border: 1px solid var(--border-color);
-  font-size: 0.875rem;
+  font-size: 0.8em;
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--muted-color);
+  font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
 }
 
 .pagination a.older:hover,

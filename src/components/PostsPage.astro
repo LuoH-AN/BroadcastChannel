@@ -49,12 +49,12 @@ const hasNewerPosts = showNewer && afterCursor
       <nav class="pagination" aria-label="Pagination">
         {hasOlderPosts ? (
           <a href={`${SITE_URL}before/${beforeCursor}`} title="Older posts" aria-label="Older posts" class="older">
-            <span aria-hidden="true">←</span> Older
+            Before
           </a>
         ) : null}
         {hasNewerPosts ? (
           <a href={`${SITE_URL}after/${afterCursor}`} title="Newer posts" aria-label="Newer posts" class="newer">
-            Newer <span aria-hidden="true">→</span>
+            After
           </a>
         ) : null}
       </nav>
