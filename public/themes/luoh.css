@@ -31,6 +31,57 @@ html {
   color-scheme: light;
 }
 
+/* ===== Header: keep the title vertically centered against the avatar ===== */
+
+.site-header {
+  align-items: center;
+}
+
+/* The compact breakpoint switches to flex-start; restore vertical centering. */
+@media (max-width: 37.5rem) {
+  .site-header {
+    align-items: center;
+  }
+}
+
+/* ===== Header sections: visually separate identity / links / intro ===== */
+
+.site-header > .title {
+  align-self: center;
+}
+
 .channel-avatar {
   corner-shape: superellipse(1.2);
+}
+
+.channel-description {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-chip);
+  background: var(--code-background-color);
+  word-break: break-word;
+}
+
+/* ===== Bilibili / YouTube embedded video cards (ported link-preview-video) ===== */
+
+.link-preview-video-wrap {
+  margin-top: 1rem;
+  width: calc(100% - var(--box-margin));
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background: #000;
+}
+
+.link-preview-video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Compensate Bilibili player's internal chrome inside a 16/9 frame. */
+.link-preview-video-bilibili .link-preview-video {
+  height: calc(100% + 40px);
+  margin-top: -20px;
 }

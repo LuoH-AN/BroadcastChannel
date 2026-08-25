@@ -1,6 +1,6 @@
 import sanitizeHtml from 'sanitize-html'
 
-const mediaTags = ['img', 'video', 'audio', 'source']
+const mediaTags = ['img', 'video', 'audio', 'source', 'iframe']
 const interactiveTags = ['button', 'input', 'label']
 const telegramTags = ['tg-spoiler']
 const utilityTags = ['mark']
@@ -22,6 +22,7 @@ const contentSanitizeOptions = {
     'a': ['href', 'name', 'target', 'rel', 'title', 'class', 'data-pswp-width', 'data-pswp-height', 'data-pswp-type'],
     'audio': ['src', 'controls', 'preload'],
     'button': ['type', 'class', 'popovertarget', 'popovertargetaction', 'aria-label'],
+    'iframe': ['src', 'title', 'loading', 'scrolling', 'referrerpolicy', 'allow', 'allowfullscreen', 'class', 'frameborder', 'framespacing', 'border'],
     'img': ['src', 'srcset', 'alt', 'title', 'width', 'height', 'loading', 'class'],
     'input': ['type', 'id', 'class', 'aria-label', 'aria-controls'],
     'label': ['for', 'class'],

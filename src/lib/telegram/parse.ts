@@ -4,7 +4,7 @@ import type { ExtractPostOptions, MessageSelection } from './types'
 import { modifyHTMLContent } from './content'
 import { getCustomEmojiImage, normalizeEmoji } from './emoji'
 import { highlightSearchTerm } from './highlight'
-import { getAudio, getForwardedFrom, getImages, getImageStickers, getLinkPreview, getReply, getTgsStickers, getVideo, getVideoStickers } from './media'
+import { getAudio, getForwardedFrom, getImages, getImageStickers, getLinkPreview, getLinkPreviewVideo, getReply, getTgsStickers, getVideo, getVideoStickers } from './media'
 import { renderRawContent } from './renderers/raw'
 import { normalizeUrlAttributes } from './url'
 
@@ -46,6 +46,8 @@ function renderPostContent(
 ): string {
   const { channel, staticProxy, index, id, title } = options
 
+  const linkPreviewVideo = getLinkPreviewVideo($, message)
+
   return [
     getForwardedFrom($, message),
     getReply($, message, { channel }),
@@ -57,7 +59,8 @@ function renderPostContent(
     getTgsStickers($, message, { staticProxy, index }),
     getVideoStickers($, message, { staticProxy, index }),
     ...renderRawContent($, message, { staticProxy }),
-    getLinkPreview($, message, { staticProxy, index }),
+    linkPreviewVideo?.html ?? '',
+    ...linkPreviewVideo ? [] : [getLinkPreview($, message, { staticProxy, index })],
   ]
     .filter(isNonEmptyString)
     .join('')
