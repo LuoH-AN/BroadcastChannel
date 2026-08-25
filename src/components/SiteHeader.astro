@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 import ChannelAvatar from './ChannelAvatar.astro'
+import SearchField from './SearchField.astro'
 import { getBooleanEnv, getEnv } from '../lib/env'
 import { sanitizeContentHtml } from '../lib/sanitize'
 import { buildSocialLinks } from '../lib/social'
@@ -8,6 +9,8 @@ import { buildSocialLinks } from '../lib/social'
 const { SITE_URL, RSS_URL } = Astro.locals
 const { channel } = Astro.props
 
+const GOOGLE_SEARCH_SITE = getEnv(import.meta.env, 'GOOGLE_SEARCH_SITE')
+const searchAction = GOOGLE_SEARCH_SITE ? 'https://www.google.com/search' : `${SITE_URL}search/result`
 const PODCAST = getEnv(import.meta.env, 'PODCAST')
 const TWITTER = getEnv(import.meta.env, 'TWITTER')
 const GITHUB = getEnv(import.meta.env, 'GITHUB')
@@ -48,6 +51,23 @@ const socialLinks = buildSocialLinks({
     <h1>{channel?.title}</h1>
   </a>
   <div class="social-links" role="group" aria-label="Channel links">
+    <div class="search">
+      <input type="checkbox" id="search-toggle" class="search-toggle" />
+      <label for="search-toggle" class="search-button" title="Search" aria-label="Search">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path
+            d="m14.2 14.2 3.3 3.3M8.8 15.1a6.3 6.3 0 1 1 0-12.6 6.3 6.3 0 0 1 0 12.6Z"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+          ></path>
+        </svg>
+      </label>
+      <form action={searchAction} method="get" role="search" class="search-form">
+        <SearchField id="header-search-query" googleSearchSite={GOOGLE_SEARCH_SITE} />
+      </form>
+    </div>
     {
       socialLinks.map((item) => (
         <a href={item.href} title={item.title} target="_blank" rel={item.rel} type={item.type} aria-label={item.label}>

@@ -88,55 +88,85 @@ html {
   background: color-mix(in srgb, var(--link-color) 14%, transparent);
 }
 
-/* ===== Search: icon button inline with the header links ===== */
+/* ===== Search: toggle icon in the header link row, floating panel ===== */
 
-/* The desktop input box is dropped; the expandable icon (mobile-search) is
-   always shown instead, joined to the header link row. */
+/* The desktop input box is dropped; a checkbox-toggled search icon sits inside
+   the header .social-links row (fork behavior). The panel floats below the
+   icon row with a fade/slide transition instead of pushing content down. */
 .desktop-search {
   display: none;
 }
 
 .mobile-search {
-  display: block;
-}
-
-.mobile-search summary {
-  display: flex;
-  width: 2.2rem;
-  height: 2.2rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-chip);
-  cursor: pointer;
-  list-style: none;
-}
-
-.mobile-search summary::-webkit-details-marker {
   display: none;
 }
 
-.mobile-search summary svg {
+.social-links .search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.social-links .search-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.social-links .search-button {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-chip);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.social-links .search-button:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.social-links .search-button svg {
   width: 1rem;
   height: 1rem;
 }
 
-.site-navigation {
-  gap: 0.75rem;
+.social-links .search-toggle:focus-visible ~ .search-button {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
 
-/* The expandable search panel drops below the nav row when opened. */
-.mobile-search[open] {
-  order: 99;
-  width: 100%;
+.social-links .search-form {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  width: 14rem;
+  max-width: 70vw;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s;
 }
 
-.mobile-search[open] form {
-  width: 100%;
-  margin-top: 0.5rem;
+.social-links .search-toggle:checked ~ .search-form {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-.mobile-search .search-input {
-  font-size: 16px;
+/* The floating panel borrows the input-box chrome from the base field. */
+.social-links .search-form .search-field {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-panel);
+  background: var(--surface-color);
 }
 
 /* ===== Bilibili / YouTube embedded video cards (ported link-preview-video) ===== */
