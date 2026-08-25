@@ -26,33 +26,38 @@
   :root {
     --width: 800px;
     --body-padding-inline: 20px;
-    --font-main: Verdana, sans-serif;
-    --font-secondary: Verdana, sans-serif;
+    --font-main: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
+    --font-secondary: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
     --font-scale: 1em;
-    --background-color: #fff;
-    --heading-color: #222;
-    --text-color: #444;
-    --link-color: #3273dc;
+    --background-color: #f4f1ec;
+    --heading-color: #000;
+    --text-color: #000;
+    --link-color: orangered;
     --visited-color: #8b6fcb;
-    --code-background-color: #f2f2f2;
+    --code-background-color: #f9f9f9;
     --code-color: #222;
     --blockquote-color: #222;
 
     --accent-color: var(--link-color);
-    --border-color: color-mix(in srgb, var(--text-color) 22%, transparent);
+    --border-color: rgba(0, 0, 0, 0.08);
     --link-hover-color: color-mix(in srgb, var(--link-color) 72%, var(--heading-color));
     --muted-color: color-mix(in srgb, var(--text-color) 74%, transparent);
-    --surface-color: var(--background-color);
+    --surface-color: #fff;
     --code-muted-color: color-mix(in srgb, var(--code-color) 72%, var(--code-background-color));
     --code-accent-color: color-mix(in srgb, var(--link-color) 75%, var(--code-color));
     --code-alt-accent-color: color-mix(in srgb, var(--visited-color) 65%, var(--code-color));
     --reaction-paid-color: #6b5000;
     --reaction-paid-border-color: color-mix(in srgb, var(--reaction-paid-color) 38%, transparent);
     --reaction-paid-background-color: color-mix(in srgb, #d5a000 14%, var(--background-color));
-    --box-margin: 10px;
+    --box-margin: 12px;
     --back-to-top-offset: 1.25rem;
-    --icon-hover-filter: grayscale(1) opacity(0.8);
-    --icon-secondary-filter: grayscale(1) opacity(0.5);
+    --icon-hover-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(23deg) brightness(90%) contrast(90%);
+    --icon-secondary-filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(129deg) brightness(86%) contrast(88%);
+
+    /* Custom radii & media polish (ported from the v0.1.8 fork) */
+    --radius-panel: 12px;
+    --radius-chip: 16px;
+    --radius-media: 16px;
   }
 
   @media (prefers-color-scheme: dark) {

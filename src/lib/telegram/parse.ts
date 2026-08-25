@@ -2,6 +2,7 @@ import type { AnyNode, CheerioAPI } from 'cheerio'
 import type { Post, Reaction } from '../../types'
 import type { ExtractPostOptions, MessageSelection } from './types'
 import { modifyHTMLContent } from './content'
+import { highlightSearchTerm } from './highlight'
 import { getCustomEmojiImage, normalizeEmoji } from './emoji'
 import { getAudio, getForwardedFrom, getImages, getImageStickers, getLinkPreview, getReply, getTgsStickers, getVideo, getVideoStickers } from './media'
 import { renderRawContent } from './renderers/raw'
@@ -109,7 +110,7 @@ function getReactions($: CheerioAPI, message: MessageSelection, telegramHost: st
 }
 
 export async function extractPost($: CheerioAPI, item: AnyNode | null, options: ExtractPostOptions): Promise<Post> {
-  const { channel, telegramHost, staticProxy, index = 0, reactionsEnabled } = options
+  const { channel, telegramHost, staticProxy, index = 0, reactionsEnabled, q = '' } = options
   const message = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   normalizeUrlAttributes($, message)
   const hasReplyText = message.find('.js-message_reply_text').length > 0
@@ -122,7 +123,10 @@ export async function extractPost($: CheerioAPI, item: AnyNode | null, options: 
   const title = contentText.match(TITLE_PREVIEW_REGEX)?.[0] ?? contentText
   const id = message.attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '') ?? ''
   const tags = rewriteTagLinksAndCollectTags($, content)
-  const contentHtml = renderPostContent($, message, content, { channel, staticProxy, index, id, title })
+  const contentHtml = highlightSearchTerm(
+    renderPostContent($, message, content, { channel, staticProxy, index, id, title }),
+    q,
+  )
 
   return {
     id,

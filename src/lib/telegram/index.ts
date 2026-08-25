@@ -21,7 +21,7 @@ export async function getChannelInfo(params: GetChannelInfoParams = {}): Promise
   const postNodes = $('.tgme_channel_history .tgme_widget_message_wrap').toArray()
   const avatar = $('.tgme_page_photo_image img').attr('src')
   const posts = (await Promise.all(
-    postNodes.map((item, index) => extractPost($, item, { channel, telegramHost, staticProxy, index, reactionsEnabled })),
+    postNodes.map((item, index) => extractPost($, item, { channel, telegramHost, staticProxy, index, reactionsEnabled, q })),
   ))
     .reverse()
     .filter(isRenderablePost)

@@ -1,0 +1,59 @@
+# Port maintenance: install deps, update the lockfile, run tests and a build.
+# The committed lockfile is updated automatically so Vercel builds stay reproducible.
+name: Port CI (lockfile + test + build)
+
+on:
+  push:
+    branches:
+      - port-v0.3.0
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: port-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies (updates lockfile)
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+        env:
+          CHANNEL: demo
+          STATIC_PROXY: https://i0.wp.com/
+
+      - name: Commit updated lockfile
+        run: |
+          git config user.name "LuoH-AN"
+          git config user.email "enltic@outlook.com"
+          git add pnpm-lock.yaml
+          if git diff --cached --quiet; then
+            echo "Lockfile unchanged."
+          else
+            git commit -m "chore(deps): update pnpm-lock.yaml [skip ci]"
+            git push
+          fi

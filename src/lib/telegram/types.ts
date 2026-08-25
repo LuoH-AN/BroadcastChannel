@@ -25,6 +25,8 @@ export interface ExtractPostOptions {
   staticProxy: string
   index?: number
   reactionsEnabled?: boolean
+  /** Search term used to highlight matches inside post content. */
+  q?: string
 }
 
 export interface LoadedChannelDocument {

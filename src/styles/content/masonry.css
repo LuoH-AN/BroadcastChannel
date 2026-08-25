@@ -92,6 +92,13 @@
   }
 }
 
+mark.search-highlight {
+  background: rgb(255 213 79 / 0.5);
+  color: inherit;
+  padding: 0 0.15em;
+  border-radius: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .content .image-loading-placeholder::before {
     animation: none;
