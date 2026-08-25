@@ -270,11 +270,24 @@ pre {
   padding-bottom: 1.5rem;
 }
 
-/* ===== Bilibili / YouTube embedded video cards (ported link-preview-video) ===== */
+/* ===== Media: full-width, centered (drop legacy -12px offset) ===== */
+
+/* The v0.1.8 --box-margin (12px) width offset is gone in v0.3.0's layout;
+   images and the video card now fill the content column and center. */
+.content img:not(.tg-emoji):not(.sticker):not(.link_preview_image):not(.modal-img) {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.content .image-list-container {
+  width: 100%;
+  margin-inline: auto;
+}
 
 .link-preview-video-wrap {
   margin-top: 1rem;
-  width: calc(100% - var(--box-margin));
+  margin-inline: auto;
+  width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-media);
   overflow: hidden;
