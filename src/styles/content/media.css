@@ -7,12 +7,14 @@
     }
 
     .image-list-container {
-      @apply grid grid-cols-2;
-      grid-template-rows: masonry;
+      /* Masonry layout is driven by the PhotoSwipe component script; sizing
+         rules live in content/masonry.css. Only neutral resets remain here. */
+      display: block;
+      grid-template-rows: none;
 
       &.image-list-odd {
         :first-child {
-          grid-column: 1 / 3;
+          grid-column: auto;
         }
       }
     }

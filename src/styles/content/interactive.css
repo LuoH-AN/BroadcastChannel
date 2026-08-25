@@ -107,6 +107,9 @@
       @apply outline outline-2 outline-offset-4 outline-heading;
     }
 
+    /* PhotoSwipe lightbox anchors (.image-preview-wrap) are styled in
+       content/masonry.css; upstream modal styles below remain for any
+       popover-based previews still emitted by other media renderers. */
     .modal {
       @apply fixed inset-0 z-[1000] hidden box-border h-dvh w-screen overflow-hidden overscroll-contain border-0 bg-black/80 p-5 backdrop-blur-[20px];
     }

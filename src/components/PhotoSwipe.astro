@@ -1,0 +1,84 @@
+---
+import 'photoswipe/style.css'
+---
+
+<script>
+  import imagesLoaded from 'imagesloaded'
+  import Masonry from 'masonry-layout'
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '.post-content .image-list-container',
+    children: 'a[data-pswp-width][data-pswp-height]',
+    pswpModule: () => import('photoswipe'),
+    closeOnVerticalDrag: true,
+    pinchToClose: true,
+    bgClickAction: 'close',
+    imageClickAction: 'close',
+    tapAction: 'close',
+  })
+
+  lightbox.on('open', () => {
+    document.body.style.overflow = 'hidden'
+  })
+
+  lightbox.on('close', () => {
+    document.body.style.overflow = ''
+  })
+
+  lightbox.init()
+
+  function updatePhotoSwipeDimensions(img: HTMLImageElement) {
+    const link = img.closest('a[data-pswp-width][data-pswp-height]')
+    if (!link) {
+      return
+    }
+
+    link.setAttribute('data-pswp-width', String(img.naturalWidth || img.width))
+    link.setAttribute('data-pswp-height', String(img.naturalHeight || img.height))
+  }
+
+  function observeImage(img: HTMLImageElement) {
+    const placeholder = img.closest('.image-loading-placeholder')
+    if (!placeholder) {
+      return
+    }
+
+    const tracker = imagesLoaded(img)
+    tracker.on('done', () => {
+      placeholder.classList.remove('is-image-error')
+      placeholder.classList.add('is-image-loaded')
+      updatePhotoSwipeDimensions(img)
+    })
+    tracker.on('fail', () => {
+      placeholder.classList.remove('is-image-loaded')
+      placeholder.classList.add('is-image-error')
+    })
+  }
+
+  function initMasonryGallery(grid: HTMLElement) {
+    const gutter = Number.parseFloat(getComputedStyle(grid).getPropertyValue('--image-grid-gutter')) || 12
+    const masonry = new Masonry(grid, {
+      itemSelector: '.image-preview-wrap',
+      columnWidth: '.image-grid-sizer',
+      gutter,
+      percentPosition: true,
+      horizontalOrder: true,
+      transitionDuration: 0,
+    })
+    const tracker = imagesLoaded(grid)
+    tracker.on('progress', () => masonry.layout?.())
+    tracker.on('always', () => masonry.layout?.())
+  }
+
+  function initImages() {
+    document.querySelectorAll<HTMLImageElement>('.image-loading-placeholder img').forEach(observeImage)
+    document.querySelectorAll<HTMLElement>('.image-list-container').forEach(initMasonryGallery)
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initImages)
+  } else {
+    initImages()
+  }
+</script>

@@ -17,6 +17,11 @@
     "test:watch": "vitest",
     "postinstall": "test -d .git && simple-git-hooks || true"
   },
+  "dependencies": {
+    "imagesloaded": "^5.0.0",
+    "masonry-layout": "^4.2.2",
+    "photoswipe": "^5.4.4"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^9.1.0",
     "@astrojs/cloudflare": "^14.1.3",

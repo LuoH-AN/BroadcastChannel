@@ -15,6 +15,18 @@ describe('sanitizeContentHtml', () => {
     expect(result).toContain('src="modal.jpg"')
     expect(result).toContain('class="photo modal-img"')
   })
+
+  it('preserves PhotoSwipe anchor attributes for the lightbox', () => {
+    const result = sanitizeContentHtml(`
+      <a href="photo.jpg" data-pswp-width="1200" data-pswp-height="800" data-pswp-type="image" class="image-preview-wrap">
+        <img src="photo.jpg" alt="Photo" width="1200" height="800">
+      </a>
+    `)
+
+    expect(result).toContain('data-pswp-width="1200"')
+    expect(result).toContain('data-pswp-height="800"')
+    expect(result).toContain('data-pswp-type="image"')
+  })
 })
 
 describe('sanitizeFeedHtml', () => {

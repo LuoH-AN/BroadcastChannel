@@ -18,7 +18,7 @@ const contentSanitizeOptions = {
       'style',
       'title',
     ],
-    'a': ['href', 'name', 'target', 'rel', 'title', 'class'],
+    'a': ['href', 'name', 'target', 'rel', 'title', 'class', 'data-pswp-width', 'data-pswp-height', 'data-pswp-type'],
     'audio': ['src', 'controls', 'preload'],
     'button': ['type', 'class', 'popovertarget', 'popovertargetaction', 'aria-label'],
     'img': ['src', 'srcset', 'alt', 'title', 'width', 'height', 'loading', 'class'],
