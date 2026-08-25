@@ -37,10 +37,17 @@ html {
   align-items: center;
 }
 
-/* The compact breakpoint switches to flex-start; restore vertical centering. */
+/* The compact breakpoint stacks social links onto their own row; with a short
+   channel title everything fits on one line: avatar | title | links. */
 @media (max-width: 37.5rem) {
   .site-header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
+  }
+
+  .social-links {
+    grid-column: auto;
+    justify-self: end;
   }
 }
 
