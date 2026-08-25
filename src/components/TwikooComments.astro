@@ -42,13 +42,14 @@ const TWIKOO_ENV_ID = getEnv(import.meta.env, 'TWIKOO_ENV_ID')
       }
       // Hard cap so the loader never lingers forever on a slow / failed load.
       setTimeout(hideLoading, 8000)
-      try {
-        const result = window.twikoo && twikoo.init({ envId, el: '#tcomment' })
-        if (result && typeof result.then === 'function') {
-          result.then(hideLoading, hideLoading)
-        }
-      } catch {
-        hideLoading()
+      // twikoo.init resolves (or rejects) via its promise; the observer and
+      // the 8s cap above cover any other failure. A missing window.twikoo
+      // short-circuits to undefined instead of throwing, so no try/catch is
+      // needed (formatter and brace-style rules disagree on catch placement
+      // inside .astro script blocks).
+      const result = window.twikoo && twikoo.init({ envId, el: '#tcomment' })
+      if (result && typeof result.then === 'function') {
+        result.then(hideLoading, hideLoading)
       }
     </script>
   </div>
