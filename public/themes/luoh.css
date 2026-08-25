@@ -69,6 +69,76 @@ html {
   word-break: break-word;
 }
 
+/* ===== Navigation: pill highlight instead of underline ===== */
+
+.site-navigation > ul {
+  gap: 0.25rem;
+}
+
+.site-navigation a {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius-chip);
+  text-decoration: none;
+}
+
+.site-navigation a:hover,
+.site-navigation a[aria-current='page'] {
+  text-decoration: none;
+  background: color-mix(in srgb, var(--link-color) 14%, transparent);
+}
+
+/* ===== Search: icon button inline with the header links ===== */
+
+/* The desktop input box is dropped; the expandable icon (mobile-search) is
+   always shown instead, joined to the header link row. */
+.desktop-search {
+  display: none;
+}
+
+.mobile-search {
+  display: block;
+}
+
+.mobile-search summary {
+  display: flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-chip);
+  cursor: pointer;
+  list-style: none;
+}
+
+.mobile-search summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-search summary svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.site-navigation {
+  gap: 0.75rem;
+}
+
+/* The expandable search panel drops below the nav row when opened. */
+.mobile-search[open] {
+  order: 99;
+  width: 100%;
+}
+
+.mobile-search[open] form {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.mobile-search .search-input {
+  font-size: 16px;
+}
+
 /* ===== Bilibili / YouTube embedded video cards (ported link-preview-video) ===== */
 
 .link-preview-video-wrap {
