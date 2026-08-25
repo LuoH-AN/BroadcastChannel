@@ -47,8 +47,7 @@ const TWIKOO_ENV_ID = getEnv(import.meta.env, 'TWIKOO_ENV_ID')
         if (result && typeof result.then === 'function') {
           result.then(hideLoading, hideLoading)
         }
-      }
-      catch {
+      } catch {
         hideLoading()
       }
     </script>
