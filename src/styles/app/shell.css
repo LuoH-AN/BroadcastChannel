@@ -64,7 +64,6 @@
     height: 3rem;
     flex: 0 0 auto;
     border-radius: 50%;
-    corner-shape: superellipse(1.2);
     object-fit: cover;
   }
 

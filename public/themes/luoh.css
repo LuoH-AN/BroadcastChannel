@@ -1,0 +1,36 @@
+/* LuoH custom theme for BroadcastChannel Base.
+   Ported from the v0.1.8 fork: 米白纸面 #f4f1ec, orangered accent, Bitter +
+   Noto Serif SC typography, soft rounded panels. Load via HEADER_INJECT
+   together with the Google Fonts (CN mirror) link — see THEMES.md. */
+
+:root {
+  --font-main: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
+  --font-secondary: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
+  --background-color: #f4f1ec;
+  --heading-color: #000;
+  --text-color: #000;
+  --link-color: orangered;
+  --code-background-color: #f9f9f9;
+
+  --accent-color: var(--link-color);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --muted-color: #999;
+  --surface-color: #fff;
+
+  --box-margin: 12px;
+  --icon-hover-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(23deg) brightness(90%) contrast(90%);
+  --icon-secondary-filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(129deg) brightness(86%) contrast(88%);
+
+  --radius-panel: 12px;
+  --radius-chip: 16px;
+  --radius-media: 16px;
+  --shadow-soft: none;
+}
+
+html {
+  color-scheme: light;
+}
+
+.channel-avatar {
+  corner-shape: superellipse(1.2);
+}
