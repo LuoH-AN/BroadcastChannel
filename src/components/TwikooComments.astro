@@ -12,11 +12,11 @@ const enabled = COMMENTS && TWIKOO_ENV_ID && isDetail
   <section class="post-comments" aria-label="Comments">
     <div class="comments">
       <div class="comments-loading" id="comments-loading">
-        <span class="comments-spinner" />
+        <span class="comments-spinner"></span>
         <span class="comments-loading-text">Comments are loading…</span>
       </div>
-      <div id="tcomment" />
-      <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js" />
+      <div id="tcomment"></div>
+      <script is:inline src="https://fastly.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js"></script>
       <script is:inline define:vars={{ envId: TWIKOO_ENV_ID }}>
         const commentsRoot = document.querySelector('.comments')
         const loadingEl = document.getElementById('comments-loading')
