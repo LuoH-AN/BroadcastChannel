@@ -300,9 +300,3 @@ pre {
   border: 0;
   display: block;
 }
-
-/* Compensate Bilibili player's internal chrome inside a 16/9 frame. */
-.link-preview-video-bilibili .link-preview-video {
-  height: calc(100% + 40px);
-  margin-top: -20px;
-}
