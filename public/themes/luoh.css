@@ -228,6 +228,46 @@ pre {
   background: var(--surface-color);
 }
 
+/* ===== Feed: tighten spacing between posts ===== */
+
+.pagination {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+/* Restore the legacy pill button (v0.1.8 `.page`): rounded capsule with a
+   1px border, instead of the bare 2rem square containing just an arrow. */
+.pagination a.older,
+.pagination a.newer {
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-chip);
+  border: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.pagination a.older:hover,
+.pagination a.newer:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+}
+
+.pagination .newer {
+  margin-left: auto;
+}
+
+/* The base .post-entry uses 2.75rem margin+padding (≈88px) between posts —
+   too airy. Pull it back to a compact 1.5rem rhythm while keeping the
+   hairline separator. */
+.post-entry {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
 /* ===== Bilibili / YouTube embedded video cards (ported link-preview-video) ===== */
 
 .link-preview-video-wrap {
