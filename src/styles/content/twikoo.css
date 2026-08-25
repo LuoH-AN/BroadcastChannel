@@ -1,0 +1,285 @@
+/* Twikoo comment overrides.
+   Twikoo injects Element UI markup at runtime, so these must be global.
+   Styled flat & plain after 阮一峰的网络日志 — no cards, no white blocks; everything
+   sits directly on the page background, separated only by hairline rules.
+   Variable names adapted to the v0.3.0 theme system:
+     --foreground-color → --text-color
+     --secondary-color  → --muted-color
+     --highlight-color  → --accent-color */
+
+.tk-comments {
+  margin-top: 24px;
+  font-family: var(--font-main);
+  color: var(--text-color);
+}
+
+/* ---- Submit form: flat, no card, no background ---- */
+.tk-comments .tk-submit {
+  background: none;
+  border: none;
+  padding: 4px 0 0;
+  margin-bottom: 8px;
+}
+
+.tk-comments .tk-avatar-img {
+  color: var(--muted-color);
+}
+
+/* ---- Nick / email / website inputs: plain rectangles ---- */
+.tk-comments .tk-meta-input .el-input {
+  margin-bottom: 8px;
+}
+
+.tk-comments .tk-meta-input .el-input-group__prepend {
+  background: none;
+  border-color: var(--border-color);
+  color: var(--muted-color);
+  border-radius: 4px 0 0 4px;
+}
+
+.tk-comments .tk-meta-input .el-input__inner {
+  font-family: inherit;
+  background: none;
+  border-color: var(--border-color);
+  color: var(--text-color);
+  border-radius: 0 4px 4px 0;
+}
+
+.tk-comments .tk-meta-input .el-input__inner:focus {
+  border-color: var(--accent-color);
+}
+
+/* ---- Comment textarea: plain rectangle ---- */
+.tk-comments .tk-input .el-textarea__inner {
+  font-family: inherit;
+  background: none;
+  border-color: var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+}
+
+.tk-comments .tk-input .el-textarea__inner:focus {
+  border-color: var(--accent-color);
+}
+
+.tk-comments .tk-input__count {
+  color: var(--muted-color);
+}
+
+/* ---- Action icons (emoji / image / markdown) ---- */
+.tk-comments .tk-submit-action-icon {
+  color: var(--muted-color);
+  transition: color 0.15s ease-in-out;
+}
+
+.tk-comments .tk-submit-action-icon:hover {
+  color: var(--accent-color);
+}
+
+.tk-comments .tk-error-message {
+  color: var(--accent-color);
+}
+
+/* ---- Buttons: minimal, flat (no fills) ---- */
+.tk-comments .el-button {
+  font-family: inherit;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.tk-comments .el-button--default {
+  background: none;
+  border-color: var(--border-color);
+  color: var(--muted-color);
+}
+
+.tk-comments .el-button--default:hover,
+.tk-comments .el-button--default:focus {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  background: none;
+}
+
+.tk-comments .el-button--primary {
+  background: none;
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.tk-comments .el-button--primary:hover,
+.tk-comments .el-button--primary:focus {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #fff;
+}
+
+.tk-comments .el-button--primary.is-disabled,
+.tk-comments .el-button--primary.is-disabled:hover,
+.tk-comments .el-button--primary.is-disabled:focus {
+  background: none;
+  border-color: var(--border-color);
+  color: var(--muted-color);
+  cursor: not-allowed;
+}
+
+/* ---- Comments list: flat, separated only by hairlines ---- */
+.tk-comments .tk-comments-container {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.tk-comments .tk-comments-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted-color);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tk-comments .tk-comments-count {
+  color: var(--muted-color);
+  font-size: 14px;
+}
+
+.tk-comments .tk-comments-actions .tk-icon {
+  color: var(--muted-color);
+  cursor: pointer;
+  transition: color 0.15s ease-in-out;
+}
+
+.tk-comments .tk-comments-actions .tk-icon:hover {
+  color: var(--accent-color);
+}
+
+.tk-comments .tk-comments-no {
+  color: var(--muted-color);
+  font-size: 14px;
+  text-align: center;
+  padding: 28px 0;
+}
+
+/* ---- Individual comments ---- */
+.tk-comments .tk-comment {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tk-comments .tk-comment:last-child {
+  border-bottom: none;
+}
+
+.tk-comments .tk-nick,
+.tk-comments .tk-nick a {
+  color: var(--text-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tk-comments .tk-nick a:hover {
+  color: var(--accent-color);
+}
+
+.tk-comments .tk-tag {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.tk-comments .tk-date {
+  color: var(--muted-color);
+  font-size: 12px;
+}
+
+.tk-comments .tk-content {
+  color: var(--text-color);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 6px 0;
+}
+
+.tk-comments .tk-content a {
+  color: var(--link-color);
+}
+
+.tk-comments .tk-action {
+  color: var(--muted-color);
+  font-size: 12px;
+  transition: color 0.15s ease-in-out;
+}
+
+.tk-comments .tk-action:hover {
+  color: var(--accent-color);
+}
+
+.tk-comments .tk-replies .tk-comment {
+  padding: 12px 0;
+  border-bottom: none;
+}
+
+/* ---- Element loading spinner (fetching comments) ---- */
+.tk-comments .el-loading-spinner .path {
+  stroke: var(--accent-color);
+}
+
+/* ---- Footer & admin ---- */
+.tk-comments .tk-footer {
+  margin-top: 8px;
+  color: var(--muted-color);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.tk-comments .tk-footer a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.tk-comments .tk-admin .el-button,
+.tk-comments .tk-admin .el-input__inner {
+  font-family: inherit;
+}
+
+.tk-comments .tk-admin-close,
+.tk-comments .tk-login-title {
+  color: var(--muted-color);
+}
+
+/* ---- Loading indicator shown until Twikoo mounts ---- */
+.comments-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 4px;
+  color: var(--muted-color);
+  font-size: 14px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.comments-loading.is-comments-loaded {
+  opacity: 0;
+}
+
+.comments-spinner {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: comments-spinner 0.75s linear infinite;
+}
+
+@keyframes comments-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comments-spinner {
+    animation: none;
+    border-top-color: var(--border-color);
+    opacity: 0.5;
+  }
+}
