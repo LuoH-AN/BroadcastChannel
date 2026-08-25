@@ -71,6 +71,15 @@ html {
 
 /* ===== Navigation: pill highlight instead of underline ===== */
 
+/* Hairlines above and below separate the nav band from the header card
+   above and the content below — same trick as aria/terminal themes. */
+.site-navigation {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
 .site-navigation > ul {
   gap: 0.25rem;
 }
