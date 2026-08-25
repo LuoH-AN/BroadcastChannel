@@ -79,7 +79,10 @@ import 'photoswipe/style.css'
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initImages)
   }
-  else {
+
+  // DOMContentLoaded never fires once the document is past the loading state,
+  // so this cannot double-init; when still loading, the guard skips it.
+  if (document.readyState !== 'loading') {
     initImages()
   }
 </script>

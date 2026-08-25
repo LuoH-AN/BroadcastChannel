@@ -99,24 +99,28 @@ const hasTags = post.tags.length > 0
   }
 
   {
-    commentsEnabled && isDetail && (
+    commentsEnabled && isDetail && twikooEnvId && (
       <section class="post-comments" aria-label="Comments">
-        {twikooEnvId
-          ? <TwikooComments isDetail={isDetail} />
-          : (
-            /* Telegram comments are the only intentional client-side JS exception. */
-            <script
-              is:inline
-              async
-              src="https://telegram.org/js/telegram-widget.js"
-              data-telegram-discussion={`${channelName}/${post.id}`}
-              data-comments-limit="50"
-              data-colorful="1"
-              data-color="454545"
-            >
-              /* Explicit closing avoids an astro-eslint-parser v3 crash. */
-            </script>
-          )}
+        <TwikooComments isDetail={isDetail} />
+      </section>
+    )
+  }
+
+  {
+    commentsEnabled && isDetail && !twikooEnvId && (
+      <section class="post-comments" aria-label="Telegram comments">
+        {/* Telegram comments are the only intentional client-side JS exception. */}
+        <script
+          is:inline
+          async
+          src="https://telegram.org/js/telegram-widget.js"
+          data-telegram-discussion={`${channelName}/${post.id}`}
+          data-comments-limit="50"
+          data-colorful="1"
+          data-color="454545"
+        >
+          {/* Explicit closing avoids an astro-eslint-parser v3 crash. */}
+        </script>
       </section>
     )
   }
