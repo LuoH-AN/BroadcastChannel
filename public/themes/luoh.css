@@ -35,6 +35,7 @@ html {
 
 .site-header {
   align-items: center;
+  gap: 0.75rem;
 }
 
 /* The compact breakpoint stacks social links onto their own row; with a short
@@ -62,10 +63,10 @@ html {
 }
 
 .channel-description {
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   padding: 0.6rem 1.1rem;
   border-radius: var(--radius-chip);
-  background: var(--code-background-color);
+  background: color-mix(in srgb, var(--link-color) 14%, transparent);
   word-break: break-word;
 }
 
@@ -74,8 +75,8 @@ html {
 /* Hairlines above and below separate the nav band from the header card
    above and the content below — same trick as aria/terminal themes. */
 .site-navigation {
-  margin-top: 0.75rem;
-  padding-top: 0.65rem;
+  margin-top: 0.35rem;
+  padding-top: 0.5rem;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
