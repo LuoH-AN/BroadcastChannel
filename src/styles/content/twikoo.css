@@ -28,42 +28,58 @@
   margin-bottom: 8px;
 }
 
-/* ---- Nick / email / website inputs: plain rectangles ---- */
+/* ---- Nick / email / website inputs: underlined, no box ----
+   The paper style reads as bare ruled lines, so drop Element's four-sided
+   box and keep only a bottom hairline; the prepend label becomes plain
+   muted text and the group border vanishes. */
 .tk-comments .tk-meta-input .el-input {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.tk-comments .tk-meta-input .el-input-group {
+  border: none;
 }
 
 .tk-comments .tk-meta-input .el-input-group__prepend {
   background: none;
-  border-color: var(--border-color);
+  border: none;
   color: var(--muted-color);
-  border-radius: 4px 0 0 4px;
+  padding: 0 8px 0 0;
+  border-radius: 0;
 }
 
 .tk-comments .tk-meta-input .el-input__inner {
   font-family: inherit;
   background: none;
-  border-color: var(--border-color);
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: 0;
   color: var(--text-color);
-  border-radius: 0 4px 4px 0;
 }
 
 .tk-comments .tk-meta-input .el-input__inner:focus {
-  border-color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+  box-shadow: none;
 }
 
-/* ---- Comment textarea: plain rectangle ---- */
+/* ---- Comment textarea: underlined, no box ---- */
 .tk-comments .tk-input .el-textarea__inner {
   font-family: inherit;
   background: none;
-  border-color: var(--border-color);
-  border-radius: 4px;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: none;
+  padding-inline: 0;
   color: var(--text-color);
   resize: vertical;
 }
 
 .tk-comments .tk-input .el-textarea__inner:focus {
-  border-color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+  box-shadow: none;
 }
 
 /* Element's placeholder grey is hardcoded; point it at the theme muted tone. */
@@ -92,53 +108,55 @@
   color: var(--accent-color);
 }
 
-/* ---- Buttons: minimal, flat (no fills) ----
-   Anchored on .post-comments to outrank Twikoo's runtime-injected
-   `.twikoo …` rules of equal specificity (its sheet loads later). */
-.post-comments .tk-comments .el-button {
+/* ---- Buttons: outlined pills, no fills ----
+   Dom stucture is section.post-comments > div.comments > div.twikoo > .tk-comments,
+   so anchor on .post-comments .comments (the stable ancestor chain) to
+   outrank Twikoo's runtime `.twikoo …` rules of equal specificity. */
+.post-comments .comments .tk-comments .el-button {
   font-family: inherit;
-  border-radius: 4px;
+  border-radius: 16px;
   font-weight: 500;
+  padding: 6px 18px;
 }
 
-.post-comments .tk-comments .el-button--default {
+.post-comments .comments .tk-comments .el-button--default {
   background: none;
   border-color: var(--border-color);
   color: var(--muted-color);
 }
 
-.post-comments .tk-comments .el-button--default:hover,
-.post-comments .tk-comments .el-button--default:focus {
+.post-comments .comments .tk-comments .el-button--default:hover,
+.post-comments .comments .tk-comments .el-button--default:focus {
   color: var(--accent-color);
   border-color: var(--accent-color);
   background: none;
 }
 
-.post-comments .tk-comments .el-button--primary {
+.post-comments .comments .tk-comments .el-button--primary {
   background: none;
   border-color: var(--accent-color);
   color: var(--accent-color);
 }
 
-.post-comments .tk-comments .el-button--primary:hover,
-.post-comments .tk-comments .el-button--primary:focus {
+.post-comments .comments .tk-comments .el-button--primary:hover,
+.post-comments .comments .tk-comments .el-button--primary:focus {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
   color: #fff;
 }
 
-.post-comments .tk-comments .el-button--primary.is-plain,
-.post-comments .tk-comments .el-button--primary.is-plain:hover,
-.post-comments .tk-comments .el-button--primary.is-plain:focus {
+.post-comments .comments .tk-comments .el-button--primary.is-plain,
+.post-comments .comments .tk-comments .el-button--primary.is-plain:hover,
+.post-comments .comments .tk-comments .el-button--primary.is-plain:focus {
   background: none;
   border-color: var(--accent-color);
   color: var(--accent-color);
 }
 
 /* Disabled (empty form): hairline border + muted text, no Element blue. */
-.post-comments .tk-comments .el-button--primary.is-disabled,
-.post-comments .tk-comments .el-button--primary.is-disabled:hover,
-.post-comments .tk-comments .el-button--primary.is-disabled:focus {
+.post-comments .comments .tk-comments .el-button--primary.is-disabled,
+.post-comments .comments .tk-comments .el-button--primary.is-disabled:hover,
+.post-comments .comments .tk-comments .el-button--primary.is-disabled:focus {
   background: none;
   border-color: var(--border-color);
   color: var(--muted-color);
