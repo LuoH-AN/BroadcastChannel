@@ -211,6 +211,13 @@
   color: var(--muted-color);
 }
 
+.tk-comments .tk-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .tk-comments .tk-nick,
 .tk-comments .tk-nick a {
   color: var(--text-color);
