@@ -31,9 +31,18 @@
 /* ---- Nick / email / website inputs: underlined, no box ----
    The paper style reads as bare ruled lines, so drop Element's four-sided
    box and keep only a bottom hairline; the prepend label becomes plain
-   muted text and the group border vanishes. */
-.tk-comments .tk-meta-input .el-input {
-  margin-bottom: 10px;
+   muted text. Stack the three fields vertically at full width instead of
+   Element's 3-column form grid — the grid reads as a widget, the stack
+   reads as a sheet of paper. */
+.post-comments .comments .tk-comments .tk-meta-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-comments .comments .tk-comments .tk-meta-input .el-input {
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .tk-comments .tk-meta-input .el-input-group {
@@ -82,16 +91,38 @@
   box-shadow: none;
 }
 
-/* Element's placeholder grey is hardcoded; point it at the theme muted tone. */
+/* Element's placeholder grey is hardcoded; point it at the theme muted tone.
+   The meta-field placeholders ("Required" / "Optional") are dropped entirely:
+   the prepend label already names the field, so a bare ruled line reads as
+   paper. Keep the textarea's helper placeholder visible but muted. */
 .post-comments .comments .tk-comments .el-textarea__inner::-webkit-input-placeholder,
 .post-comments .comments .tk-comments .el-input__inner::-webkit-input-placeholder,
 .post-comments .comments .tk-comments .el-textarea__inner::placeholder,
 .post-comments .comments .tk-comments .el-input__inner::placeholder {
   color: var(--muted-color);
 }
+.post-comments .comments .tk-comments .tk-meta-input .el-input__inner::-webkit-input-placeholder,
+.post-comments .comments .tk-comments .tk-meta-input .el-input__inner::placeholder {
+  color: transparent;
+}
 
 .tk-comments .tk-input__count {
   color: var(--muted-color);
+}
+
+/* Hidden widget signals: kill Element's char counter and the textarea
+   resize handle — both read as component chrome, not paper. */
+.post-comments .comments .tk-comments .el-input__count,
+.post-comments .comments .tk-comments .el-textarea__inner {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.post-comments .comments .tk-comments .el-input__count {
+  display: none;
+}
+.post-comments .comments .tk-comments .el-textarea__inner::-webkit-resizer {
+  display: none;
+  background: none;
 }
 
 /* ---- Action icons (emoji / image / markdown) ---- */
@@ -108,59 +139,70 @@
   color: var(--accent-color);
 }
 
-/* ---- Buttons: outlined pills, no fills ----
+/* ---- Buttons: flat paper text, no fills, no pill chrome ----
    Dom stucture is section.post-comments > div.comments > div.twikoo > .tk-comments,
    so anchor on .post-comments .comments (the stable ancestor chain) to
-   outrank Twikoo's runtime `.twikoo …` rules of equal specificity. */
+   outrank Twikoo's runtime `.twikoo …` rules of equal specificity.
+   Styled as bare text actions: muted for Preview, accent for Send, with a
+   hairline underline on hover — the site link language, not buttons. */
 .post-comments .comments .tk-comments .el-button {
   font-family: inherit;
-  border-radius: 16px;
+  border: none;
+  background: none;
+  border-radius: 0;
   font-weight: 500;
-  padding: 6px 18px;
+  padding: 6px 2px;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
 }
 
 .post-comments .comments .tk-comments .el-button--default {
   background: none;
-  border-color: var(--border-color);
+  border: none;
   color: var(--muted-color);
 }
 
 .post-comments .comments .tk-comments .el-button--default:hover,
 .post-comments .comments .tk-comments .el-button--default:focus {
   color: var(--accent-color);
-  border-color: var(--accent-color);
+  border: none;
   background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .post-comments .comments .tk-comments .el-button--primary {
   background: none;
-  border-color: var(--accent-color);
+  border: none;
   color: var(--accent-color);
 }
 
 .post-comments .comments .tk-comments .el-button--primary:hover,
 .post-comments .comments .tk-comments .el-button--primary:focus {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: #fff;
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .post-comments .comments .tk-comments .el-button--primary.is-plain,
 .post-comments .comments .tk-comments .el-button--primary.is-plain:hover,
 .post-comments .comments .tk-comments .el-button--primary.is-plain:focus {
   background: none;
-  border-color: var(--accent-color);
+  border: none;
   color: var(--accent-color);
 }
 
-/* Disabled (empty form): hairline border + muted text, no Element blue. */
+/* Disabled (empty form): muted text, no Element blue. */
 .post-comments .comments .tk-comments .el-button--primary.is-disabled,
 .post-comments .comments .tk-comments .el-button--primary.is-disabled:hover,
 .post-comments .comments .tk-comments .el-button--primary.is-disabled:focus {
   background: none;
-  border-color: var(--border-color);
+  border: none;
   color: var(--muted-color);
   cursor: not-allowed;
+  text-decoration: none;
 }
 
 /* ---- Comments list: flat, separated only by hairlines ---- */
