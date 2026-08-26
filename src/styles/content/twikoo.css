@@ -194,10 +194,12 @@
 
 /* Avatars: match the header channel avatar — superellipse squircle with a
    circular fallback (corner-shape is Chromium-only today; the 50% radius
-   keeps other browsers round instead of square). */
+   keeps other browsers round instead of square). Thin grey border matches
+   the channel avatar's. */
 .tk-comments .tk-avatar {
   border-radius: 50%;
   corner-shape: superellipse(1.2);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .tk-comments .tk-avatar-img {

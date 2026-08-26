@@ -147,6 +147,7 @@ pre {
 
 .channel-avatar {
   corner-shape: superellipse(1.2);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /* Intro sits on the bare page background, separated from the header row
