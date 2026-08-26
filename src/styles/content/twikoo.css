@@ -192,9 +192,12 @@
   border-bottom: none;
 }
 
-/* Avatar placeholder: circle, matching the site avatar language. */
+/* Avatars: match the header channel avatar — superellipse squircle with a
+   circular fallback (corner-shape is Chromium-only today; the 50% radius
+   keeps other browsers round instead of square). */
 .tk-comments .tk-avatar {
   border-radius: 50%;
+  corner-shape: superellipse(1.2);
 }
 
 .tk-comments .tk-avatar-img {
