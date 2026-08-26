@@ -65,13 +65,27 @@
   border: none;
   color: var(--muted-color);
   padding: 0;
+  margin-right: 10px;
   border-radius: 0;
   font-family: 'Inter', 'Noto Sans SC', sans-serif;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.2;
   white-space: nowrap;
+  flex: 0 0 auto;
   transition: color 0.15s ease-in-out;
+}
+
+.tk-comments .tk-meta-input .el-input__inner {
+  font-family: inherit;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: 0;
+  color: var(--text-color);
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 /* The ruled underline spans the whole field row (label + value). On focus
@@ -85,16 +99,6 @@
    switch is scoped on the group itself via :focus-within. */
 .tk-comments .tk-meta-input .el-input-group:focus-within {
   border-bottom-color: var(--accent-color);
-}
-
-.tk-comments .tk-meta-input .el-input__inner {
-  font-family: inherit;
-  background: none;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding-left: 0;
-  color: var(--text-color);
 }
 
 .tk-comments .tk-meta-input .el-input__inner:focus {
