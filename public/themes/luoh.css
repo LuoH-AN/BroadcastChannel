@@ -100,7 +100,7 @@ time {
    own selectors. */
 .post-comments .comments .tk-comments .el-input__inner,
 .post-comments .comments .tk-comments .el-textarea__inner,
-.post-comments .comments .tk-comments .el-textarea.el-input__count,
+.post-comments .comments .tk-input > .el-input__count,
 .post-comments .comments .tk-comments .el-button,
 .post-comments .comments .twikoo > .tk-footer,
 .tk-comments .tk-input__count,
