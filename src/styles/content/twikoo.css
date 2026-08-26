@@ -182,9 +182,14 @@
   padding: 28px 0;
 }
 
-/* ---- Individual comments ---- */
+/* ---- Individual comments ----
+   Twikoo's base stylesheet gives each comment margin-top:16px which stacks
+   on top of our padding-top:16px, leaving a doubled 32px gap before the
+   first comment's nickname. Kill the injected margin; padding owns the
+   rhythm. */
 .tk-comments .tk-comment {
   padding: 16px 0;
+  margin-top: 0;
   border-bottom: 1px solid var(--border-color);
 }
 
