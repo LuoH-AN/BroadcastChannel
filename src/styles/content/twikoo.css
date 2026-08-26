@@ -83,10 +83,10 @@
 }
 
 /* Element's placeholder grey is hardcoded; point it at the theme muted tone. */
-.post-comments .tk-comments .el-textarea__inner::-webkit-input-placeholder,
-.post-comments .tk-comments .el-input__inner::-webkit-input-placeholder,
-.post-comments .tk-comments .el-textarea__inner::placeholder,
-.post-comments .tk-comments .el-input__inner::placeholder {
+.post-comments .comments .tk-comments .el-textarea__inner::-webkit-input-placeholder,
+.post-comments .comments .tk-comments .el-input__inner::-webkit-input-placeholder,
+.post-comments .comments .tk-comments .el-textarea__inner::placeholder,
+.post-comments .comments .tk-comments .el-input__inner::placeholder {
   color: var(--muted-color);
 }
 
