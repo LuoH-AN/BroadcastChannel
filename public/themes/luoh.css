@@ -93,10 +93,16 @@ time {
 
 /* Form chrome: inputs, buttons, counters, Twikoo footer — same voice as nav.
    .post-comments .comments .tk-comments outranks the bundled twikoo.css
-   `font-family: inherit` rules (.tk-comments .tk-* .el-*, loaded later). */
+   `font-family: inherit` rules (.tk-comments .tk-* .el-*, loaded later).
+   The count badge and footer are OUTSIDE the inner input/textarea nodes:
+   the counter inherits from the .el-textarea wrapper, and .tk-footer sits
+   directly under Twikoo's renamed mount (div.twikoo), so both get their
+   own selectors. */
 .post-comments .comments .tk-comments .el-input__inner,
 .post-comments .comments .tk-comments .el-textarea__inner,
+.post-comments .comments .tk-comments .el-textarea.el-input__count,
 .post-comments .comments .tk-comments .el-button,
+.post-comments .comments .twikoo > .tk-footer,
 .tk-comments .tk-input__count,
 .tk-comments .tk-footer,
 .tk-comments .tk-comments-title,
