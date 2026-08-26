@@ -52,25 +52,25 @@
   transition: border-color 0.15s ease-in-out;
 }
 
-/* Label sits ABOVE the value, and the value starts at the field's left
-   edge — so the typed content in the three meta fields aligns with the
-   comment textarea's text (both left: 0 on the row). */
+/* Label sits INLINE at the left of the value (same row), classic
+   ruled-line field. */
 .tk-comments .tk-meta-input .el-input-group {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-direction: row;
+  align-items: center;
 }
 
 .tk-comments .tk-meta-input .el-input-group__prepend {
   background: none;
   border: none;
   color: var(--muted-color);
-  padding: 0 0 2px;
+  padding: 0;
   border-radius: 0;
   font-family: 'Inter', 'Noto Sans SC', sans-serif;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.2;
+  white-space: nowrap;
   transition: color 0.15s ease-in-out;
 }
 
