@@ -28,12 +28,13 @@
   margin-bottom: 8px;
 }
 
-/* ---- Nick / email / website inputs: underlined, no box ----
-   The paper style reads as bare ruled lines, so drop Element's four-sided
-   box and keep only a bottom hairline; the prepend label becomes plain
-   muted text. Stack the three fields vertically at full width instead of
-   Element's 3-column form grid — the grid reads as a widget, the stack
-   reads as a sheet of paper. */
+/* ---- Nick / email / website inputs: underlined ruled rows ----
+   EVERY rule below anchors on the full stable ancestor chain
+   (.post-comments .comments .tk-comments … = 5 classes). Twikoo injects
+   a runtime <style> whose own form rules reach 3 classes (e.g.
+   `.tk-meta-input .el-input .el-input-group__prepend { padding: 0 1rem }`)
+   and always load after this sheet, so a 3-vs-3 tie loses by order.
+   Five classes win outright regardless of load order. */
 .post-comments .comments .tk-comments .tk-meta-input {
   display: flex;
   flex-direction: column;
@@ -45,38 +46,47 @@
   width: 100%;
 }
 
-.tk-comments .tk-meta-input .el-input-group {
+/* Label sits INLINE left of the value on one ruled row; the hairline
+   spans label + value and both turn accent-orange while focused. */
+.post-comments .comments .tk-comments .tk-meta-input .el-input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   border: none;
   border-bottom: 1px solid var(--border-color);
   border-radius: 0;
   transition: border-color 0.15s ease-in-out;
 }
 
-/* Label sits INLINE at the left of the value (same row), classic
-   ruled-line field. */
-.tk-comments .tk-meta-input .el-input-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.post-comments .comments .tk-comments .tk-meta-input .el-input-group:focus-within {
+  border-bottom-color: var(--accent-color);
 }
 
-.tk-comments .tk-meta-input .el-input-group__prepend {
+/* Kill Element's table-cell chrome (display: table-cell / width: 1px /
+   padded cell) before applying the paper label look. */
+.post-comments .comments .tk-comments .tk-meta-input .el-input-group__prepend {
+  display: block;
+  width: auto;
   background: none;
   border: none;
+  border-radius: 0;
   color: var(--muted-color);
   padding: 0;
-  margin-right: 10px;
-  border-radius: 0;
+  margin: 0 10px 0 0;
   font-family: 'Inter', 'Noto Sans SC', sans-serif;
   font-size: 15px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.4;
   white-space: nowrap;
   flex: 0 0 auto;
   transition: color 0.15s ease-in-out;
 }
 
-.tk-comments .tk-meta-input .el-input__inner {
+.post-comments .comments .tk-comments .tk-meta-input .el-input:focus-within .el-input-group__prepend {
+  color: var(--accent-color);
+}
+
+.post-comments .comments .tk-comments .tk-meta-input .el-input__inner {
   font-family: inherit;
   background: none;
   border: none;
@@ -88,25 +98,12 @@
   min-width: 0;
 }
 
-/* The ruled underline spans the whole field row (label + value). On focus
-   the label flips from grey to the accent orange and the line follows.
-   Element adds no class on focus, so use :focus-within on the group. */
-.tk-comments .tk-meta-input .el-input:focus-within .el-input-group__prepend {
-  color: var(--accent-color);
-}
-
-/* .el-input-group and .el-input are the same element, so the underline
-   switch is scoped on the group itself via :focus-within. */
-.tk-comments .tk-meta-input .el-input-group:focus-within {
-  border-bottom-color: var(--accent-color);
-}
-
-.tk-comments .tk-meta-input .el-input__inner:focus {
+.post-comments .comments .tk-comments .tk-meta-input .el-input__inner:focus {
   box-shadow: none;
 }
 
 /* ---- Comment textarea: underlined, no box ---- */
-.tk-comments .tk-input .el-textarea__inner {
+.post-comments .comments .tk-comments .tk-input .el-textarea__inner {
   font-family: inherit;
   background: none;
   border: none;
@@ -118,7 +115,7 @@
   resize: vertical;
 }
 
-.tk-comments .tk-input .el-textarea__inner:focus {
+.post-comments .comments .tk-comments .tk-input .el-textarea__inner:focus {
   border-bottom-color: var(--accent-color);
   box-shadow: none;
 }
