@@ -72,6 +72,38 @@ time {
   font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
 }
 
+/* ===== Comments: role-based type, mirroring the page's font division =====
+   The comment body is set in Inter + Noto Sans SC so guest voices read as
+   sans-serif against the serif article text. Nicknames take the UI stack
+   (like navigation), timestamps the mono/meta stack (like post dates). */
+
+.tk-comments .tk-content {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+
+.tk-comments .tk-nick,
+.tk-comments .tk-nick a {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+
+.tk-comments .tk-date,
+.tk-comments .tk-action {
+  font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
+}
+
+/* Form chrome: inputs, buttons, counters, Twikoo footer — same voice as nav.
+   .post-comments .comments .tk-comments outranks the bundled twikoo.css
+   `font-family: inherit` rules (.tk-comments .tk-* .el-*, loaded later). */
+.post-comments .comments .tk-comments .el-input__inner,
+.post-comments .comments .tk-comments .el-textarea__inner,
+.post-comments .comments .tk-comments .el-button,
+.tk-comments .tk-input__count,
+.tk-comments .tk-footer,
+.tk-comments .tk-comments-title,
+.tk-comments .tk-comments-no {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+
 /* Code: IBM Plex Mono with CJK fallback for inline comments */
 .content code,
 .content pre,
