@@ -58,6 +58,16 @@ const skipLinkText = 'Skip to main content'
       {...seoParams}
     />
     <Fragment set:html={HEADER_INJECT} />
+    <script is:inline>
+      // Opt-in element inspector: loads only when the URL carries ?inspect.
+      // Normal visitors never fetch or execute this script.
+      if (new URLSearchParams(location.search).has('inspect')) {
+        var s = document.createElement('script')
+        s.src = '/page-inspect.js'
+        s.defer = true
+        document.head.appendChild(s)
+      }
+    </script>
   </head>
 
   <body class:list={[pageType, pageClass]}>
