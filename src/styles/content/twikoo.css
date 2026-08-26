@@ -212,9 +212,17 @@
   color: var(--accent-color);
 }
 
+/* Identity badges (Admin / spam / level): Twikoo fills these with Element
+   pastel backgrounds (.tk-tag-green etc). Flatten to the site's outlined
+   chip language — transparent fill, accent text + hairline accent border,
+   like the pagination pills. */
 .tk-comments .tk-tag {
   color: var(--accent-color);
-  border-color: var(--accent-color);
+  background: none;
+  border: 1px solid var(--accent-color);
+  border-radius: 3px;
+  padding: 0 5px;
+  line-height: 1.6;
 }
 
 .tk-comments .tk-date {
