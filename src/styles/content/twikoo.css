@@ -47,6 +47,9 @@
 
 .tk-comments .tk-meta-input .el-input-group {
   border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  transition: border-color 0.15s ease-in-out;
 }
 
 .tk-comments .tk-meta-input .el-input-group__prepend {
@@ -55,13 +58,25 @@
   color: var(--muted-color);
   padding: 0 8px 0 0;
   border-radius: 0;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  transition: color 0.15s ease-in-out;
+}
+
+/* The ruled underline spans the whole field row (label + value). On focus
+   the label flips from grey to the accent orange and the line follows.
+   Element adds no class on focus, so use :focus-within on the group. */
+.tk-comments .tk-meta-input .el-input:focus-within .el-input-group__prepend {
+  color: var(--accent-color);
+}
+
+.tk-comments .tk-meta-input .el-input:focus-within .el-input-group {
+  border-bottom-color: var(--accent-color);
 }
 
 .tk-comments .tk-meta-input .el-input__inner {
   font-family: inherit;
   background: none;
   border: none;
-  border-bottom: 1px solid var(--border-color);
   border-radius: 0;
   box-shadow: none;
   padding-left: 0;
@@ -69,7 +84,6 @@
 }
 
 .tk-comments .tk-meta-input .el-input__inner:focus {
-  border-bottom-color: var(--accent-color);
   box-shadow: none;
 }
 
@@ -139,6 +153,13 @@
   color: var(--accent-color);
 }
 
+/* Unwanted form chrome: hide the Markdown toggle and the Preview button —
+   submission is the only action the paper form needs. */
+.post-comments .comments .tk-comments .tk-submit-action-icon.__markdown,
+.post-comments .comments .tk-comments .el-button.tk-preview {
+  display: none;
+}
+
 /* ---- Buttons: flat paper text, no fills, no pill chrome ----
    Dom stucture is section.post-comments > div.comments > div.twikoo > .tk-comments,
    so anchor on .post-comments .comments (the stable ancestor chain) to
@@ -146,7 +167,7 @@
    Styled as bare text actions: muted for Preview, accent for Send, with a
    hairline underline on hover — the site link language, not buttons. */
 .post-comments .comments .tk-comments .el-button {
-  font-family: inherit;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
   border: none;
   background: none;
   border-radius: 0;
