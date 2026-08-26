@@ -69,7 +69,9 @@
   color: var(--accent-color);
 }
 
-.tk-comments .tk-meta-input .el-input:focus-within .el-input-group {
+/* .el-input-group and .el-input are the same element, so the underline
+   switch is scoped on the group itself via :focus-within. */
+.tk-comments .tk-meta-input .el-input-group:focus-within {
   border-bottom-color: var(--accent-color);
 }
 
