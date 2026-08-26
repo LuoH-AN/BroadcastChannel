@@ -244,7 +244,13 @@
   color: var(--text-color);
   font-size: 15px;
   line-height: 1.6;
-  margin: 6px 0;
+  margin: 2px 0 4px;
+}
+
+/* Tighter vertical rhythm below the comment body: collapse the gap to the
+   stats/action row that Twikoo's defaults leave a little airy. */
+.tk-comments .tk-extras .tk-extra {
+  margin-top: 4px;
 }
 
 .tk-comments .tk-content a {
