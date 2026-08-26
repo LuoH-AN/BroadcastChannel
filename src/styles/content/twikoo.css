@@ -207,6 +207,12 @@
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+/* Drop the placeholder avatar at the top of the comment input form: the
+   empty-circle SVG adds noise before a commenter sets their own avatar. */
+.tk-comments .tk-submit .tk-avatar {
+  display: none;
+}
+
 .tk-comments .tk-avatar-img {
   color: var(--muted-color);
 }
