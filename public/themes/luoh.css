@@ -27,10 +27,178 @@
   --radius-chip: 16px;
   --radius-media: 16px;
   --shadow-soft: none;
+
+  /* Dark palette. Applied when html[data-luoh-theme] is 'dark', or when it is
+     'auto' (or absent) and the system prefers dark. Paper turns to deep ink
+     #12100e — a warm near-black that keeps the 纸面 feel instead of going
+     cold blue. Text is off-white ink; the orangered accent stays, slightly
+     lifted so it reads on the dark ground. */
+  --background-color-dark: #12100e;
+  --heading-color-dark: #ece7de;
+  --text-color-dark: #d8d2c8;
+  --link-color-dark: #ff6a3d;
+  --visited-color-dark: #b39ddb;
+  --code-background-color-dark: #1d1a17;
+  --code-color-dark: #d8d2c8;
+  --blockquote-color-dark: #c4bdb2;
+  --border-color-dark: rgba(236, 231, 222, 0.14);
+  --muted-color-dark: #857e73;
+  --surface-color-dark: #1c1916;
+  --icon-hover-filter-dark: invert(84%) sepia(8%) saturate(120%) hue-rotate(337deg) brightness(96%) contrast(88%);
+  --icon-secondary-filter-dark: invert(52%) sepia(0%) saturate(0%) hue-rotate(337deg) brightness(74%) contrast(86%);
 }
 
-html {
+/* Three-state theme switching (auto / light / dark):
+   html[data-luoh-theme] is maintained by /theme-toggle.js. 'auto' (or no
+   attribute) falls back to the system preference, 'light' forces light,
+   'dark' forces dark. Because this theme file is loaded via HEADER_INJECT
+   AFTER the bundled base styles, the plain ':root' block above already wins
+   ties; these media/attribute selectors only swap the palette variables. */
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  :root[data-luoh-theme='auto'] {
+    --background-color: var(--background-color-dark);
+    --heading-color: var(--heading-color-dark);
+    --text-color: var(--text-color-dark);
+    --link-color: var(--link-color-dark);
+    --visited-color: var(--visited-color-dark);
+    --code-background-color: var(--code-background-color-dark);
+    --code-color: var(--code-color-dark);
+    --blockquote-color: var(--blockquote-color-dark);
+    --accent-color: var(--link-color);
+    --link-hover-color: color-mix(in srgb, var(--link-color) 72%, var(--heading-color));
+    --border-color: var(--border-color-dark);
+    --muted-color: var(--muted-color-dark);
+    --surface-color: var(--surface-color-dark);
+    --code-muted-color: color-mix(in srgb, var(--code-color) 72%, var(--code-background-color));
+    --code-accent-color: color-mix(in srgb, var(--link-color) 75%, var(--code-color));
+    --code-alt-accent-color: color-mix(in srgb, var(--visited-color) 65%, var(--code-color));
+    --icon-hover-filter: var(--icon-hover-filter-dark);
+    --icon-secondary-filter: var(--icon-secondary-filter-dark);
+  }
+}
+
+:root[data-luoh-theme='dark'] {
+  --background-color: var(--background-color-dark);
+  --heading-color: var(--heading-color-dark);
+  --text-color: var(--text-color-dark);
+  --link-color: var(--link-color-dark);
+  --visited-color: var(--visited-color-dark);
+  --code-background-color: var(--code-background-color-dark);
+  --code-color: var(--code-color-dark);
+  --blockquote-color: var(--blockquote-color-dark);
+  --accent-color: var(--link-color);
+  --link-hover-color: color-mix(in srgb, var(--link-color) 72%, var(--heading-color));
+  --border-color: var(--border-color-dark);
+  --muted-color: var(--muted-color-dark);
+  --surface-color: var(--surface-color-dark);
+  --code-muted-color: color-mix(in srgb, var(--code-color) 72%, var(--code-background-color));
+  --code-accent-color: color-mix(in srgb, var(--link-color) 75%, var(--code-color));
+  --code-alt-accent-color: color-mix(in srgb, var(--visited-color) 65%, var(--code-color));
+  --icon-hover-filter: var(--icon-hover-filter-dark);
+  --icon-secondary-filter: var(--icon-secondary-filter-dark);
+}
+
+/* color-scheme must follow the resolved theme so scrollbars / form controls
+   match. Attribute states resolve directly; 'auto' (or absent) inherits the
+   media-query context. */
+html,
+html[data-luoh-theme='auto'] {
   color-scheme: light;
+}
+
+html[data-luoh-theme='dark'] {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  html[data-luoh-theme='auto'] {
+    color-scheme: dark;
+  }
+
+  html[data-luoh-theme='light'] {
+    color-scheme: light;
+  }
+}
+
+/* Hardcoded light values elsewhere in this file (avatar hairline,
+   search-button hover wash) get their dark counterparts at the END of this
+   file, after the original rules — same-specificity media-query overrides
+   must come later in the cascade to win. */
+
+/* ===== Theme toggle button (auto / light / dark) ===== */
+
+/* Injected via HEADER_INJECT next to the search icon in the header link row.
+   Visually identical to the fork's other header icon buttons: bare glyph,
+   2rem square, soft hover wash. The button shows one glyph per state —
+   sun (light), moon (dark), auto (half circle) — driven purely by CSS
+   attribute matching on html[data-luoh-theme]. */
+
+.social-links .luoh-theme-toggle {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  border-radius: var(--radius-chip);
+  background: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.social-links .luoh-theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-luoh-theme='dark'] .social-links .luoh-theme-toggle:hover {
+  background: rgba(236, 231, 222, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .social-links .luoh-theme-toggle:hover,
+  :root[data-luoh-theme='auto'] .social-links .luoh-theme-toggle:hover {
+    background: rgba(236, 231, 222, 0.08);
+  }
+}
+
+.social-links .luoh-theme-toggle:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.social-links .luoh-theme-toggle svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+/* Show only the glyph matching the current state. 'auto' (or no attribute)
+   shows the auto glyph, matching the media-query fallback. */
+.social-links .luoh-theme-toggle .icon-sun,
+.social-links .luoh-theme-toggle .icon-moon,
+.social-links .luoh-theme-toggle .icon-auto {
+  display: none;
+}
+
+:root[data-luoh-theme='light'] .social-links .luoh-theme-toggle .icon-sun {
+  display: block;
+}
+
+:root[data-luoh-theme='dark'] .social-links .luoh-theme-toggle .icon-moon {
+  display: block;
+}
+
+.social-links .luoh-theme-toggle .icon-auto {
+  display: block;
+}
+
+:root[data-luoh-theme='light'] .social-links .luoh-theme-toggle .icon-auto,
+:root[data-luoh-theme='dark'] .social-links .luoh-theme-toggle .icon-auto {
+  display: none;
 }
 
 /* ===== Typography: role-based font assignment =====
@@ -338,4 +506,29 @@ pre {
   height: 100%;
   border: 0;
   display: block;
+}
+
+/* ===== Dark counterparts for hardcoded light values ===== */
+
+/* These must sit at the end of the file: the light rules they override
+   (avatar hairline, search-button hover wash) appear earlier with equal
+   specificity, so source order decides. Both paths are covered —
+   prefers-color-scheme (auto / no attribute) and forced dark. */
+
+@media (prefers-color-scheme: dark) {
+  .channel-avatar {
+    border-color: rgba(236, 231, 222, 0.16);
+  }
+
+  .social-links .search-button:hover {
+    background: rgba(236, 231, 222, 0.08);
+  }
+}
+
+:root[data-luoh-theme='dark'] .channel-avatar {
+  border-color: rgba(236, 231, 222, 0.16);
+}
+
+:root[data-luoh-theme='dark'] .social-links .search-button:hover {
+  background: rgba(236, 231, 222, 0.08);
 }
