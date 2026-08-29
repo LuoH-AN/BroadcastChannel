@@ -12,6 +12,10 @@
   --heading-color: #000;
   --text-color: #4a463f;
   --link-color: #e8590c;
+  /* Rust-orange visited: Bear's cold default #8b6fcb broke the warm
+     paper palette. Dimmer than the link but same family, so read links
+     recede without jumping hue. */
+  --visited-color: #a3571d;
   --code-background-color: #f9f9f9;
 
   --accent-color: var(--link-color);
@@ -286,6 +290,23 @@ pre {
   font-family: 'IBM Plex Mono', 'Noto Sans SC', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* ===== Reading rhythm: roomier line-height for CJK body copy =====
+   Base sets 1.6 on main — tuned for Latin faces. Noto Serif SC needs
+   more inter-line air for comfortable Chinese reading (CJK glyphs have
+   no ascenders/descenders to create optical gaps). 1.78 on the article
+   and feed text only; UI chrome (nav, comments form) keeps the default
+   so the page doesn't loosen everywhere. */
+.post-content,
+.post-content p {
+  line-height: 1.78;
+}
+
+/* ===== Selection: warm orange highlight instead of default cold blue ===== */
+::selection {
+  background: color-mix(in srgb, var(--link-color) 22%, var(--background-color));
+  color: var(--text-color);
+}
+
 /* ===== Header: keep the title vertically centered against the avatar ===== */
 
 .site-header {
@@ -485,16 +506,17 @@ pre {
    artifact rather than a design. Replace with the typographic asterism
    (dinkus): three centered dots floating in the whitespace gap, an old
    book convention for section breaks. Variable-driven color adapts to
-   both palettes. Hidden after the last entry — the pagination or footer
-   already closes the page. */
-.post-entry {
+   both palettes. Scoped to body.feed — the post detail page must not
+   grow a dinkus between article and comments. Hidden after the last
+   entry — the pagination or footer already closes the page. */
+body.feed .post-entry {
   position: relative;
   margin-bottom: 3.5rem;
   padding-bottom: 0;
   border-bottom: 0;
 }
 
-.post-entry::after {
+body.feed .post-entry::after {
   content: '· · ·';
   position: absolute;
   right: 0;
@@ -511,7 +533,7 @@ pre {
   transform: translateY(50%);
 }
 
-.posts-feed > li:last-child .post-entry::after {
+body.feed .posts-feed > li:last-child .post-entry::after {
   content: none;
 }
 
