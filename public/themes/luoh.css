@@ -232,7 +232,9 @@ html[data-luoh-theme='dark'] {
   font-family: 'Inter', 'Noto Sans SC', sans-serif;
 }
 
-/* Meta / timestamps / footer: IBM Plex Mono digits + Noto Sans SC CJK */
+/* Timestamps / footer: UI voice (Inter + Noto Sans SC), not mono —
+   three typefaces per page (display / reading / UI) plus mono strictly
+   for code. tabular-nums keeps dates from jittering. */
 .post-meta,
 .post-meta p,
 .post-meta a,
@@ -243,16 +245,18 @@ html[data-luoh-theme='dark'] {
 .site-footer,
 .site-footer a,
 time {
-  font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
-/* ===== Comments: role-based type, mirroring the page's font division =====
-   The comment body is set in Inter + Noto Sans SC so guest voices read as
-   sans-serif against the serif article text. Nicknames take the UI stack
-   (like navigation), timestamps the mono/meta stack (like post dates). */
+/* ===== Comments: the reading voice, not a separate sans channel =====
+   Comment bodies join the article in Bitter + Noto Serif SC so the whole
+   reading flow is one voice. Nicknames keep the UI sans (like nav — a
+   person's name is chrome, not prose); timestamps follow the UI stack
+   like post dates; form controls stay UI sans like search. */
 
 .tk-comments .tk-content {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: 'Bitter', 'Noto Serif SC', serif;
 }
 
 .tk-comments .tk-nick,
@@ -262,7 +266,8 @@ time {
 
 .tk-comments .tk-date,
 .tk-comments .tk-action {
-  font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Form chrome: inputs, buttons, counters, Twikoo footer — same voice as nav.
@@ -477,9 +482,7 @@ pre {
   justify-content: space-between;
 }
 
-/* Restore the legacy pill button (v0.1.8 `.page`): rounded capsule with a
-   1px border, text styled to match the footer "Powered by BroadcastChannel".
-   Same muted grey, 0.8em size, and mono/Noto Sans SC type stack. */
+/* Pagination pills: UI voice, matching nav — mono stays in code blocks only */
 .pagination a.older,
 .pagination a.newer {
   width: auto;
@@ -490,7 +493,7 @@ pre {
   font-size: 0.8em;
   font-weight: 500;
   color: var(--muted-color);
-  font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
 }
 
 .pagination a.older:hover,
