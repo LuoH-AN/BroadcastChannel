@@ -41,7 +41,9 @@
   --heading-color-dark: #ece7de;
   --text-color-dark: #c4bdb2;
   --link-color-dark: #ff8a4d;
-  --visited-color-dark: #b39ddb;
+  /* Warm dim amber instead of Bear's cold purple — same fix as light
+     mode's rust visited, keeping the ink palette warm in the dark too. */
+  --visited-color-dark: #c99a6e;
   --code-background-color-dark: #1d1a17;
   --code-color-dark: #d8d2c8;
   --blockquote-color-dark: #c4bdb2;
@@ -555,7 +557,10 @@ body.feed .posts-feed > li:last-child .post-entry::after {
 
 .post-meta a:visited,
 .tg-message-meta a:visited {
-  color: var(--visited-color);
+  /* Deep umber, far from the fresh orange mix — the ~15% difference of
+     plain --visited-color was invisible at timestamp size. Mixing toward
+     body ink by 45% keeps it warm but clearly darker and duller. */
+  color: color-mix(in srgb, var(--visited-color) 55%, var(--text-color));
 }
 
 /* Side margins: a whisper of tone on the bare paper flanking the column,
