@@ -10,7 +10,7 @@
   --font-secondary: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
   --background-color: #f4f1ec;
   --heading-color: #000;
-  --text-color: #33302b;
+  --text-color: #4a463f;
   --link-color: #e8590c;
   --code-background-color: #f9f9f9;
 
@@ -35,7 +35,7 @@
      lifted so it reads on the dark ground. */
   --background-color-dark: #12100e;
   --heading-color-dark: #ece7de;
-  --text-color-dark: #d8d2c8;
+  --text-color-dark: #c4bdb2;
   --link-color-dark: #ff8a4d;
   --visited-color-dark: #b39ddb;
   --code-background-color-dark: #1d1a17;
@@ -482,12 +482,12 @@ pre {
 
 /* The base .post-entry separates posts with a full-width 1px hairline —
    too many long, faint lines. Replace with vertical whitespace plus a
-   short, slightly stronger tick on the left edge: 48px long, 2px thick,
-   rounded ends. Keeps the paper feel and marks the rhythm without
-   slicing the whole column. */
+   short, fine tick on the left edge: 32px long, 1px thin, rounded ends.
+   Keeps the paper feel and marks the rhythm without slicing the whole
+   column. margin-bottom 2.25rem pulls the tick closer to the text above. */
 .post-entry {
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 2.25rem;
   padding-bottom: 0;
   border-bottom: 0;
 }
@@ -495,23 +495,24 @@ pre {
 .post-entry::after {
   content: '';
   position: absolute;
-  bottom: -1px;
+  bottom: -0.5px;
   left: 0;
-  width: 48px;
-  height: 2px;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.18);
+  width: 32px;
+  height: 1px;
+  border-radius: 1px;
+  background: rgba(0, 0, 0, 0.22);
 }
 
-/* Timestamps are the weakest layer of the hierarchy (site name > intro >
-   body > time): mono type already shrinks them, muted grey finishes the
-   job so the time never competes with the text. */
+/* Timestamps take a lower-purity orange: the link accent mixed toward the
+   body ink. Still the weakest layer of the hierarchy (site name > intro >
+   body > time) via mono type and size, but now with a whisper of the
+   accent color so dates read as a deliberate rhythm, not grey noise. */
 .post-meta,
 .post-meta a,
 .post-meta a:visited,
 .tg-message-meta,
 .tg-message-meta a {
-  color: var(--muted-color);
+  color: color-mix(in srgb, var(--link-color) 78%, var(--text-color));
 }
 
 /* Side margins: a whisper of tone on the bare paper flanking the column,
@@ -577,7 +578,7 @@ body::before {
   }
 
   .post-entry::after {
-    background: rgba(236, 231, 222, 0.22);
+    background: rgba(236, 231, 222, 0.24);
   }
 
   body::before {
@@ -596,7 +597,7 @@ body::before {
 }
 
 :root[data-luoh-theme='dark'] .post-entry::after {
-  background: rgba(236, 231, 222, 0.22);
+  background: rgba(236, 231, 222, 0.24);
 }
 
 :root[data-luoh-theme='dark'] body::before {
