@@ -10,8 +10,8 @@
   --font-secondary: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
   --background-color: #f4f1ec;
   --heading-color: #000;
-  --text-color: #000;
-  --link-color: orangered;
+  --text-color: #33302b;
+  --link-color: #e8590c;
   --code-background-color: #f9f9f9;
 
   --accent-color: var(--link-color);
@@ -36,7 +36,7 @@
   --background-color-dark: #12100e;
   --heading-color-dark: #ece7de;
   --text-color-dark: #d8d2c8;
-  --link-color-dark: #ff6a3d;
+  --link-color-dark: #ff8a4d;
   --visited-color-dark: #b39ddb;
   --code-background-color-dark: #1d1a17;
   --code-color-dark: #d8d2c8;
@@ -318,12 +318,23 @@ pre {
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-/* Intro sits on the bare page background, separated from the header row
-   above and the nav band below by hairlines — no card. */
+/* Intro = standfirst layer: one rank below the site title, one above body
+   text. Larger size, heading color and weight, wider line-height — reads
+   as an introduction, not as the first paragraph of the feed. The hairline
+   above separates it from the header row; the nav band below closes it. */
 .channel-description {
-  padding-top: 0.75rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border-color);
+  font-size: 1.2em;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--heading-color);
+  letter-spacing: 0.01em;
   word-break: break-word;
+}
+
+.channel-description p {
+  margin-block: 0.25em;
 }
 
 /* ===== Navigation: hairline-separated band (no card) ===== */
@@ -469,12 +480,53 @@ pre {
   margin-left: auto;
 }
 
-/* The base .post-entry uses 2.75rem margin+padding (≈88px) between posts —
-   too airy. Pull it back to a compact 1.5rem rhythm while keeping the
-   hairline separator. */
+/* The base .post-entry separates posts with a full-width 1px hairline —
+   too many long, faint lines. Replace with vertical whitespace plus a
+   short, slightly stronger tick on the left edge: 48px long, 2px thick,
+   rounded ends. Keeps the paper feel and marks the rhythm without
+   slicing the whole column. */
 .post-entry {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
+  position: relative;
+  margin-bottom: 3rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.post-entry::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Timestamps are the weakest layer of the hierarchy (site name > intro >
+   body > time): mono type already shrinks them, muted grey finishes the
+   job so the time never competes with the text. */
+.post-meta,
+.post-meta a,
+.post-meta a:visited,
+.tg-message-meta,
+.tg-message-meta a {
+  color: var(--muted-color);
+}
+
+/* Side margins: a whisper of tone on the bare paper flanking the column,
+   fading toward the page edge. Guides the eye inward so the whitespace
+   reads as intentional margin, not a missing sidebar. Fixed overlay sits
+   behind all content (z-index -1) and never intercepts clicks. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.035), transparent 12%),
+    linear-gradient(to left, rgba(0, 0, 0, 0.035), transparent 12%);
 }
 
 /* ===== Media: full-width, centered (drop legacy -12px offset) ===== */
@@ -523,6 +575,16 @@ pre {
   .social-links .search-button:hover {
     background: rgba(236, 231, 222, 0.08);
   }
+
+  .post-entry::after {
+    background: rgba(236, 231, 222, 0.22);
+  }
+
+  body::before {
+    background:
+      linear-gradient(to right, rgba(236, 231, 222, 0.04), transparent 12%),
+      linear-gradient(to left, rgba(236, 231, 222, 0.04), transparent 12%);
+  }
 }
 
 :root[data-luoh-theme='dark'] .channel-avatar {
@@ -531,4 +593,14 @@ pre {
 
 :root[data-luoh-theme='dark'] .social-links .search-button:hover {
   background: rgba(236, 231, 222, 0.08);
+}
+
+:root[data-luoh-theme='dark'] .post-entry::after {
+  background: rgba(236, 231, 222, 0.22);
+}
+
+:root[data-luoh-theme='dark'] body::before {
+  background:
+    linear-gradient(to right, rgba(236, 231, 222, 0.04), transparent 12%),
+    linear-gradient(to left, rgba(236, 231, 222, 0.04), transparent 12%);
 }
