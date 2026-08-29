@@ -540,13 +540,22 @@ body.feed .posts-feed > li:last-child .post-entry::after {
 /* Timestamps take a lower-purity orange: the link accent mixed toward the
    body ink. Still the weakest layer of the hierarchy (site name > intro >
    body > time) via mono type and size, but now with a whisper of the
-   accent color so dates read as a deliberate rhythm, not grey noise. */
+   accent color so dates read as a deliberate rhythm, not grey noise.
+   Visited timestamps fade to the rust visited-color — dimmer and less
+   pure than fresh, marking read posts without shouting. */
 .post-meta,
+.tg-message-meta {
+  color: color-mix(in srgb, var(--link-color) 78%, var(--text-color));
+}
+
 .post-meta a,
-.post-meta a:visited,
-.tg-message-meta,
 .tg-message-meta a {
   color: color-mix(in srgb, var(--link-color) 78%, var(--text-color));
+}
+
+.post-meta a:visited,
+.tg-message-meta a:visited {
+  color: var(--visited-color);
 }
 
 /* Side margins: a whisper of tone on the bare paper flanking the column,
