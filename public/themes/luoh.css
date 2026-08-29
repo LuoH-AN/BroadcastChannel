@@ -481,26 +481,38 @@ pre {
 }
 
 /* The base .post-entry separates posts with a full-width 1px hairline —
-   too many long, faint lines. Replace with vertical whitespace plus a
-   short, fine tick on the left edge: 32px long, 1px thin, rounded ends.
-   Keeps the paper feel and marks the rhythm without slicing the whole
-   column. margin-bottom 2.25rem pulls the tick closer to the text above. */
+   too many long, faint lines, and a short tick read as a rendering
+   artifact rather than a design. Replace with the typographic asterism
+   (dinkus): three centered dots floating in the whitespace gap, an old
+   book convention for section breaks. Variable-driven color adapts to
+   both palettes. Hidden after the last entry — the pagination or footer
+   already closes the page. */
 .post-entry {
   position: relative;
-  margin-bottom: 2.25rem;
+  margin-bottom: 3.5rem;
   padding-bottom: 0;
   border-bottom: 0;
 }
 
 .post-entry::after {
-  content: '';
+  content: '· · ·';
   position: absolute;
-  bottom: -0.5px;
+  right: 0;
+  bottom: -1.75rem;
   left: 0;
-  width: 32px;
-  height: 1px;
-  border-radius: 1px;
-  background: rgba(0, 0, 0, 0.22);
+  color: var(--muted-color);
+  font-size: 0.9em;
+  letter-spacing: 0.6em;
+  line-height: 1;
+  text-align: center;
+  /* letter-spacing leaves a trailing gap after the last dot; indent
+     compensates so the group stays optically centered */
+  text-indent: 0.6em;
+  transform: translateY(50%);
+}
+
+.posts-feed > li:last-child .post-entry::after {
+  content: none;
 }
 
 /* Timestamps take a lower-purity orange: the link accent mixed toward the
@@ -577,10 +589,6 @@ body::before {
     background: rgba(236, 231, 222, 0.08);
   }
 
-  .post-entry::after {
-    background: rgba(236, 231, 222, 0.24);
-  }
-
   body::before {
     background:
       linear-gradient(to right, rgba(236, 231, 222, 0.04), transparent 12%),
@@ -594,10 +602,6 @@ body::before {
 
 :root[data-luoh-theme='dark'] .social-links .search-button:hover {
   background: rgba(236, 231, 222, 0.08);
-}
-
-:root[data-luoh-theme='dark'] .post-entry::after {
-  background: rgba(236, 231, 222, 0.24);
 }
 
 :root[data-luoh-theme='dark'] body::before {
