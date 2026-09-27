@@ -21,37 +21,25 @@
 
 - [面条实验室](https://memo.miantiao.me/)
 - [Find Blog👁发现博客](https://broadcastchannel.pages.dev/)
-- [Memos 广场 🎪](https://now.memobbs.app/)
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
-- [新闻在花频道](https://tg.istore.app/)
 - [ALL About RSS](https://blog.rss.tips/)
-- [Charles Chin's Whisper](https://memo.eallion.com/)
 - [PlayStation 新闻转发](https://playstationnews.pages.dev)
 - [Yu's Life](https://daily.pseudoyu.com/)
-- [Leslie 和朋友们](https://tg.imlg.co/)
 - [OKHK 分享](https://tg.okhk.net/)
-- [gledos 的微型博客](https://microblogging.gledos.science)
-- [Steve Studio](https://tgc.surgeee.me/)
-- [LiFePO4:沙雕吐槽](https://lifepo4.top)
-- [Hotspot Hourly](https://hourly.top/)
-- [大河马中文财经新闻分享](https://a.xiaomi318.com/)
 - [\_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
-- [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
-- [Fake news](https://fake-news.csgo.ovh/)
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 - [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
 - [甬哥侃侃侃--频道发布](https://ygkkktg.pages.dev)
-- [Fugoou.log](https://fugoou.xyz)
 - [Bboysoul的博客](https://tg.bboy.app/)
 - [MakerHunter](https://share.makerhunter.com/)
-- [ChatGPT/AI新闻聚合](https://g4f.icu/)
-- [Abner's memos](https://memos.abnerz6.top/)
 - [小众软件的发现](https://talk.appinn.net/)
 - [小报童优惠与排行榜](https://youhui.xiaobaoto.com/)
 - [热干面拌 10 号土豆泥](https://memo.moran.im/)
 - [万事屋工程部](https://t.wanshiwu.fyi/)
+- [折腾啥 @xream](https://telegram.zhetengsha.eu.org)
+- [北方的博客](https://100412.xyz)
 
 ### 平台
 
@@ -74,6 +62,7 @@ Cloudflare Pages SSR 在当前 Astro 6 + @astrojs/cloudflare v13 下不受支持
 - 可选主题视觉灵感：[Hacker News](https://news.ycombinator.com/)（由 Y Combinator 运营，独立实现，与其无官方关系）
 - 可选主题视觉灵感：[Telegram 公开频道预览](https://t.me/s/)（独立实现，与 Telegram Messenger Inc. 无官方关系）
 - 可选主题视觉灵感：[Zed 的 Agentic Engineering 页面](https://zed.dev/agentic-engineering)（独立实现，与 Zed Industries, Inc. 无官方关系）
+- 原创可选主题：Polar（项目自有设计，无外部视觉上游）
 
 ## 🏗️ 部署
 
@@ -188,12 +177,13 @@ TARGET_WHITELIST=a.com,b.com
 | HN News          | `/themes/hn-news.css`          |
 | TG Channel       | `/themes/tg-channel.css`       |
 | ZAE              | `/themes/zae.css`              |
+| Polar            | `/themes/polar.css`            |
 
 ```env
-HEADER_INJECT='<link rel="stylesheet" href="/themes/aria.css">'
+HEADER_INJECT='<link rel="stylesheet" href="/themes/polar.css">'
 ```
 
-HN News、TG Channel 和 ZAE 是固定浅色主题。不要直接加载 `/themes/terminal-base.css`；项目不存在 `/themes/terminal.css`。
+HN News、TG Channel、ZAE 和 Polar 是固定浅色主题。不要直接加载 `/themes/terminal-base.css`；项目不存在 `/themes/terminal.css`。
 
 完整配置、明暗模式、平台控制台写法、自定义 CSS 与安全边界见 **[THEMES.md](./THEMES.md)**。主题归属见 **[NOTICE.md](./NOTICE.md)**。
 

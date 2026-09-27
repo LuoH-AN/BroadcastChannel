@@ -21,38 +21,25 @@ English | [简体中文](./README.zh-cn.md)
 
 - [面条实验室](https://memo.miantiao.me/)
 - [Find Blog👁发现博客](https://broadcastchannel.pages.dev/)
-- [Memos 广场 🎪](https://now.memobbs.app/)
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
-- [新闻在花频道](https://tg.istore.app/)
 - [ALL About RSS](https://blog.rss.tips/)
-- [Charles Chin's Whisper](https://memo.eallion.com/)
 - [PlayStation 新闻转发](https://playstationnews.pages.dev)
 - [Yu's Life](https://daily.pseudoyu.com/)
-- [Leslie 和朋友们](https://tg.imlg.co/)
 - [OKHK 分享](https://tg.okhk.net/)
-- [gledos 的微型博客](https://microblogging.gledos.science)
-- [Steve Studio](https://tgc.surgeee.me/)
-- [LiFePO4:沙雕吐槽](https://lifepo4.top)
-- [Hotspot Hourly](https://hourly.top/)
-- [大河马中文财经新闻分享](https://a.xiaomi318.com/)
 - [\_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
-- [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
-- [Fake news](https://fake-news.csgo.ovh/)
 - [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
 - [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
 - [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
 - [甬哥侃侃侃--频道发布](https://ygkkktg.pages.dev)
-- [Fugoou.log](https://fugoou.xyz)
 - [Bboysoul的博客](https://tg.bboy.app/)
 - [MakerHunter](https://share.makerhunter.com/)
-- [ChatGPT/AI新闻聚合](https://g4f.icu/)
-- [Abner's memos](https://memos.abnerz6.top/)
 - [Appinn Talk](https://talk.appinn.net/)
 - [小报童优惠与排行榜](https://youhui.xiaobaoto.com/)
 - [热干面拌 10 号土豆泥](https://memo.moran.im/)
 - [万事屋工程部](https://t.wanshiwu.fyi/)
 - [折腾啥 @xream](https://telegram.zhetengsha.eu.org)
+- [北方的博客](https://100412.xyz)
 
 ### Platform
 
@@ -75,6 +62,7 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 - Optional theme visual inspiration: [Hacker News](https://news.ycombinator.com/) by Y Combinator, independently implemented with no official affiliation
 - Optional theme visual inspiration: [Telegram public channel previews](https://t.me/s/), independently implemented with no official affiliation with Telegram Messenger Inc.
 - Optional theme visual inspiration: [Zed's Agentic Engineering page](https://zed.dev/agentic-engineering), independently implemented with no official affiliation with Zed Industries, Inc.
+- Original optional theme: Polar, a project-owned design with no external visual upstream
 
 ## 🏗️ Deployment
 
@@ -189,12 +177,13 @@ Base is always loaded. Leave `HEADER_INJECT` empty to use Base, or load **exactl
 | HN News          | `/themes/hn-news.css`          |
 | TG Channel       | `/themes/tg-channel.css`       |
 | ZAE              | `/themes/zae.css`              |
+| Polar            | `/themes/polar.css`            |
 
 ```env
-HEADER_INJECT='<link rel="stylesheet" href="/themes/aria.css">'
+HEADER_INJECT='<link rel="stylesheet" href="/themes/polar.css">'
 ```
 
-HN News, TG Channel, and ZAE are fixed-light themes. Do not load `/themes/terminal-base.css` directly; there is no `/themes/terminal.css`.
+HN News, TG Channel, ZAE, and Polar are fixed-light themes. Do not load `/themes/terminal-base.css` directly; there is no `/themes/terminal.css`.
 
 Full configuration, light/dark behavior, platform dashboard values, custom CSS, and security notes: **[THEMES.md](./THEMES.md)**. Theme credits: **[NOTICE.md](./NOTICE.md)**.
 

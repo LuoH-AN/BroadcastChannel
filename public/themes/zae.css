@@ -347,8 +347,8 @@ hr {
 }
 
 .post-entry {
-  margin: 0 0 2.4rem;
-  padding: 0 0 2.4rem;
+  margin: 0 0 2.5rem;
+  padding: 0 0 2.5rem;
   border: 0;
   border-bottom: 1px solid var(--border-color);
   border-radius: 0;
@@ -504,6 +504,20 @@ body.post .post-content {
   box-shadow: var(--shadow-soft);
 }
 
+.pagination a {
+  position: relative;
+}
+
+.pagination a::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
 .pagination a:hover,
 #back-to-top:hover {
   border-color: #858d97;
@@ -541,8 +555,8 @@ body.post .post-content {
 
 .site-footer {
   width: calc(100% - 18px);
-  margin: 17px auto 0;
-  padding: 0.9rem 0 0;
+  margin: 16px auto 0;
+  padding: 1rem 0 0;
   color: var(--muted-color);
   font-size: 0.65rem;
   letter-spacing: 0.03em;
@@ -608,7 +622,7 @@ body.post .post-content {
 }
 
 .content h2 {
-  padding-top: 1.15rem;
+  padding-top: 1.25rem;
   border-top: 7px solid transparent;
   border-image: repeating-linear-gradient(135deg, var(--border-faint) 0 1px, transparent 1px 3px) 7;
   font-size: 1.25rem;
@@ -1070,7 +1084,7 @@ body.post .post-content {
 
   #main-content {
     width: calc(100% - 8px);
-    padding: 18px 14px 22px;
+    padding: 16px 12px 20px;
     outline-offset: 3px;
     box-shadow:
       0 0 0 3px var(--shell-color),
