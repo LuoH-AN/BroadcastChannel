@@ -59,6 +59,18 @@ HEADER_INJECT='<link rel="stylesheet" href="/themes/tg-channel.css">'
 HEADER_INJECT='<link rel="stylesheet" href="/themes/zae.css">'
 ```
 
+## LuoH custom theme
+
+The fork's `/themes/luoh.css` override loads its fonts automatically. Body text, navigation, dates, pagination, and Twikoo comments use Xiaomi's MiSans. Headings pair Cormorant Garamond for Latin text with LXGW WenKai for Chinese; quotations use WenKai, and code uses IBM Plex Mono.
+
+MiSans uses Xiaomi's official font service with weights 400, 500, 600, and 700 and `font-display: swap`. Chinese font subsets load according to the characters on the page. The font stacks include local fallbacks. The credits and font licenses are recorded in [NOTICE.md](./NOTICE.md).
+
+```env
+HEADER_INJECT='<link rel="stylesheet" href="/themes/luoh.css">'
+```
+
+If your existing `HEADER_INJECT` also contains navigation or theme controls, retain that markup. A separate Google Fonts stylesheet is unnecessary for this theme.
+
 ## Custom CSS
 
 Host a normal CSS file at a URL you control and load it instead of a built-in override:

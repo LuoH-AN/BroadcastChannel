@@ -75,6 +75,7 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 - Optional theme visual inspiration: [Hacker News](https://news.ycombinator.com/) by Y Combinator, independently implemented with no official affiliation
 - Optional theme visual inspiration: [Telegram public channel previews](https://t.me/s/), independently implemented with no official affiliation with Telegram Messenger Inc.
 - Optional theme visual inspiration: [Zed's Agentic Engineering page](https://zed.dev/agentic-engineering), independently implemented with no official affiliation with Zed Industries, Inc.
+- LuoH custom theme fonts: [MiSans by Xiaomi](https://hyperos.mi.com/font/zh/), Cormorant Garamond, LXGW WenKai, and IBM Plex Mono; licenses and attribution in [NOTICE.md](./NOTICE.md)
 
 ## 🏗️ Deployment
 

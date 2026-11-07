@@ -74,6 +74,7 @@ Cloudflare Pages SSR 在当前 Astro 6 + @astrojs/cloudflare v13 下不受支持
 - 可选主题视觉灵感：[Hacker News](https://news.ycombinator.com/)（由 Y Combinator 运营，独立实现，与其无官方关系）
 - 可选主题视觉灵感：[Telegram 公开频道预览](https://t.me/s/)（独立实现，与 Telegram Messenger Inc. 无官方关系）
 - 可选主题视觉灵感：[Zed 的 Agentic Engineering 页面](https://zed.dev/agentic-engineering)（独立实现，与 Zed Industries, Inc. 无官方关系）
+- LuoH 自定义主题字体：[小米 MiSans](https://hyperos.mi.com/font/zh/)、Cormorant Garamond、霞鹜文楷和 IBM Plex Mono；许可与署名见 [NOTICE.md](./NOTICE.md)
 
 ## 🏗️ 部署
 

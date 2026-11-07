@@ -1,13 +1,19 @@
-@import url('https://fonts.googleapis.cn/css2?family=Cormorant+Garamond:wght@500;600;700&family=LXGW+WenKai&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+@import url('https://font.sec.miui.com/font/css?family=MiSans:400,500,600,700:Chinese_Simplify,Latin&display=swap');
+@import url('https://fonts.googleapis.cn/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-regular.css');
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-bold.css');
 
 /* LuoH custom theme for BroadcastChannel Base.
-   Ported from the v0.1.8 fork: 米白纸面 #f4f1ec, orangered accent, Bitter +
-   Noto Serif SC typography, soft rounded panels. Load via HEADER_INJECT
-   together with the Google Fonts (CN mirror) link — see THEMES.md. */
+   Ported from the v0.1.8 fork: 米白纸面 #f4f1ec, orangered accent, soft
+   rounded panels. MiSans by Xiaomi is the reading and UI face; display
+   and code fonts are loaded separately. Load via HEADER_INJECT.
+   MiSans font license and companion font credits: see NOTICE.md. */
 
 :root {
-  --font-main: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
-  --font-secondary: 'Bitter', 'Noto Serif SC', ui-sans-serif, system-ui, sans-serif;
+  --font-main: 'Cormorant Garamond', 'LXGW WenKai', 'MiSans', serif;
+  --font-secondary: 'MiSans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-quote: 'LXGW WenKai', 'MiSans', serif;
+  --font-code: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'MiSans', monospace;
   --background-color: #f4f1ec;
   --heading-color: #000;
   --text-color: #4a463f;
@@ -207,9 +213,7 @@ html[data-luoh-theme='dark'] {
   display: none;
 }
 
-/* ===== Typography: role-based font assignment =====
-   Headings / UI / meta each get their own typeface, while CJK always
-   falls back to a matching Chinese webfont (loaded via @import above). */
+/* ===== Typography: MiSans for reading and UI, accents for display/code ===== */
 
 /* Headings: Cormorant Garamond (Latin) + LXGW WenKai (CJK) */
 .site-header > .title,
@@ -220,21 +224,19 @@ html[data-luoh-theme='dark'] {
 .content h4,
 .content h5,
 .content h6 {
-  font-family: 'Cormorant Garamond', 'LXGW WenKai', serif;
+  font-family: var(--font-main);
 }
 
-/* UI / navigation: Inter (Latin) + Noto Sans SC (CJK) */
+/* UI / navigation shares the MiSans reading face. */
 .site-navigation a,
 .site-navigation a:visited,
 .search-button,
 .search-submit,
 .search-input {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: var(--font-secondary);
 }
 
-/* Timestamps / footer: UI voice (Inter + Noto Sans SC), not mono —
-   three typefaces per page (display / reading / UI) plus mono strictly
-   for code. tabular-nums keeps dates from jittering. */
+/* MiSans metadata; tabular-nums keeps dates from jittering. */
 .post-meta,
 .post-meta p,
 .post-meta a,
@@ -245,28 +247,25 @@ html[data-luoh-theme='dark'] {
 .site-footer,
 .site-footer a,
 time {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: var(--font-secondary);
   font-variant-numeric: tabular-nums;
 }
 
-/* ===== Comments: the reading voice, not a separate sans channel =====
-   Comment bodies join the article in Bitter + Noto Serif SC so the whole
-   reading flow is one voice. Nicknames keep the UI sans (like nav — a
-   person's name is chrome, not prose); timestamps follow the UI stack
-   like post dates; form controls stay UI sans like search. */
+/* ===== Comments: MiSans throughout the reading and input flow ===== */
 
+.post-comments .tk-comments,
 .tk-comments .tk-content {
-  font-family: 'Bitter', 'Noto Serif SC', serif;
+  font-family: var(--font-secondary);
 }
 
 .tk-comments .tk-nick,
 .tk-comments .tk-nick a {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: var(--font-secondary);
 }
 
 .tk-comments .tk-date,
 .tk-comments .tk-action {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: var(--font-secondary);
   font-variant-numeric: tabular-nums;
 }
 
@@ -278,27 +277,35 @@ time {
    directly under Twikoo's renamed mount (div.twikoo), so both get their
    own selectors. */
 .post-comments .comments .tk-comments .el-input__inner,
+.post-comments .comments .tk-comments .tk-meta-input .el-input .el-input-group__prepend,
 .post-comments .comments .tk-comments .el-textarea__inner,
 .post-comments .comments .tk-input > .el-input__count,
 .post-comments .comments .tk-comments .el-button,
+.post-comments .comments .tk-comments .tk-submit .el-button,
 .post-comments .comments .twikoo > .tk-footer,
 .tk-comments .tk-input__count,
 .tk-comments .tk-footer,
 .tk-comments .tk-comments-title,
 .tk-comments .tk-comments-no {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: var(--font-secondary);
 }
 
-/* Code: IBM Plex Mono with CJK fallback for inline comments */
+/* Quoted prose gets a restrained handwritten accent. */
+.content blockquote,
+.tk-comments .tk-content blockquote {
+  font-family: var(--font-quote);
+}
+
+/* Code: IBM Plex Mono, with system monospace and MiSans fallbacks. */
 .content code,
 .content pre,
 code,
 pre {
-  font-family: 'IBM Plex Mono', 'Noto Sans SC', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-code);
 }
 
 /* ===== Reading rhythm: roomier line-height for CJK body copy =====
-   Base sets 1.6 on main — tuned for Latin faces. Noto Serif SC needs
+   Base sets 1.6 on main — tuned for Latin faces. MiSans benefits from
    more inter-line air for comfortable Chinese reading (CJK glyphs have
    no ascenders/descenders to create optical gaps). 1.78 on the article
    and feed text only; UI chrome (nav, comments form) keeps the default
@@ -493,7 +500,7 @@ pre {
   font-size: 0.8em;
   font-weight: 500;
   color: var(--muted-color);
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-family: var(--font-secondary);
 }
 
 .pagination a.older:hover,

@@ -73,4 +73,22 @@ The optional `public/themes/zae.css` theme takes visual inspiration from Zed's o
 - License URL: N/A (not applicable); official reference page: https://zed.dev/agentic-engineering
 - Nature: Visual inspiration; independent implementation, not adapted source
 
-These are attribution and compatibility notices only. They do not imply endorsement by or official affiliation with Bear Blog, Planetable, hugo-theme-terminal, Aria Template, Y Combinator or Hacker News, Telegram Messenger Inc., or Zed Industries, Inc., and they do not change the licensing of BroadcastChannel under the root `LICENSE`.
+## LuoH theme fonts
+
+The custom `public/themes/luoh.css` theme uses **MiSans by Xiaomi** for body text and interface controls. MiSans is loaded from Xiaomi's official font service at runtime; its font files are not copied, modified, or bundled in this repository.
+
+- Project and copyright holder: [MiSans](https://hyperos.mi.com/font/zh/), Xiaomi Inc. (小米科技有限责任公司)
+- License: [MiSans Font Intellectual Property License Agreement](https://hyperos.mi.com/font-download/MiSans%E5%AD%97%E4%BD%93%E7%9F%A5%E8%AF%86%E4%BA%A7%E6%9D%83%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE.pdf)
+- Nature: Runtime use of the official webfont service, with this explicit MiSans attribution
+
+The companion fonts are also loaded remotely at runtime and are not bundled:
+
+| Font | Use | Author or copyright holder | License |
+| --- | --- | --- | --- |
+| [Cormorant Garamond](https://github.com/CatharsisFonts/Cormorant) | Latin headings | Christian Thalmann / Cormorant Project Authors, copyright 2015 | [SIL OFL 1.1](https://github.com/google/fonts/blob/main/ofl/cormorantgaramond/OFL.txt) |
+| [LXGW WenKai](https://github.com/lxgw/LxgwWenKai) | Chinese headings and quotations | LXGW; Klee Project Authors | [SIL OFL 1.1](https://github.com/lxgw/LxgwWenKai/blob/main/OFL.txt) |
+| [IBM Plex Mono](https://github.com/IBM/plex) | Code | IBM Corp., copyright 2017 | [SIL OFL 1.1](https://github.com/IBM/plex/blob/master/LICENSE.txt) |
+
+LXGW WenKai webfont delivery uses the versioned [`lxgw-wenkai-webfont`](https://github.com/chawyehsu/lxgw-wenkai-webfont) package by D.H. (Chawye Hsu). Its packaging code is [MIT-licensed](https://github.com/chawyehsu/lxgw-wenkai-webfont/blob/main/LICENSE); the fonts retain their SIL OFL license. Cormorant Garamond and IBM Plex Mono are delivered through Google Fonts.
+
+These are attribution and compatibility notices only. They do not imply endorsement by or official affiliation with Bear Blog, Planetable, hugo-theme-terminal, Aria Template, Y Combinator or Hacker News, Telegram Messenger Inc., Zed Industries, Inc., or the font creators, and they do not change the licensing of BroadcastChannel under the root `LICENSE`.
