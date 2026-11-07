@@ -1,0 +1,42 @@
+---
+import PostsPage from '../components/PostsPage.astro'
+import { getEnv } from '../lib/env'
+import { getFeedData } from '../lib/feed'
+
+const { channel, siteUrl, tag } = await getFeedData(Astro)
+const xmlUrl = new URL('rss.xml', siteUrl)
+const jsonUrl = new URL('rss.json', siteUrl)
+if (tag) {
+  xmlUrl.searchParams.set('tag', tag)
+  jsonUrl.searchParams.set('tag', tag)
+}
+Astro.locals.RSS_URL = xmlUrl.toString()
+Astro.locals.RSS_PREFIX = tag ? `${tag} | ` : ''
+
+const isChinese = /^zh(?:-|$)/i.test(getEnv(import.meta.env, 'LOCALE') ?? '')
+const heading = tag ? `RSS · #${tag}` : 'RSS'
+const subscriptionText = isChinese
+  ? '在 RSS 阅读器中添加以下订阅链接，即可接收更新。'
+  : 'Add one of these feed links to your RSS reader to receive updates.'
+const emptyText = isChinese ? '暂无文章。' : 'No posts available.'
+---
+
+<PostsPage
+  channel={channel}
+  before={false}
+  after={false}
+  pageClass="feed rss-preview"
+  pageSeo={{ title: heading, noindex: true }}
+  pageType="page"
+>
+  <section slot="header" class="rss-intro content" aria-labelledby="rss-heading">
+    <h2 id="rss-heading">{heading}</h2>
+    <p>{subscriptionText}</p>
+    <p>
+      <a href={xmlUrl.toString()} type="application/rss+xml">RSS XML</a>
+      {' · '}
+      <a href={jsonUrl.toString()} type="application/feed+json">JSON Feed</a>
+    </p>
+    {channel.posts.length === 0 && <p>{emptyText}</p>}
+  </section>
+</PostsPage>

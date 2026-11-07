@@ -156,6 +156,7 @@ NOINDEX=false
 HIDE_DESCRIPTION=false
 COMMENTS=true
 REACTIONS=true
+# RSS icon opens the HTML preview at /rss; subscription data stays at /rss.xml.
 RSS_BEAUTIFY=true
 
 ## Tags, links, and navigation (comma / semicolon separated)
@@ -174,6 +175,8 @@ SERVER_ADAPTER=
 # Append hostname-only proxy targets to the defaults, separated by commas (no protocol, port, or path).
 TARGET_WHITELIST=a.com,b.com
 ```
+
+RSS previews at `/rss` are rendered on the server, use the site's theme and fonts, and do not require browser XSLT. Set `RSS_BEAUTIFY=true` to open this preview from the RSS icon; otherwise the icon opens `/rss.xml`. Existing XML subscriptions and automatic feed discovery keep using `/rss.xml`. Both the preview and feed links support `?tag=...` filtering; `/rss.json` remains available for JSON Feed readers.
 
 ## 🎨 Themes
 

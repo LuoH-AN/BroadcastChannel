@@ -9,6 +9,14 @@
     list-style: none;
   }
 
+  .rss-intro {
+    margin-bottom: 2rem;
+  }
+
+  .rss-intro h2 {
+    margin-top: 0;
+  }
+
   .post-entry {
     margin-bottom: 2.75rem;
     padding-bottom: 2.75rem;

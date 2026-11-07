@@ -25,6 +25,7 @@ const homeLabel = channel?.title ? `Home — ${channel.title}` : 'Home'
 
 const socialLinks = buildSocialLinks({
   rssUrl: RSS_URL,
+  rssPreview: getBooleanEnv(import.meta.env, 'RSS_BEAUTIFY'),
   podcast: PODCAST,
   twitter: TWITTER,
   github: GITHUB,

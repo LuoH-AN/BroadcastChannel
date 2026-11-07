@@ -9,6 +9,7 @@ export interface SocialLink {
 
 export interface SocialLinkOptions {
   rssUrl: string
+  rssPreview?: boolean
   podcast?: string
   twitter?: string
   github?: string
@@ -21,12 +22,12 @@ export interface SocialLinkOptions {
 export function buildSocialLinks(options: SocialLinkOptions): SocialLink[] {
   const links: SocialLink[] = [
     {
-      href: options.rssUrl,
+      href: options.rssPreview ? options.rssUrl.replace(/rss\.xml(?=\?|$)/, 'rss') : options.rssUrl,
       title: 'RSS Feed',
       label: 'RSS Feed',
       icon: 'ri:rss-line',
-      rel: 'alternate noopener noreferrer',
-      type: 'application/rss+xml',
+      rel: options.rssPreview ? 'noopener noreferrer' : 'alternate noopener noreferrer',
+      type: options.rssPreview ? 'text/html' : 'application/rss+xml',
     },
   ]
 

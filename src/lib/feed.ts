@@ -8,6 +8,7 @@ export interface FeedData {
   posts: Post[]
   siteUrl: URL
   title: string
+  tag?: string
 }
 
 export interface JsonFeedData {
@@ -27,13 +28,18 @@ export interface JsonFeedData {
   }[]
 }
 
-export function buildJsonFeed({ channel, posts, siteUrl, title }: FeedData): JsonFeedData {
+export function buildJsonFeed({ channel, posts, siteUrl, title, tag }: FeedData): JsonFeedData {
+  const feedUrl = new URL('rss.json', siteUrl)
+  if (tag) {
+    feedUrl.searchParams.set('tag', tag)
+  }
+
   return {
     version: 'https://jsonfeed.org/version/1.1',
     title,
     description: channel.description,
     home_page_url: siteUrl.toString(),
-    feed_url: new URL('rss.json', siteUrl).toString(),
+    feed_url: feedUrl.toString(),
     items: posts.map((item) => {
       const itemUrl = new URL(`posts/${item.id}`, siteUrl).toString()
 
@@ -63,5 +69,6 @@ export async function getFeedData(context: APIContext): Promise<FeedData> {
     posts: channel.posts ?? [],
     siteUrl,
     title: `${tag ? `${tag} | ` : ''}${channel.title}`,
+    tag: tag || undefined,
   }
 }

@@ -155,6 +155,7 @@ NOINDEX=false
 HIDE_DESCRIPTION=false
 COMMENTS=true
 REACTIONS=true
+# RSS 图标打开 /rss 网页预览；订阅数据仍在 /rss.xml。
 RSS_BEAUTIFY=true
 
 ## 标签、链接与导航（英文逗号 / 分号分隔）
@@ -173,6 +174,8 @@ SERVER_ADAPTER=
 # 在默认白名单基础上追加代理目标；仅填写域名，以英文逗号分隔（不含协议、端口或路径）。
 TARGET_WHITELIST=a.com,b.com
 ```
+
+`/rss` 预览由服务器渲染，沿用站点主题和字体，无需浏览器支持 XSLT。设置 `RSS_BEAUTIFY=true` 时，RSS 图标打开此预览；否则打开 `/rss.xml`。已有 XML 订阅和自动发现订阅源仍使用 `/rss.xml`。预览和订阅链接均支持 `?tag=...` 标签筛选；`/rss.json` 继续提供 JSON Feed。
 
 ## 🎨 主题
 
