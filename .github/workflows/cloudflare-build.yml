@@ -1,0 +1,37 @@
+name: Build Cloudflare Workers artifact
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/cloudflare-memo-20261121
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SERVER_ADAPTER: cloudflare_workers
+      SITE: https://memo.luoh.org
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Package worker and assets
+        run: tar -czf cloudflare-worker.tar.gz dist .wrangler/deploy
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-worker
+          path: cloudflare-worker.tar.gz
+          retention-days: 7

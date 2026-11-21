@@ -45,6 +45,7 @@ const adapterProvider = adapterAliases[requestedProvider] || requestedProvider
 
 // https://astro.build/config
 export default defineConfig({
+  site: process.env.SITE,
   output: 'server',
   adapter: providers[adapterProvider] || providers.node,
   integrations: [
